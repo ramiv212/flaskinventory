@@ -1,0 +1,172 @@
+
+<td class="inventory-inspector-col">
+
+  <div class="sticky-window" style="text-align: right;">
+    <br>
+    <br>
+
+    <div class="sticky-inspector-inner">
+      <button class="sidebar-banner" onclick="hideInspector()">Inspector</button>
+
+      <form method="POST" class="inspector-form" id="inspector-window" onSubmit="return confirm('Are you sure?')" style="color:white; display: none;">
+        <div class="inspector-fields">
+          {{ inspector_form.hidden_tag() }}
+
+          {{ inspector_form.ID.label() }}
+          {{ inspector_form.ID(id="idnumber", class="inspector-field") }}<br>
+
+          {{ inspector_form.barcode.label() }}
+          {{ inspector_form.barcode(id="barcode", class="inspector-field") }}<br>
+
+          {{ inspector_form.serial.label() }}
+          {{ inspector_form.serial(id="serial", class="inspector-field") }}<br>
+
+          {{ inspector_form.manufacturer.label() }}
+          {{ inspector_form.manufacturer(id="manufacturer", class="inspector-field") }}<br>
+
+          {{ inspector_form.name.label() }}
+          {{ inspector_form.name(id="name", class="inspector-field") }}<br>
+
+          {{ inspector_form.category.label() }}
+          {{ inspector_form.category(id="category", class="inspector-field") }}<br>
+
+          {{ inspector_form.storage.label() }}
+          {{ inspector_form.storage(id="storage", class="inspector-field") }}<br>
+
+          {{ inspector_form.status.label() }}
+          {{ inspector_form.status(id="status", class="inspector-field") }}<br>
+        </div>
+
+        <div style="margin: auto;">
+          <div style="text-align: center;">
+            <div>{{ inspector_form.notes.label() }}</div>
+            {{ inspector_form.notes(id="notes", class="inspector-notes") }}
+
+            <div>
+              {{ inspector_form.submit(id="submit") }}
+              {{ inspector_form.delete(id="delete") }}
+              {{ inspector_form.print_barcode(id="barcode") }}
+
+            </div>
+            <br>
+          </div>
+
+        </div>
+
+      </form>
+    </div>
+
+    <div class="sticky-inspector-inner">
+      <button class="sidebar-banner" onclick="hideCreateItem()">Create Item</button>
+
+
+      <form method="POST" class="inspector-form" id="create-item-window" onSubmit="return confirm('Are you sure?')" style="color:white; display: none;">
+        <div class="inspector-fields">
+          {{ create_item_form.hidden_tag() }}
+
+          {{ create_item_form.serial.label() }}
+          {{ create_item_form.serial(class="inspector-field") }}<br>
+
+          {{ create_item_form.manufacturer.label() }}
+          {{ create_item_form.manufacturer(class="inspector-field") }}<br>
+
+          {{ create_item_form.name.label() }}
+          {{ create_item_form.name(class="inspector-field") }}<br>
+
+          {{ create_item_form.category.label() }}
+          {{ create_item_form.category(class="inspector-field") }}<br>
+
+          {{ create_item_form.storage.label() }}
+          {{ create_item_form.storage(class="inspector-field") }}<br>
+
+
+          {{ create_item_form.qty.label() }}
+          {{ create_item_form.qty(class="inspector-field",value="1",style="width: 40px !important;") }}<br>
+
+        </div>
+
+        <div style="margin: auto;">
+          <div style="text-align: center;">
+            <div>{{ create_item_form.notes.label() }}</div>
+            {{ create_item_form.notes(class="inspector-notes") }}
+
+            <div>{{ create_item_form.create(id="submit") }}</div>
+            <br>
+          </div>
+
+        </div>
+
+      </form>
+    </div>
+
+    <div class="sticky-inspector-inner">
+      <button class="sidebar-banner" onclick="hideEvents()">Event Quick Scan</button>
+    </div>
+    <div id="events-window" style="display: none;">
+
+      <div class="inspector-fields">
+
+        <form onsubmit="return false">
+          <label for="scan_item">Scan</label>
+          <input type="text" name="scan_item" id="scan-item" class="inspector-field">
+        </form>
+
+        <form method="POST" class="inspector-form" id="events-window" onSubmit="return confirm('Are you sure?')" style="color:white; display: block;">
+          <div>
+            {{ add_to_event_form.csrf_token }}
+
+            {{ add_to_event_form.event_select.label() }}
+            {{ add_to_event_form.event_select(class="inspector-field", id="event_select", value="") }}<br>
+
+            {{ add_to_event_form.hidden_scanned_items(id="scanned-item-list") }}
+            {{ add_to_event_form.add_scanned_items }}
+            <br><br>
+            Items to add:
+            <br>
+            <span id="items-to-add-list"></span>
+
+            <br><br>
+            Items In Event:<br>
+            <span id="items-in-event-list"></span>
+            <br>
+
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+    <div class="sticky-inspector-inner">
+      <button class="sidebar-banner" onclick="hideCreateEvent()">Create Event</button>
+    </div>
+
+    <div id="create-event-window" style="display: none;">
+
+      <div class="container" style="width:80%">
+
+        <form method="POST" class="form-register" style="color:white">
+          {{ create_event_form.hidden_tag() }}
+          {{ create_event_form.event_name.label() }}
+          {{ create_event_form.event_name(class="inspector-field") }}
+          <br>
+          {{ create_event_form.event_date_start.label() }}
+          {{ create_event_form.event_date_start(class="inspector-field") }}
+          <br>
+          {{ create_event_form.event_date_end.label() }}
+          {{ create_event_form.event_date_end(class="inspector-field") }}
+          <br>
+          {{ create_event_form.event_client.label() }}
+          {{ create_event_form.event_client(class="inspector-field") }}
+          <br>
+          {{ create_event_form.submit() }}
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</td>

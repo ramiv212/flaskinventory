@@ -1,0 +1,100 @@
+.main-table {
+	width: 100%;
+	background-color: #212529;
+}
+
+td {
+	padding: 0px;
+	margin: 0px;
+}
+
+.td-display {
+	display: none;
+}
+
+button {
+	width: 80px;
+}
+
+.inventory-table {
+	padding:  0px !important;
+	margin: auto;
+	border-spacing: 0px !important;
+	border-collapse: separate;
+}
+
+.inventory-table-col{
+	width: 70%;
+	background-color: #212121 !important;
+}
+
+.sticky-window {
+	position: sticky;
+	top: 0;
+	margin:  auto;
+	text-align: center;
+	width: 350px;
+	margin: auto;
+}
+
+.inventory-inspector-col{
+	text-align: center;
+	vertical-align: top;
+	padding: 0px !important;
+	margin: 0px !important;
+}
+
+.sidebar-banner{
+	width: 100%;
+	height: 50px;
+	border-color: white;
+	border-width: 1px;
+	border-style: solid;
+	background-color: #212529;
+	color: white;
+	font-weight: 700;
+}
+
+.inspector-fields{
+	margin-right: 50px;
+}
+
+
+.inspector-field {
+	margin: 4px;
+	width: 150px;
+}
+
+.inspector-notes {
+	margin: 4px;
+	height: 100px;
+	width: 250px;
+
+}
+
+
+#ID {
+	width: 40px;
+}
+
+.alert {
+	background-color: green !important; text-align: center; display: block;
+}
+
+.status-emoji{
+	margin: auto;
+	font-size: 20px;
+	text-align: center;
+}
+
+.add-to-event-button{
+	width: 30px;
+	height: 30px;
+	background-color: green;
+	color: white;
+	font-weight: 800;
+  	align-items: center;
+  	text-align: center;
+  	line-height: 0px;
+  	border: 0;
+}

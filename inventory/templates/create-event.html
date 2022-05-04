@@ -1,0 +1,340 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Create Event
+{% endblock %}
+
+
+{% block content %}
+
+
+<table class="main-table">
+
+  <tr>
+
+    <form method="POST" style="color:white; display: block;">
+
+      {{ select_event_form.csrf_token }}
+      {{ select_event_form.event_field.label() }}
+      {{ select_event_form.event_field(class="inspector-field", id="event-field") }}
+      {{ select_event_form.submit() }}
+
+    </form>
+
+  </tr>
+
+  <tr VALIGN="TOP">
+    <td class="inventory-cable-col" id="inv-table">
+      <div style="background-color: #212529; padding: 20px;">
+        <table class="table table-hover table-dark inventory-table">
+          <h3>Items In Event</h3>
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Manufacturer</th>
+              <th scope="col">St.</th>
+              <th scope="col">Name</th>
+              <th scope="col">Barcode</th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            {% for dict in itemdict2 %}
+            {% if itemdict2[dict][0] in selected_event_items %}
+
+            <tr style="font-weight: 600;" id="{{ itemdict2[dict][0] }}">
+              <!-- ID -->
+              <td>{{ itemdict2[dict][0] }}</td>
+              <!-- Manufacturer -->
+              <td>{{ itemdict2[dict][3] }}</td>
+              <!-- Status -->
+              <td>
+                <!-- this code sets the emojis in the status column according to the status of the item in the db -->
+
+                {% if itemdict2[dict][7] == 'Broken': %}
+                <span class="status-emoji">&#128165</span>
+
+                {% elif itemdict2[dict][7] == 'Sent For Repair': %}
+                <span class="status-emoji">&#8987</span>
+
+                {% elif itemdict2[dict][7] == 'Loaned To Customer': %}
+                <span class="status-emoji">&#128100</span>
+
+                {% elif itemdict2[dict][7] == 'See Notes': %}
+                <span class="status-emoji">&#128203</span>
+
+                {% endif %} 
+
+              </td>
+              <!-- Name -->
+              {% if 
+              itemdict2[dict][7] == 'Broken' 
+              or itemdict2[dict][7] == 'Sent For Repair' 
+              or itemdict2[dict][7] == 'Loaned To Customer': %}
+              <td style="color:red">{{ itemdict2[dict][4] }}</td>
+              {% elif itemdict2[dict][7] == 'See Notes'%}
+              <td style="color:yellow">{{ itemdict2[dict][4] }}</td>
+
+              {% else %}
+              <td>{{ itemdict2[dict][4] }}</td>
+              {% endif %}
+
+              <!-- Barcode -->
+              <td>{{ itemdict2[dict][1] }}</td>
+
+            
+
+              <!-- Remove Button -->
+              <td>
+
+                <button onclick="deleteEventItem( {{ itemdict2[dict][0] }} )">
+                  Remove
+                </button>
+
+              </td>
+              {% endif %}
+              {% endfor %}
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+      <div>
+
+        <table class="main-table">
+          <tr>
+
+            <td class="inventory-table-col" id="inv-table">
+              <div style="padding: 20px; background-color: #212529;">
+                <table class="table table-hover table-dark inventory-table">
+                  <h3>Item Inventory</h3>
+                  <thead>
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th score="col">Qty</th>
+                      <th scope="col">Manufacturer</th>
+                      <th scope="col">St.</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Barcode</th>
+                      <th scope="col"></th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+
+
+
+                  <!-- start code for row with no multiples -->
+                  <tbody>
+                    {% for dict in itemdict %}
+                    {% if itemdict[dict][9] < 2: %}
+
+                    <tr style="font-weight: 600;" id="{{ itemdict[dict][0] }}">
+                      <!-- ID -->
+                      <td>{{ itemdict[dict][0] }}</td>
+                      <!-- QTY -->
+                      <td>{{ itemdict[dict][9] }}</td>
+                      <!-- Manufacturer -->
+                      <td>{{ itemdict[dict][3] }}</td>
+                      <!-- Status -->
+                      <td>
+                        <!-- this code sets the emojis in the status column according to the status of the item in the db -->
+
+                        {% if itemdict[dict][7] == 'Broken': %}
+                        <span class="status-emoji">&#128165</span>
+
+                        {% elif itemdict[dict][7] == 'Sent For Repair': %}
+                        <span class="status-emoji">&#8987</span>
+
+                        {% elif itemdict[dict][7] == 'Loaned To Customer': %}
+                        <span class="status-emoji">&#128100</span>
+
+                        {% elif itemdict[dict][7] == 'See Notes': %}
+                        <span class="status-emoji">&#128203</span>
+
+                        {% endif %} 
+
+                      </td>
+                      <!-- Name -->
+                      {% if 
+                      itemdict[dict][7] == 'Broken' 
+                      or itemdict[dict][7] == 'Sent For Repair' 
+                      or itemdict[dict][7] == 'Loaned To Customer': %}
+                      <td style="color:red">{{ dict }}</td>
+                      {% elif itemdict[dict][7] == 'See Notes'%}
+                      <td style="color:yellow">{{ dict }}</td>
+
+                      {% else %}
+                      <td>{{ dict }}</td>
+                      {% endif %}
+
+                      <!-- Barcode -->
+                      <td>{{ itemdict[dict][1] }}</td>
+
+                      <!-- Add to event button -->
+                      <td>
+
+                        <button class="add-to-event-button"
+                        onclick="addItemToEvent({{ itemdict[dict][0] }})">+</button>
+
+                      </td>
+                      
+                      <td></td>
+                    </tr>
+
+                    {% else %}
+                    <tr style="font-weight: 600;">
+                      <!-- ID -->
+                      <td></td>
+                      <!-- QTY -->
+                      <td>{{ itemdict[dict][9] }}</td>
+                      <!-- Manufacturer -->
+                      <td>{{ itemdict[dict][3] }}</td>
+                      <!-- Status -->
+                      <td></td>
+                      <!-- Name -->
+                      <td>{{ dict }}</td>
+                      <!-- Barcode -->
+                      <td></td>
+                      <td></td>
+                      <td>
+                        <button id="button{{ itemdict[dict][0] }}" onclick="collapse({{ itemdict[dict][0] }})">Expand</button>
+                      </td>
+                    </tr>
+                    <!-- end code for item that has no multiples -->
+
+
+
+                    <!-- start code for item that has multiples (child) -->
+                    {% for item in items %}
+                    {% if item.name == dict and itemdict[dict][9] > 1 %}
+                    <tr class="row{{ itemdict[dict][0] }}" id="{{ item.ID }}">
+                      <!-- ID -->
+                      <td class="td-display">{{ item.ID }}</td>
+                      <!-- QTY -->
+                      <td class="td-display"></td>
+                      <!-- Manufacturer -->
+                      <td class="td-display">{{ item.manufacturer }}</td>
+                      <!-- Status -->
+                      <td class="td-display">
+                        <!-- this code sets the emojis in the status column according to the status of the item in the db -->
+
+                        {% if item.status == 'Broken': %}
+                        <span class="status-emoji">&#128165</span>
+
+                        {% elif item.status == 'Sent For Repair': %}
+                        <span class="status-emoji">&#8987</span>
+
+                        {% elif item.status == 'Loaned To Customer': %}
+                        <span class="status-emoji">&#128100</span>
+
+                        {% elif item.status == 'See Notes': %}
+                        <span class="status-emoji">&#128203</span>
+
+                        {% endif %} 
+
+                      </td>
+                      <!-- Name -->
+                      {% if 
+                      item.status == 'Broken' 
+                      or item.status == 'Sent For Repair' 
+                      or item.status == 'Loaned To Customer': %}
+                      <td style="color:red" class="td-display">{{ dict }}</td>
+                      {% elif item.status == 'See Notes'%}
+                      <td style="color:yellow" class="td-display">{{ dict }}</td>
+
+                      {% else %}
+                      <td class="td-display">{{ item.name }}</td>
+                      {% endif %}
+
+                      <!-- Barcode -->
+                      <td class="td-display">{{ item.barcode }}</td>
+
+                      <!-- Add to event button -->
+                      <td class="td-display">
+
+                        <button class="add-to-event-button"
+                        onload="=checkDate()"
+                        onclick="addItemToEvent({{ item.ID }})">+</button>
+
+                      </td>
+                      
+                      <td class="td-display">
+                      </td>
+                    </tr>
+                    <!-- end code for item that has multiples (child) -->
+
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+
+            </td>
+
+
+            <td>
+              {% include 'inspector_bar.html' %}
+            </td>
+
+
+          </table>
+
+        </tr>
+
+      </div>
+
+    </table>
+
+
+    <script type="text/javascript" src="{{ url_for('static', filename='scripts.js') }}"></script>
+
+
+    <script type="text/javascript">
+      var csrf_token = "{{ csrf_token() }}";
+
+
+      function addItemToEvent(item){
+        var event = document.getElementById('event-field').value;
+
+        console.log(event)
+
+        $.ajax({
+          type: 'POST',
+          url: '/events/add',
+          headers: {
+            "X-CSRFToken": csrf_token
+          },
+          data: {id: item, event: event }
+        })
+        location.reload();
+      }
+
+
+      function deleteEventItem(item){
+        var event = document.getElementById('event-field').value;
+
+        console.log(event)
+
+        $.ajax({
+          type: 'POST',
+          url: '/events/remove',
+          headers: {
+            "X-CSRFToken": csrf_token
+          },
+          data: {id: item, event: event }
+        })
+        location.reload();
+      }
+    </script>
+
+
+    {% endblock %}
