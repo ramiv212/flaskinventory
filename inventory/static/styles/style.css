@@ -23,6 +23,13 @@ button {
 	border-collapse: separate;
 }
 
+.inventory-table2 {
+	padding:  0px !important;
+	margin: auto;
+	border-spacing: 0px !important;
+	border-collapse: separate;
+}
+
 .inventory-table-col{
 	width: 70%;
 	background-color: #212529 !important;

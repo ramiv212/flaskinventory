@@ -188,11 +188,37 @@ function conflictingItem(events,item){
 }
 
 
-// Item Search
-
-
+// Home Item Search
   document.getElementById('item-search').addEventListener('input', (e) => {
     var inv_table = document.getElementsByClassName("inventory-table")
+
+    var children = inv_table[0].childNodes[5].childNodes
+
+    search_var = document.getElementById('item-search').value.toLowerCase()
+    console.clear()
+
+    for (let i = 1; i < children.length; i++) {
+            if (children[i].nodeName == "TR")
+              var tr = children[i].childNodes[19]
+              // console.log(tr.innerHTML)
+              
+                if (tr.innerHTML.toLowerCase().includes(search_var)){
+                  console.log(tr.innerHTML)
+                  tr.parentNode.style.visibility = "visible"
+                } else {
+                  tr.parentNode.style.visibility = "collapse"
+                }
+
+          }
+    })
+
+
+// Event Item Search
+  document.getElementById('item-search').addEventListener('input', (e) => {
+    var inv_table = document.getElementsByClassName("inventory-table2")
+
+    console.log(inv_table)
+
     var children = inv_table[0].childNodes[5].childNodes
 
     search_var = document.getElementById('item-search').value.toLowerCase()
