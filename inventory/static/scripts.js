@@ -178,10 +178,37 @@ function buttonClick(e){
 }
 
 
+// This will create a confirm pop-up for an item to be added that is
+// already reserved in another event during those dates
 function conflictingItem(events,item){
   if (confirm("Are you sure? This item is already reserved in one of the following events during one of the event dates: " + events)) {
     addItemToEvent(item)
   } else {
-    txt = "You pressed Cancel!";
   }
 }
+
+
+// Item Search
+
+
+  document.getElementById('item-search').addEventListener('input', (e) => {
+    var inv_table = document.getElementsByClassName("inventory-table")
+    var children = inv_table[0].childNodes[5].childNodes
+
+    search_var = document.getElementById('item-search').value.toLowerCase()
+    console.clear()
+
+    for (let i = 1; i < children.length; i++) {
+            if (children[i].nodeName == "TR")
+              var tr = children[i].childNodes[19]
+              // console.log(tr.innerHTML)
+              
+                if (tr.innerHTML.toLowerCase().includes(search_var)){
+                  console.log(tr.innerHTML)
+                  tr.parentNode.style.visibility = "visible"
+                } else {
+                  tr.parentNode.style.visibility = "collapse"
+                }
+
+          }
+    })

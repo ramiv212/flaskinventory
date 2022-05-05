@@ -17,11 +17,12 @@ Create Event
       {{ select_event_form.csrf_token }}
       {{ select_event_form.event_field.label() }}
       {{ select_event_form.event_field(class="inspector-field", id="event-field") }}
+      &nbsp;
       {{ select_event_form.submit() }}
 
     </form>
 
-    &nbsp;&nbsp;
+    &nbsp;
 
     <form method="POST" action="/events/checklist?event={{ selected_event_name }}" style="color:white; display: block;">
      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
