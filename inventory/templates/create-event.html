@@ -29,6 +29,13 @@ Create Event
       <button>Checklist</button>
     </form>
 
+    &nbsp;
+
+    <form method="POST" action="/events/delete-event?event={{ selected_event_name }}" style="color:white; display: block;">
+     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+      <button>Delete</button>
+    </form>
+
 
     <p>Event Start Date: {{ event_start_date }}<br>
     Event End Date: {{ event_end_date }}</p>
@@ -361,6 +368,23 @@ Create Event
             "X-CSRFToken": csrf_token
           },
           data: {id: item, event: event }
+        })
+        location.reload();
+      }
+
+
+        function deleteEvent(){
+        var event = document.getElementById('event-field').value;
+
+        console.log(event)
+
+        $.ajax({
+          type: 'POST',
+          url: '/events/delete-event',
+          headers: {
+            "X-CSRFToken": csrf_token
+          },
+          data: {event: event}
         })
         location.reload();
       }

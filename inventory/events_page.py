@@ -8,6 +8,7 @@ from inventory.checkdates import get_conflicting_event_items
 import json
 import os
 from sqlalchemy.orm import load_only
+from sqlalchemy import delete
 from wtforms import SelectField
 from datetime import datetime,timedelta
 
@@ -159,7 +160,7 @@ def event_page():
 		conflicting_event_items=list())
 
 
-
+# remove item
 @eventspage.route('/remove', methods=['GET', 'POST'])
 def remove_from_event():
 	scan = Scan()
@@ -178,7 +179,7 @@ def remove_from_event():
 
 
 
-
+# add item
 @eventspage.route('/add', methods=['GET', 'POST'])
 def add_item_to_event():
 	scan = Scan()
@@ -194,10 +195,9 @@ def add_item_to_event():
 	return redirect(url_for('events.event_page'))
 
 
-
+# render a checklist of the event
 @eventspage.route('/checklist', methods=['GET', 'POST'])
 def return_event_checklist():
-	print(request.args.get('event'))
 	dictionaries = Dictionaries()
 	event = request.args.get('event')
 
@@ -209,6 +209,27 @@ def return_event_checklist():
 			event_date_end=dictionaries.eventdict[event][2],
 			event_client=dictionaries.eventdict[event][3],
 			event_items=json.loads(dictionaries.eventdict[event][5])['items'])
+	else:
+		flash("No event was selected")
+		return redirect(url_for('events.event_page'))
+
+
+@eventspage.route('/delete-event', methods=['GET', 'POST'])
+def delete_event():
+	dictionaries = Dictionaries()
+	funcs = Funcs()
+	event = request.args.get('event')
+	
+	if event:
+		event_ID = dictionaries.eventdict[event][0]
+
+		Event.query.filter_by(ID=event_ID).delete()
+		db.session.commit()
+		funcs.update_event_submitfields()
+		
+		flash(f"{event} was deleted")
+
+		return redirect(url_for('events.event_page'))
 	else:
 		flash("No event was selected")
 		return redirect(url_for('events.event_page'))
