@@ -6,6 +6,7 @@ from inventory.mybarcode import export_barcode
 from inventory.resources import Dictionaries,Scan,Funcs
 from inventory.checkdates import get_conflicting_event_items
 import json
+import os
 from sqlalchemy.orm import load_only
 from wtforms import SelectField
 from datetime import datetime,timedelta
@@ -61,7 +62,6 @@ def event_page():
 
 
 	# select an event
-
 	if select_event_form.submit.data and select_event_form.validate_on_submit():
 		selected_event = select_event_form.event_field.data
 		selected_event_id = dictionaries.eventdict[selected_event][0]
@@ -91,6 +91,13 @@ def event_page():
 	# and then update the items of the event in the database
 	if add_to_event_form.add_scanned_items.data and add_to_event_form.validate_on_submit():
 		scan.add_scanned_items(add_to_event_form.hidden_scanned_items.data)
+
+
+	# code to show barcode
+	elif inspector_form.print_barcode.data and inspector_form.validate_on_submit():
+		export_barcode(str(inspector_form.barcode.data),inspector_form.name.data)
+
+		return send_from_directory(f'{os.getcwd()}/inventory/static/', "new_code1.png") 
 
 
 	if select_event_form.errors != {}: #If there are not errors from the validations
