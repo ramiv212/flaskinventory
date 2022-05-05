@@ -97,7 +97,46 @@ def event_page():
 	elif inspector_form.print_barcode.data and inspector_form.validate_on_submit():
 		export_barcode(str(inspector_form.barcode.data),inspector_form.name.data)
 
-		return send_from_directory(f'{os.getcwd()}/inventory/static/', "new_code1.png") 
+		return send_from_directory(f'{os.getcwd()}/inventory/static/', "new_code1.png")
+
+
+	# code to delete item from db
+	elif inspector_form.delete.data and inspector_form.validate_on_submit():
+		item_to_delete = Item.query.get(inspector_form.ID.data)
+		print(f"\n###{item_to_delete}###\n")
+		db.session.delete(item_to_delete)
+		db.session.commit()
+
+		flash(f'{inspector_form.name.data} was deleted.')
+
+		return redirect(url_for('events.event_page'))
+
+
+	# code to add a new item to db
+	if create_item_form.create.data and create_item_form.validate_on_submit():
+		print("\ncreate_item_form form validated\n")
+
+		barcode = dictionaries.return_max_barcode()
+
+		for _ in range(create_item_form.qty.data):
+			item_to_create = Item(barcode=barcode + 1,
+								  serial=create_item_form.serial.data,
+								  manufacturer=create_item_form.manufacturer.data,
+								  name=create_item_form.name.data,
+								  category=create_item_form.category.data,
+								  storage=create_item_form.storage.data,
+								  status="OK",
+								  notes=create_item_form.storage.data)
+			db.session.add(item_to_create)
+
+			barcode += 1
+		
+		db.session.commit()
+
+		flash(f'{create_item_form.name.data} was created.')
+
+		return redirect(url_for('events.event_page'))
+
 
 
 	if select_event_form.errors != {}: #If there are not errors from the validations
