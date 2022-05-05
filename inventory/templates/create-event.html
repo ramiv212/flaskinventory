@@ -21,6 +21,17 @@ Create Event
 
     </form>
 
+    &nbsp;&nbsp;
+
+    <form method="POST" action="/events/checklist?event={{ selected_event_name }}" style="color:white; display: block;">
+     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+      <button>Checklist</button>
+    </form>
+
+
+    <p>Event Start Date: {{ event_start_date }}<br>
+    Event End Date: {{ event_end_date }}</p>
+
   </tr>
 
   <tr VALIGN="TOP">
@@ -179,9 +190,17 @@ Create Event
 
                       <!-- Add to event button -->
                       <td>
+                        {% if itemdict[dict][0] not in conflicting_event_items[0] %}
 
                         <button class="add-to-event-button"
                         onclick="addItemToEvent({{ itemdict[dict][0] }})">+</button>
+
+                        {% else %}
+
+                        <button class="conflicting-event-button"
+                        onclick="conflictingItem({{ conflicting_event_items[1] }},{{ itemdict[dict][0] }})">+</button>
+
+                        {% endif %}
 
                       </td>
                       

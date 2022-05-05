@@ -4,6 +4,7 @@ from inventory.forms import CreateEventForm,ItemInspectorForm,CreateItemForm,Add
 from inventory import db
 from inventory.mybarcode import export_barcode
 from inventory.resources import Dictionaries,Scan,Funcs
+from inventory.checkdates import get_conflicting_event_items
 import json
 from sqlalchemy.orm import load_only
 from wtforms import SelectField
@@ -33,7 +34,7 @@ def event_page():
 		event_to_create = Event(event_name=create_event_form.event_name.data,
 							  event_date_start=create_event_form.event_date_start.data,
 							  event_date_end=create_event_form.event_date_end.data,
-							  event_client=create_event_form .event_client.data,
+							  event_client=create_event_form.event_client.data,
 							  active=True,
 
 							  # empty JSON string
@@ -54,6 +55,7 @@ def event_page():
 
 		flash(f"Event \"{create_event_form.event_name.data}\" was created.")
 
+
 		return redirect(url_for('events.event_page'))
 
 
@@ -65,6 +67,9 @@ def event_page():
 		selected_event_id = dictionaries.eventdict[selected_event][0]
 		selected_event_items = json.loads(dictionaries.eventdict[selected_event][5])
 		selected_event_items = selected_event_items['items']
+		conflicting_event_items = get_conflicting_event_items(selected_event)
+
+
 
 		return render_template('create-event.html', 
 		items=dictionaries.items,
@@ -75,8 +80,12 @@ def event_page():
 		create_item_form=create_item_form,
 		add_to_event_form=add_to_event_form,
 		select_event_form=select_event_form,
+		selected_event_name=selected_event,
 		selected_event_items=selected_event_items,
-		selected_event_id=selected_event_id)
+		selected_event_id=selected_event_id,
+		conflicting_event_items=conflicting_event_items,
+		event_start_date=dictionaries.eventdict[select_event_form.event_field.data][1],
+		event_end_date=dictionaries.eventdict[select_event_form.event_field.data][2])
 
 	# get the scanned items from the hidden form, add them to the items that are already in the selected form,
 	# and then update the items of the event in the database
@@ -100,7 +109,9 @@ def event_page():
 		create_event_form=create_event_form,
 		add_to_event_form=add_to_event_form,
 		select_event_form=select_event_form,
-		selected_event_items=selected_event_items)
+		selected_event_items=selected_event_items,
+		conflicting_event_items=list())
+
 
 
 @eventspage.route('/remove', methods=['GET', 'POST'])
@@ -121,6 +132,7 @@ def remove_from_event():
 
 
 
+
 @eventspage.route('/add', methods=['GET', 'POST'])
 def add_item_to_event():
 	scan = Scan()
@@ -136,16 +148,23 @@ def add_item_to_event():
 	return redirect(url_for('events.event_page'))
 
 
-# @eventspage.route('/datetime', methods=['GET', 'POST'])
-# def check_item_datetime():
-# 	start = start = datetime.datetime.strptime(request.form["start"], "%d-%m-%Y")
-# 	end = datetime.datetime.strptime(request.form["end"], "%d-%m-%Y")
-# 	TODAY_CHECK = datetime.datetime.now()
 
-# 	if start <= TODAY_CHECK <= end:
-# 		print("Not Available")
-# 		return False
-# 	else:
-# 		print("Available")
-# 		return True
+@eventspage.route('/checklist', methods=['GET', 'POST'])
+def return_event_checklist():
+	print(request.args.get('event'))
+	dictionaries = Dictionaries()
+	event = request.args.get('event')
+
+	if event:
+		return render_template('checklist.html',
+			itemdict2=dictionaries.itemdict2,
+			event_name=event,
+			event_date_start=dictionaries.eventdict[event][1],
+			event_date_end=dictionaries.eventdict[event][2],
+			event_client=dictionaries.eventdict[event][3],
+			event_items=json.loads(dictionaries.eventdict[event][5])['items'])
+	else:
+		flash("No event was selected")
+		return redirect(url_for('events.event_page'))
+
 

@@ -178,10 +178,10 @@ function buttonClick(e){
 }
 
 
-// function checkDate(start,end){
-//   $.get( "events/datetime", {start: start, end: end} {
-//     .done(function(data)
-//         console.log(data)
-//       )
-  
-// }
+function conflictingItem(events,item){
+  if (confirm("Are you sure? This item is already reserved in one of the following events during one of these dates: " + events)) {
+    addItemToEvent(item)
+  } else {
+    txt = "You pressed Cancel!";
+  }
+}
