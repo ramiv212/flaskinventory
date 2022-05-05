@@ -64,6 +64,7 @@ let scanned = [];
 var items_to_add_span_element = document.getElementById("items-to-add-list")
 
 $("#scan-item").keyup(function(event) {
+  var input_field = document.getElementById("scan-item")
   var input = document.getElementById("scan-item").value;
 
   console.log(typeof input)
@@ -88,6 +89,8 @@ if (!(scanned.includes(json[input][0]))){
         // add array of barcode numbers into a hidden input in the event form
         document.getElementById('scanned-item-list').value = scanned;
         console.log( document.getElementById('scanned-item-list').value)
+
+        input_field.value = "" 
 
       }
     })
@@ -122,7 +125,7 @@ if (!(event_select_field === null))
 
 function collapse(button) {
 
-              console.log(button)
+              // console.log(button)
 
               // select the row of the current python loop
               var x = document.querySelectorAll(".row" + button);
@@ -203,7 +206,7 @@ function conflictingItem(events,item){
               // console.log(tr.innerHTML)
               
                 if (tr.innerHTML.toLowerCase().includes(search_var)){
-                  console.log(tr.innerHTML)
+                  // console.log(tr.innerHTML)
                   tr.parentNode.style.visibility = "visible"
                 } else {
                   tr.parentNode.style.visibility = "collapse"
@@ -217,12 +220,12 @@ function conflictingItem(events,item){
   document.getElementById('item-search').addEventListener('input', (e) => {
     var inv_table = document.getElementsByClassName("inventory-table2")
 
-    console.log(inv_table)
+    // console.log(inv_table)
 
     var children = inv_table[0].childNodes[5].childNodes
 
     search_var = document.getElementById('item-search').value.toLowerCase()
-    console.clear()
+    // console.clear()
 
     for (let i = 1; i < children.length; i++) {
             if (children[i].nodeName == "TR")
@@ -230,7 +233,7 @@ function conflictingItem(events,item){
               // console.log(tr.innerHTML)
               
                 if (tr.innerHTML.toLowerCase().includes(search_var)){
-                  console.log(tr.innerHTML)
+                  // console.log(tr.innerHTML)
                   tr.parentNode.style.visibility = "visible"
                 } else {
                   tr.parentNode.style.visibility = "collapse"
