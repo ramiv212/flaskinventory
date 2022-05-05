@@ -31,7 +31,7 @@ Create Event
 
     &nbsp;
 
-    <form method="POST" action="/events/delete-event?event={{ selected_event_name }}" style="color:white; display: block;">
+    <form method="POST" action="/events/delete-event?event={{ selected_event_name }}" onSubmit="return confirm('Are you sure you want to delete {{ selected_event_name }}?')" style="color:white; display: block;">
      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
       <button>Delete</button>
     </form>
