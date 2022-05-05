@@ -278,9 +278,17 @@ Create Event
                       <!-- Add to event button -->
                       <td class="td-display">
 
+                        {% if item.ID not in conflicting_event_items[0] %}
+
                         <button class="add-to-event-button"
-                        onload="=checkDate()"
                         onclick="addItemToEvent({{ item.ID }})">+</button>
+
+                        {% else %}
+
+                        <button class="conflicting-event-button"
+                        onclick="conflictingItem({{ conflicting_event_items[1] }},{{ itemdict[dict][0] }})">+</button>
+
+                        {% endif %}
 
                       </td>
                       

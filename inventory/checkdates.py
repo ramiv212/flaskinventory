@@ -60,6 +60,8 @@ def get_conflicting_event_items(event):
 	# get the dates that intersect with other events
 	intersect = intersection(eventdates,other_eventdates)
 
+	print(f'INTERSECT {intersect}')
+
 	conflicting_events = []
 
 	# get the events that conflict with this event

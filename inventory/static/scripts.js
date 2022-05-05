@@ -179,7 +179,7 @@ function buttonClick(e){
 
 
 function conflictingItem(events,item){
-  if (confirm("Are you sure? This item is already reserved in one of the following events during one of these dates: " + events)) {
+  if (confirm("Are you sure? This item is already reserved in one of the following events during one of the event dates: " + events)) {
     addItemToEvent(item)
   } else {
     txt = "You pressed Cancel!";
