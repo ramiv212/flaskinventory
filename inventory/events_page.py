@@ -127,7 +127,7 @@ def event_page():
 								  category=create_item_form.category.data,
 								  storage=create_item_form.storage.data,
 								  status="OK",
-								  notes=create_item_form.storage.data)
+								  notes=create_item_form.notes.data)
 			db.session.add(item_to_create)
 
 			barcode += 1
@@ -201,7 +201,13 @@ def return_event_checklist():
 	dictionaries = Dictionaries()
 	event = request.args.get('event')
 
+
 	if event:
+
+		print(f'\n\n EVENT ITEMS{json.loads(dictionaries.eventdict[event][5])}')
+		print(f'\n\nITEMIDCT2 {dictionaries.itemdict2}\n\n')
+
+
 		return render_template('checklist.html',
 			itemdict2=dictionaries.itemdict2,
 			event_name=event,
@@ -219,7 +225,7 @@ def delete_event():
 	dictionaries = Dictionaries()
 	funcs = Funcs()
 	event = request.args.get('event')
-	
+
 	if event:
 		event_ID = dictionaries.eventdict[event][0]
 

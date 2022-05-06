@@ -90,7 +90,7 @@ def home_page():
 								  category=create_item_form.category.data,
 								  storage=create_item_form.storage.data,
 								  status="OK",
-								  notes=create_item_form.storage.data)
+								  notes=create_item_form.notes.data)
 			db.session.add(item_to_create)
 
 			barcode += 1
@@ -114,7 +114,7 @@ def home_page():
 		event_to_create = Event(event_name=create_event_form.event_name.data,
 							  event_date_start=create_event_form.event_date_start.data,
 							  event_date_end=create_event_form.event_date_end.data,
-							  event_client=create_event_form .event_client.data,
+							  event_client=create_event_form.event_client.data,
 							  active=True,
 
 							  # empty JSON string

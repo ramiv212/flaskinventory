@@ -25,11 +25,14 @@ class Event(db.Model):
     items = db.Column(db.String(length=1024))
 
 
-
-
     def __repr__(self):
         return f"{self.ID} | {self.event_name} | {self.event_client} | {self.items}"
 
 
 
+class User(db.Model):
+    ID = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(100), unique=True)
+    password = db.Column(db.String(100))
+    name = db.Column(db.String(1000))
 

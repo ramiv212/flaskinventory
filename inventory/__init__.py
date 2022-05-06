@@ -25,12 +25,14 @@ from .events_page import eventspage
 from .json_routes import jsonroutes
 from .resources import json_routes
 from .admin import adminpage
+from .auth import authorize
 
 app.register_blueprint(homepage, url_prefix='/')
 app.register_blueprint(eventspage, url_prefix='/events/')
 app.register_blueprint(jsonroutes, url_prefix='/json-routes/')
 app.register_blueprint(json_routes, url_prefix='/json/')
 app.register_blueprint(adminpage, url_prefix='/admin/')
+app.register_blueprint(authorize, url_prefix='/auth/')
 
 
 print("Started!!")
