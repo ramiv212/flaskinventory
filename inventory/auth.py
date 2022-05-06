@@ -10,9 +10,9 @@ authorize = Blueprint('authorize', __name__)
 @authorize.route('/')
 def login():
 
-	# user = User.query.filter_by(email='ramiro@clearavl.com').first()
-	# setattr(user, "password", generate_password_hash("noneya!12"))
-	# db.session.commit()
+	user = User.query.filter_by(email='seth@clearavl.com').first()
+	setattr(user, "password", generate_password_hash("Rhem@1999"))
+	db.session.commit()
 
 	return render_template('login.html')
 
