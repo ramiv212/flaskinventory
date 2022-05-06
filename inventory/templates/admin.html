@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DB Backup</title>
+  </head>
+
+  <body>
+    <span><b>DB Backup Download</b></span>
+    <form method="POST" action="/admin/download-db" style="color:white; display: block;">
+     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+      <button style="width: 90px">Download</button>
+    </form>
+
+    <br><br>
+
+    <span><b>DB Backup Upload</b></span>
+    <form
+      action="/admin/upload-db"
+      method="POST"
+      enctype="multipart/form-data">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+      <input type="file" name="file" />
+      <input type="submit" />
+    </form>
+  </body>
+</html>
+
+{% endblock %}
