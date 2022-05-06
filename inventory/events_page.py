@@ -1,4 +1,5 @@
 from flask import render_template, redirect, url_for, flash, request, send_from_directory, flash
+from flask_login import login_required
 from inventory.models import Item, Event
 from inventory.forms import CreateEventForm,ItemInspectorForm,CreateItemForm,AddToEventForm,SelectEventForm,Blueprint
 from inventory import db
@@ -18,6 +19,7 @@ eventspage = Blueprint('events',__name__)
 
 
 @eventspage.route('/', methods=['GET', 'POST'])
+@login_required
 def event_page():
 	create_event_form = CreateEventForm()
 	dictionaries = Dictionaries()
@@ -162,6 +164,7 @@ def event_page():
 
 # remove item
 @eventspage.route('/remove', methods=['GET', 'POST'])
+@login_required
 def remove_from_event():
 	scan = Scan()
 	dictionaries = Dictionaries()
@@ -181,6 +184,7 @@ def remove_from_event():
 
 # add item
 @eventspage.route('/add', methods=['GET', 'POST'])
+@login_required
 def add_item_to_event():
 	scan = Scan()
 	dictionaries = Dictionaries()
@@ -197,6 +201,7 @@ def add_item_to_event():
 
 # render a checklist of the event
 @eventspage.route('/checklist', methods=['GET', 'POST'])
+@login_required
 def return_event_checklist():
 	dictionaries = Dictionaries()
 	event = request.args.get('event')
@@ -221,6 +226,7 @@ def return_event_checklist():
 
 
 @eventspage.route('/delete-event', methods=['GET', 'POST'])
+@login_required
 def delete_event():
 	dictionaries = Dictionaries()
 	funcs = Funcs()

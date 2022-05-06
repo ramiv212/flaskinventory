@@ -5,14 +5,17 @@ import os
 adminpage = Blueprint('admin',__name__)
 
 @adminpage.route("/", methods=['GET'])
+@login_required
 def admin():
 	return render_template('admin.html')
 
 @adminpage.route("/download-db", methods=['GET', 'POST'])
+@login_required
 def download_db():
 	return send_file(f'{os.getcwd()}/inventory/uploads/inventory.db', as_attachment=True)
 
 @adminpage.route("/upload-db", methods=['GET', 'POST'])
+@login_required
 def upload_db():
    if request.method == 'POST': # check if the method is post
       f = request.files['file'] # get the file from the files object
