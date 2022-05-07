@@ -305,6 +305,7 @@ class Funcs:
 		
 		db.session.commit()
 
+
 	def create_event(self,create_event_form):
 		event_to_create = Event(event_name=create_event_form.event_name.data,
 					  event_date_start=create_event_form.event_date_start.data,
@@ -323,6 +324,36 @@ class Funcs:
 
 		db.session.add(event_to_create)
 		
+		db.session.commit()
+
+
+
+	def add_list_of_items_to_event(self,event,items):
+		dictionaries = Dictionaries()
+
+		# get the selected event ID
+		event_ID = event
+
+		# list of items to be added
+		items_to_add = items
+
+		# converts all items in the list to int. Turn it into a set to remove duplicates,
+		# then back to a list to make it JSON serializable. Then sort it. 
+		
+		int_list = list(set(map(int, items_to_add)))
+
+		# create a new dict from the list of aggregated items
+		new_dict = {'items' : int_list}
+
+		# turn that dict into a JSON object
+		json_object = json.dumps(new_dict, indent = 4)
+
+		# query the db for the event that will be updated
+		event_to_update = Event.query.get(event_ID)
+
+		# update the event items column with the new JSON object
+		setattr(event_to_update, "items", json_object)
+
 		db.session.commit()
 
 		 

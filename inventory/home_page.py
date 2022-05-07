@@ -47,8 +47,22 @@ def home_page():
 	# code to delete item from db
 	elif inspector_form.delete.data and inspector_form.validate_on_submit():
 		item_to_delete = Item.query.get(inspector_form.ID.data)
-		db.session.delete(item_to_delete)
-		db.session.commit()
+		# db.session.delete(item_to_delete)
+		# db.session.commit()
+
+		# for each event in eventdict
+		for event in dictionaries.eventdict:
+			event_ID = dictionaries.eventdict[event][0]
+			# get the json of the items in each event
+			event_item_list = json.loads(dictionaries.eventdict[event][5])['items']
+			print(event_item_list)
+	
+			# remove deleted item from event in eventdict
+			event_item_list.remove(inspector_form.ID.data)
+
+			print(event_item_list)
+			# add items back to events without deleted item
+			funcs.add_list_of_items_to_event(event_ID,event_item_list)
 
 		flash(f'{inspector_form.name.data} was deleted.')
 
