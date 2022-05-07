@@ -33,26 +33,19 @@ def event_page():
 	selected_event_items = []
 
 
+	# code to update item in database
+	if inspector_form.submit.data and inspector_form.validate_on_submit():
+		funcs.update_item(inspector_form)
+
+		flash(f'{inspector_form.name.data} was updated.')
+
+		return redirect(url_for('events.event_page'))
+		
+
 	# create an event
 	if create_event_form.submit.data and create_event_form.validate_on_submit():
-		event_to_create = Event(event_name=create_event_form.event_name.data,
-							  event_date_start=create_event_form.event_date_start.data,
-							  event_date_end=create_event_form.event_date_end.data,
-							  event_client=create_event_form.event_client.data,
-							  active=True,
 
-							  # empty JSON string
-							  items = """ 
-								{
-	"items": [
-	]
-}
-							  """)
-
-
-		db.session.add(event_to_create)
-		
-		db.session.commit()
+		funcs.create_event(create_event_form)
 
 		# update event submitfields
 		funcs.update_event_submitfields()
@@ -106,7 +99,6 @@ def event_page():
 	# code to delete item from db
 	elif inspector_form.delete.data and inspector_form.validate_on_submit():
 		item_to_delete = Item.query.get(inspector_form.ID.data)
-		print(f"\n###{item_to_delete}###\n")
 		db.session.delete(item_to_delete)
 		db.session.commit()
 
@@ -117,24 +109,8 @@ def event_page():
 
 	# code to add a new item to db
 	if create_item_form.create.data and create_item_form.validate_on_submit():
-		print("\ncreate_item_form form validated\n")
 
-		barcode = dictionaries.return_max_barcode()
-
-		for _ in range(create_item_form.qty.data):
-			item_to_create = Item(barcode=barcode + 1,
-								  serial=create_item_form.serial.data,
-								  manufacturer=create_item_form.manufacturer.data,
-								  name=create_item_form.name.data,
-								  category=create_item_form.category.data,
-								  storage=create_item_form.storage.data,
-								  status="OK",
-								  notes=create_item_form.notes.data)
-			db.session.add(item_to_create)
-
-			barcode += 1
-		
-		db.session.commit()
+		funcs.create_item(create_item_form)
 
 		flash(f'{create_item_form.name.data} was created.')
 

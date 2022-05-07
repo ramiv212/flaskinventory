@@ -8,6 +8,7 @@ import os
 
 json_routes = Blueprint('json',__name__)
 
+
 class JSONFiles:
 	def __init__(self):
 		dictionaries = Dictionaries()
@@ -255,7 +256,7 @@ def events():
 
 class Funcs:
 	def __init__(self):
-		pass
+		self.dictionaries = Dictionaries()
 
 	def update_event_submitfields(self):
 		# update the submitfield of events with the list of events including the newly created event
@@ -265,5 +266,63 @@ class Funcs:
 		SelectEventForm.event_field = SelectField(label='Event',choices=event_names)
 
 		return events
+
+	def update_item(self,inspector_form):
+		item_to_update = {    "ID" : inspector_form.ID.data,
+							  "barcode" : inspector_form.barcode.data,
+							  "serial" : inspector_form.serial.data,
+							  "manufacturer" : inspector_form.manufacturer.data,
+							  "name" : inspector_form.name.data,
+							  "category" : inspector_form.category.data,
+							  "storage" : inspector_form.storage.data,
+							  "status" : inspector_form.status.data,
+							  "notes" : inspector_form.notes.data,
+		
+						}
+
+		item = Item.query.get(inspector_form.ID.data)
+
+		for key, value in item_to_update.items():
+			setattr(item, key, value)
+
+		db.session.commit()
+
+	def create_item(self,create_item_form):
+		barcode = self.dictionaries.return_max_barcode()
+
+		for _ in range(create_item_form.qty.data):
+			item_to_create = Item(barcode=barcode + 1,
+								  serial=create_item_form.serial.data,
+								  manufacturer=create_item_form.manufacturer.data,
+								  name=create_item_form.name.data,
+								  category=create_item_form.category.data,
+								  storage=create_item_form.storage.data,
+								  status="OK",
+								  notes=create_item_form.notes.data)
+			db.session.add(item_to_create)
+
+			barcode += 1
+		
+		db.session.commit()
+
+	def create_event(self,create_event_form):
+		event_to_create = Event(event_name=create_event_form.event_name.data,
+					  event_date_start=create_event_form.event_date_start.data,
+					  event_date_end=create_event_form.event_date_end.data,
+					  event_client=create_event_form.event_client.data,
+					  active=True,
+
+					  # empty JSON string
+					  items = """ 
+						{
+"items": [
+]
+}
+					  """)
+
+
+		db.session.add(event_to_create)
+		
+		db.session.commit()
 
 		 
