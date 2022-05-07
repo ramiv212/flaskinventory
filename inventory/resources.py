@@ -282,6 +282,7 @@ class Funcs:
 
 		item = Item.query.get(inspector_form.ID.data)
 
+
 		for key, value in item_to_update.items():
 			setattr(item, key, value)
 
