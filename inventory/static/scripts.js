@@ -192,52 +192,111 @@ function conflictingItem(events,item){
 
 
 // Home Item Search
+
+  // if Home search bar is in the page
+  if (!(document.getElementById('item-search') == null)){
+
+  // run the function every time a letter is added to search bar
   document.getElementById('item-search').addEventListener('input', (e) => {
     var inv_table = document.getElementsByClassName("inventory-table")
 
+    // get the children of the inventory table
     var children = inv_table[0].childNodes[5].childNodes
 
+    // get the letters in the search bar
     search_var = document.getElementById('item-search').value.toLowerCase()
     console.clear()
 
+    // for every child
     for (let i = 1; i < children.length; i++) {
+
+            // if the child is a tr 
             if (children[i].nodeName == "TR")
-              var tr = children[i].childNodes[19]
-              // console.log(tr.innerHTML)
+
+              // name of item in tr
+              var name_tr = children[i].childNodes[19]
+              var tr2 = children[i]
+
+                // if the child has more than 0 nodes
+                if(tr2.childNodes.length != 0) {
+
+                  // if the child has more than 1 node
+                  if (tr2.childNodes.length != 1){
+
+                  // manufacturer of item in tr
+                  manufacturer_tr = tr2.childNodes[11].innerHTML
+
+                  // barcode of item in tr
+                  barcode_tr = tr2.childNodes[23].innerHTML
+                }
+                  }
+                // concatenate manufacturer, name and barcode
+                full_item = manufacturer_tr.toLowerCase() + " " + name_tr.innerHTML.toLowerCase() + " " + barcode_tr
               
-                if (tr.innerHTML.toLowerCase().includes(search_var)){
-                  // console.log(tr.innerHTML)
-                  tr.parentNode.style.visibility = "visible"
+                // check if the search var is in the concatenated item string
+                if (full_item.includes(search_var)){
+                  // show the searched items
+                  name_tr.parentNode.style.visibility = "visible"
+                  // hide all other items
                 } else {
-                  tr.parentNode.style.visibility = "collapse"
+                  name_tr.parentNode.style.visibility = "collapse"
                 }
 
           }
     })
-
+}
 
 // Event Item Search
-  document.getElementById('item-search').addEventListener('input', (e) => {
+
+  // if Home search bar is in the page
+  if (!(document.getElementById('item-search2') == null)){
+
+  // run the function every time a letter is added to search bar
+  document.getElementById('item-search2').addEventListener('input', (e) => {
     var inv_table = document.getElementsByClassName("inventory-table2")
 
-    // console.log(inv_table)
-
+    // get the children of the inventory table
     var children = inv_table[0].childNodes[5].childNodes
 
-    search_var = document.getElementById('item-search').value.toLowerCase()
-    // console.clear()
+    // get the letters in the search bar
+    search_var = document.getElementById('item-search2').value.toLowerCase()
+    console.clear()
 
+    // for every child
     for (let i = 1; i < children.length; i++) {
+
+            // if the child is a tr 
             if (children[i].nodeName == "TR")
-              var tr = children[i].childNodes[19]
-              // console.log(tr.innerHTML)
+
+              // name of item in tr
+              var name_tr = children[i].childNodes[19]
+              var tr2 = children[i]
+
+                // if the child has more than 0 nodes
+                if(tr2.childNodes.length != 0) {
+
+                  // if the child has more than 1 node
+                  if (tr2.childNodes.length != 1){
+
+                  // manufacturer of item in tr
+                  manufacturer_tr = tr2.childNodes[11].innerHTML
+
+                  // barcode of item in tr
+                  barcode_tr = tr2.childNodes[23].innerHTML
+                }
+                  }
+                // concatenate manufacturer, name and barcode
+                full_item = manufacturer_tr.toLowerCase() + " " + name_tr.innerHTML.toLowerCase() + " " + barcode_tr
               
-                if (tr.innerHTML.toLowerCase().includes(search_var)){
-                  // console.log(tr.innerHTML)
-                  tr.parentNode.style.visibility = "visible"
+                // check if the search var is in the concatenated item string
+                if (full_item.includes(search_var)){
+                  // show the searched items
+                  name_tr.parentNode.style.visibility = "visible"
+                  // hide all other items
                 } else {
-                  tr.parentNode.style.visibility = "collapse"
+                  name_tr.parentNode.style.visibility = "collapse"
                 }
 
           }
     })
+}
