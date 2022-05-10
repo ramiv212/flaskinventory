@@ -94,7 +94,7 @@ if (!(scanned.includes(json[input][0]))){
 
       }
     })
-  }
+}
 }
 
 });
@@ -214,8 +214,8 @@ function conflictingItem(events,item){
             if (children[i].nodeName == "TR")
 
               // name of item in tr
-              var name_tr = children[i].childNodes[19]
-              var tr2 = children[i]
+            var name_tr = children[i].childNodes[19]
+            var tr2 = children[i]
 
                 // if the child has more than 0 nodes
                 if(tr2.childNodes.length != 0) {
@@ -229,27 +229,30 @@ function conflictingItem(events,item){
                   // barcode of item in tr
                   barcode_tr = tr2.childNodes[23].innerHTML
                 }
-                  }
+              }
                 // concatenate manufacturer, name and barcode
                 full_item = manufacturer_tr.toLowerCase() + " " + name_tr.innerHTML.toLowerCase() + " " + barcode_tr
-              
+
                 // check if the search var is in the concatenated item string
                 if (full_item.includes(search_var)){
                   // show the searched items
                   name_tr.parentNode.style.visibility = "visible"
+                  $("#button" + i).html("Expand");
                   // hide all other items
                 } else {
                   name_tr.parentNode.style.visibility = "collapse"
                 }
 
-          }
-    })
+              }
+            })
 }
 
 // Event Item Search
 
   // if Home search bar is in the page
   if (!(document.getElementById('item-search2') == null)){
+
+  var hidden = document.getElementsByClassName("td-display")
 
   // run the function every time a letter is added to search bar
   document.getElementById('item-search2').addEventListener('input', (e) => {
@@ -262,6 +265,21 @@ function conflictingItem(events,item){
     search_var = document.getElementById('item-search2').value.toLowerCase()
     console.clear()
 
+
+    if (search_var.length > 0){
+      for (var idx = 0; idx < hidden.length; idx++) {
+
+        collapse(hidden[idx].parentNode.className.slice(3))
+        // console.log(hidden[idx].parentNode.className)
+
+      }
+    }else{
+      for (var idx = 0; idx < hidden.length; idx++) {
+        // console.log(hidden[idx].parentNode.className)
+        collapse(hidden[idx].parentNode.className.slice(3))
+      }
+    }
+
     // for every child
     for (let i = 1; i < children.length; i++) {
 
@@ -269,8 +287,8 @@ function conflictingItem(events,item){
             if (children[i].nodeName == "TR")
 
               // name of item in tr
-              var name_tr = children[i].childNodes[19]
-              var tr2 = children[i]
+            var name_tr = children[i].childNodes[19]
+            var tr2 = children[i]
 
                 // if the child has more than 0 nodes
                 if(tr2.childNodes.length != 0) {
@@ -279,24 +297,31 @@ function conflictingItem(events,item){
                   if (tr2.childNodes.length != 1){
 
                   // manufacturer of item in tr
+                  ID_tr = tr2.childNodes[3].innerHTML
+
+                  // manufacturer of item in tr
                   manufacturer_tr = tr2.childNodes[11].innerHTML
 
                   // barcode of item in tr
                   barcode_tr = tr2.childNodes[23].innerHTML
+
                 }
-                  }
+              }
                 // concatenate manufacturer, name and barcode
                 full_item = manufacturer_tr.toLowerCase() + " " + name_tr.innerHTML.toLowerCase() + " " + barcode_tr
-              
+
                 // check if the search var is in the concatenated item string
                 if (full_item.includes(search_var)){
                   // show the searched items
                   name_tr.parentNode.style.visibility = "visible"
+
                   // hide all other items
                 } else {
                   name_tr.parentNode.style.visibility = "collapse"
-                }
+                } 
 
-          }
-    })
+              }
+            })
+}else{
+
 }
