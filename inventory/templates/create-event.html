@@ -31,9 +31,9 @@ Create Event
 
     &nbsp;
 
-    <form method="POST" action="/events/delete-event?event={{ selected_event_name }}" onSubmit="return confirm('Are you sure you want to delete {{ selected_event_name }}?')" style="color:white; display: block;">
+    <form method="POST" action="/events/delete-event?event={{ selected_event_name }}" onSubmit="return confirm('Are you sure you want to archive {{ selected_event_name }}?')" style="color:white; display: block;">
      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-      <button>Delete</button>
+      <button>Archive</button>
     </form>
 
 
@@ -133,9 +133,12 @@ Create Event
             <td class="inventory-table-col" id="inv-table">
               <div style="padding: 20px; background-color: #212529;">
                 <table class="table table-hover table-dark inventory-table2">
+
                   <h3>Item Inventory</h3>
                   Search:
                   <input type="text" id="item-search2">
+                  <br><br>
+
                   <thead>
                     <tr>
                       <th scope="col">ID</th>
@@ -243,7 +246,7 @@ Create Event
                     <!-- start code for item that has multiples (child) -->
                     {% for item in items %}
                     {% if item.name == dict and itemdict[dict][9] > 1 %}
-                    <tr class="row{{ itemdict[dict][0] }}" id="{{ item.ID }}">
+                    <tr class="row{{ itemdict[dict][0] }} collapse-me" id="{{ item.ID }}">
                       <!-- ID -->
                       <td class="td-display">{{ item.ID }}</td>
                       <!-- QTY -->
@@ -380,7 +383,7 @@ Create Event
 
         $.ajax({
           type: 'POST',
-          url: '/events/delete-event',
+          url: '/events/archive-event',
           headers: {
             "X-CSRFToken": csrf_token
           },
