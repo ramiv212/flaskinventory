@@ -169,13 +169,31 @@ function inspectAndHide(index){
 
 // get the item that is clicked on in the table and
 // populate the inspector
-var table = document.getElementById('inv-table').addEventListener
+var table = document.querySelector('#inv-table').addEventListener
 ('click',buttonClick);
 
 function buttonClick(e){
+  console.log(e)
+
+  if (!("path" in e))
+    Object.defineProperty(e, "path", {
+      get: function() {
+        var path = [];
+        var currentElem = this.target;
+        while (currentElem) {
+          path.push(currentElem);
+          currentElem = currentElem.parentElement;
+        }
+        if (path.indexOf(window) === -1 && path.indexOf(document) === -1)
+          path.push(document);
+        if (path.indexOf(window) === -1)
+          path.push(window);
+        return path;
+      }
+    });
+
   var clickedRow = e.path[1].id
   if (clickedRow != ""){
-    console.log(e)
     inspectAndHide(clickedRow)
   }
 }
