@@ -252,8 +252,6 @@ function conflictingItem(events,item){
   // if Home search bar is in the page
   if (!(document.getElementById('item-search2') == null)){
 
-  var hidden = document.getElementsByClassName("td-display")
-
   // run the function every time a letter is added to search bar
   document.getElementById('item-search2').addEventListener('input', (e) => {
     var inv_table = document.getElementsByClassName("inventory-table2")
@@ -264,21 +262,6 @@ function conflictingItem(events,item){
     // get the letters in the search bar
     search_var = document.getElementById('item-search2').value.toLowerCase()
     console.clear()
-
-
-    if (search_var.length > 0){
-      for (var idx = 0; idx < hidden.length; idx++) {
-
-        collapse(hidden[idx].parentNode.className.slice(3))
-        // console.log(hidden[idx].parentNode.className)
-
-      }
-    }else{
-      for (var idx = 0; idx < hidden.length; idx++) {
-        // console.log(hidden[idx].parentNode.className)
-        collapse(hidden[idx].parentNode.className.slice(3))
-      }
-    }
 
     // for every child
     for (let i = 1; i < children.length; i++) {
@@ -297,14 +280,10 @@ function conflictingItem(events,item){
                   if (tr2.childNodes.length != 1){
 
                   // manufacturer of item in tr
-                  ID_tr = tr2.childNodes[3].innerHTML
-
-                  // manufacturer of item in tr
                   manufacturer_tr = tr2.childNodes[11].innerHTML
 
                   // barcode of item in tr
                   barcode_tr = tr2.childNodes[23].innerHTML
-
                 }
               }
                 // concatenate manufacturer, name and barcode
@@ -314,14 +293,12 @@ function conflictingItem(events,item){
                 if (full_item.includes(search_var)){
                   // show the searched items
                   name_tr.parentNode.style.visibility = "visible"
-
+                  $("#button" + i).html("Expand");
                   // hide all other items
                 } else {
                   name_tr.parentNode.style.visibility = "collapse"
-                } 
+                }
 
               }
             })
-}else{
-
 }

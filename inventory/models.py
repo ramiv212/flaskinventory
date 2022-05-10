@@ -30,6 +30,20 @@ class Event(db.Model):
         return f"{self.ID} | {self.event_name} | {self.event_client} | {self.items}"
 
 
+class EventArchive(db.Model):
+    __tablename__ = 'eventarchive'
+    ID = db.Column(db.Integer(), primary_key=True)
+    event_name = db.Column(db.String(length=30),nullable=False,unique=True)
+    event_date_start = db.Column(db.DateTime())
+    event_date_end = db.Column(db.DateTime())
+    event_client = db.Column(db.String(length=30),nullable=False)
+    active = db.Column(db.String(length=30), nullable=False)
+    items = db.Column(db.String(length=1024))
+
+
+    def __repr__(self):
+        return f"{self.ID} | {self.event_name} | {self.event_client} | {self.items}"
+
 
 class User(UserMixin,db.Model):
     id = db.Column(db.Integer, primary_key=True)

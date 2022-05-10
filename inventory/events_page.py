@@ -1,6 +1,6 @@
 from flask import render_template, redirect, url_for, flash, request, send_from_directory, flash
 from flask_login import login_required
-from inventory.models import Item, Event
+from inventory.models import Item, Event,EventArchive
 from inventory.forms import CreateEventForm,ItemInspectorForm,CreateItemForm,AddToEventForm,SelectEventForm,Blueprint
 from inventory import db
 from inventory.mybarcode import export_barcode
@@ -154,6 +154,9 @@ def remove_from_event():
 	scan.remove_func(request.form["id"],event_ID)
 
 
+
+
+
 	return redirect(url_for('events.event_page'))
 
 
@@ -201,25 +204,85 @@ def return_event_checklist():
 		return redirect(url_for('events.event_page'))
 
 
-@eventspage.route('/delete-event', methods=['GET', 'POST'])
+@eventspage.route('/archive-event', methods=['GET', 'POST'])
 @login_required
 def delete_event():
 	dictionaries = Dictionaries()
 	funcs = Funcs()
 	event = request.args.get('event')
+	newdict = dict()
 
+	# delete event from event db
 	if event:
-		event_ID = dictionaries.eventdict[event][0]
+		event_dict = dictionaries.eventdict[event]
+		event_ID = event_dict[0]
 
 		Event.query.filter_by(ID=event_ID).delete()
 		db.session.commit()
 		funcs.update_event_submitfields()
+
+
+		if event_dict[5]:
+			for item in json.loads(event_dict[5])['items']:
+				# print(dictionaries.itemdict2[item])
+				newdict[dictionaries.itemdict2[item][0]] = dictionaries.itemdict2[item][0],dictionaries.itemdict2[item][1],dictionaries.itemdict2[item][2],dictionaries.itemdict2[item][3],dictionaries.itemdict2[item][4],dictionaries.itemdict2[item][5],dictionaries.itemdict2[item][6],dictionaries.itemdict2[item][7]
+			
+
+			# add to event archive
+			archived_event = EventArchive(
+				event_name = event,
+				event_date_start = datetime.strptime(event_dict[1],"%m/%d/%Y"),
+				event_date_end = datetime.strptime(event_dict[2],"%m/%d/%Y"),
+				event_client = event_dict[3],
+				active = 0,
+				items = json.dumps(newdict)
+				)
+
+		db.session.add(archived_event)
 		
-		flash(f"{event} was deleted")
+		db.session.commit()
+
+		
+		flash(f"{event} was archived")
 
 		return redirect(url_for('events.event_page'))
 	else:
 		flash("No event was selected")
 		return redirect(url_for('events.event_page'))
+
+
+@eventspage.route('/archive', methods=['GET','POST'])
+@login_required
+def event_archive():
+
+	archived_events = EventArchive.query.all()
+
+	# get event request and render page with items
+	if request.form and archived_events:
+		event_name = request.form["event"]
+
+		event = EventArchive.query.filter_by(event_name=event_name).first()
+
+		items = json.loads(event.items)
+		event_date_start = event.event_date_start.strftime('%m/%d/%Y')
+		event_date_end = event.event_date_end.strftime('%m/%d/%Y')
+
+
+		return render_template("event-archive.html", 
+			archived_events=archived_events,
+			items=items, 
+			event_name=event.event_name,
+			event_client=event.event_client,
+			event_date_start=event_date_start,
+			event_date_end=event_date_end)
+
+	# if there is events but no request, render page with no items
+	elif archived_events:
+		archived_events = EventArchive.query.all()
+		return render_template("event-archive.html",archived_events=archived_events)
+
+	# if there is no events, render page with no events
+	else:
+		return render_template("event-archive.html",archived_events=archived_events)
 
 
