@@ -33,6 +33,18 @@ Home
       <input type="file" name="file" />
       <input type="submit" />
     </form>
+
+        <br><br>
+
+    <span><b>DB Google Drive Bacup</b></span>
+    <form
+      action="/admin/"
+      method="POST"
+      enctype="multipart/form-data">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+      <input type="submit" id="back_up_db" name="back_up_db">
+    </form>
+
   </body>
 </html>
 
