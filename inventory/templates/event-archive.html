@@ -29,6 +29,10 @@ Event Archive
 			+ var(--statuswidth));
 	}
 
+		.heading {display: inline-block;
+		padding-left: 10px;
+		padding-right: 10px;}
+
 	.item-table {display: flex;
 		flex-wrap: wrap;
 		width: var(--tablewidth);}
@@ -42,6 +46,7 @@ Event Archive
 		.storage{width: var(--storagewidth) }
 		.status{width: var(--statuswidth) }
 		.break{width:  var(--tablewidth);}
+
 	</style>
 
 	{% for event in archived_events: %}
@@ -61,22 +66,29 @@ Event Archive
 	<br>
 
 
-	<h4>Event Name</h4>
+<div class="heading">
+	<h4>Event Name</u></h4>
 	{{ event_name }}
+</div>
 
-	<br><br>
+<div class="heading">
+	<h4>Event Client</u></h4>
+	{{ event_client }}
+</div>
 
-	<h4>Event Start Date</h4>
+<div class="heading">
+	<h4>Event Start Date</u></h4>
 	{{ event_date_start }}	
+</div>
 
-	<br><br>
-
+<div class="heading">
 	<h4>Event End Date</h4>
 	{{ event_date_end }}	
+</div>
 
-	<br><br>
+<br><br>
 
-	<h4>Event Items</h4>
+	<h4><u>Event Items</u></h4>
 
 	<div class="item-table">
 
