@@ -4,17 +4,18 @@ from werkzeug.utils import secure_filename
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 import google_auth_oauthlib.flow
+from google.oauth2 import service_account
 import os
 
-GoogleAuth.DEFAULT_SETTINGS['client_config_file'] = f'{os.getcwd()}/inventory/client_secrets.json'
+# GoogleAuth.DEFAULT_SETTINGS['client_config_file'] = f'{os.getcwd()}/inventory/client_secrets.json'
 
-# Use the client_secret.json file to identify the application requesting
-# authorization. The client ID (from that file) and access scopes are required.
-flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
-    f'{os.getcwd()}/inventory/client_secrets.json',
-    scopes=['https://www.googleapis.com/auth/drive.metadata.readonly'])
 
-flow.redirect_uri = 'https://https://clearavl-database.herokuapp.com/admin/'
+
+SCOPES = ['https://www.googleapis.com/auth/drive']
+SERVICE_ACCOUNT_FILE = f'{os.getcwd()}/inventory/cavl-database-a6363a1fef07'
+
+credentials = service_account.Credentials.from_service_account_file(
+        SERVICE_ACCOUNT_FILE, scopes=SCOPES)
 
 adminpage = Blueprint('admin',__name__)
 

@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "cavl-database",
+  "private_key_id": "a6363a1fef079d344ce887e440c6580a2ad5a59b",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDjYLaTEwI9KWHF\nUPzAzIYvLpv3iHqOKvZr1/D0ZNGqYa58efF9S6S4xxVaFiAdh0okNAXp9AkLfJNK\nzWft+THssws8bf0IcB1rrjOhYaz2bS4aqoUXbrQH7vXrwhKxV/2S6jG4vVbIAppk\ne7vOtE6Xdgc6S7UIwA/ojvygMd4S0xbNDaxjflXAflMdDz+8UPlxx5PFq95J1Emr\nqFUWlmz0eEVRmNuMJslgSfwaZE6E3WXll95DJfqPvpwOv7q8FpM1n196z79DEfSU\nkvhTvt9sQxS9PR14COHmBYkYuOyQ2q8sfMCL4K9yBvInicZfCIZ+ieALrl48MQ4u\ntzve1ugjAgMBAAECggEAXFbvbmUe2KXQnehY7RdiOxELqAgV9Vx/PKaypR24hCAt\nU0HWj5LDr4KyKiaoHjXOJ0u1RyCi97Y8vvkSBvPXkY/YtU7Znq6hVBSnxRc8vcrz\nGUM8z5pWpI4n8vmay8i3Iw3W6XaDIrDj8IDLcZOKAzqcjtEmEQqmq0Q+VfRKgovR\nPYm2gmBuKS83QFgBY9IjIGimzQxNUquUjAh0AlzE1O2pLQUdghJIptrVUCFCFmH6\njaYrdJlhM61K8s6+BcJ8dcSb72heZYya+503wJDQVWzEoY0sAx4b0SdMBNv/47sX\nVnuJO46ndOz6natYBUB9Y9oq3oljM9P08YslgLhhiQKBgQD42TXI3eeDjbxxlxzC\nBeDnDrTqKDOvsxunlftnSDRPknI7CZUY3VmZldQkUt7SbZ+LicfluDozqNKPkWj4\nk1WfhWODBGdFu+R8T7AEpSmutzmERIB+zlLoJUvDydalCo/nIq+NV4X/WESl4bs6\n5JCWuC9PXMaOwLcWaRwVk0t8VwKBgQDp6YrN9zIIJyTfK8A1F/c206bMEmvlOkl8\n2spLUgG+aVHERTQIBZK/G3HPofvoQ/LKLI8GW3Rh+5Z3PHvA2xj6w+mznyPd6yTi\nhigbOewptk5Yv2+H1cq5P2vWwT1cVRBqM/YU+1r1Azfj4o/m0iMwtPomkEvqBKCF\nhFVHhObTFQKBgQDdsCPKHmXxPIN0bjqgXrxNGzzwnX/uNpGcanDdQeXYPY6mKZM5\n43e+60tiULFQpXhMxyHd9JFlFDEA1Xm+eQL+acaNIY8fAJQ8aoFUog7QJ0qGGsCe\nNxCE3zTv5w/hV9d7AduC/0XQhMIjRUWW4agtnUgIW45H/kcdH+Z1EhNdYQKBgQCb\nimN1YCnRyA25pMMTyxLlT0o7qwg6Dk8tieM4wJhOQIRRqd7WcrZJA/vjIIh8wyog\nDA8zH/885GoCcaKs9EQhA8NUYL8d4y3Mv37N0+9ZMVPZqbqFLcG2+xg/XpHp4tqe\ndFzvSNEL2Y8Bpvcfep5R1hX9LLh+LYN8JSn7+8DtnQKBgDPlHGOiBrfUe/wLkHMi\nLOnT7DtcJrX8BnfCWFPbhGWLlkTmEmQJaii7Ar5cOTOa1NtmQtUgo2ezcxAjoXrj\n/RwTogyha1I+f7ojdoSXoTu4yzORUUh0HGZ8N/zZjIMJ196LgxUrDKCGwKYxz4EU\ncEpUgfvgIXngEl/lFzpbWvJe\n-----END PRIVATE KEY-----\n",
+  "client_email": "cavldatabase@cavl-database.iam.gserviceaccount.com",
+  "client_id": "114825558515174453623",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/cavldatabase%40cavl-database.iam.gserviceaccount.com"
+}
