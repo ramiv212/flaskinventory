@@ -6,3 +6,228 @@ Home
 
 {% block content %}
 
+<form method="POST" style="color:white; display: block;">
+
+  {{ select_event_form.csrf_token }}
+  {{ select_event_form.event_field.label() }}:
+  {{ select_event_form.event_field(class="inspector-field form-control-sm", id="event-field") }}
+  &nbsp;
+  {{ select_event_form.submit(class="btn btn-light btn-sm") }}
+
+</form>
+<br>
+<h3>Event Item Check-In/Out</h3>
+
+<div style="display: flex; width: 100%;align-items: center;
+justify-content: center;">
+<div id="everything-scanned">
+</div>
+</div>
+
+
+<form onsubmit="return false">
+  <label for="scan_item">Scan: </label>
+  <input type="text" name="scan_item2" id="scan-item2" class="inspector-field">
+</form>
+
+<table class="main-table">
+  <tr VALIGN="TOP">
+    <td class="inventory-table-col" id="inv-table">
+      <div style="padding: 20px; background-color: #212529;">
+
+        <table class="table table-dark inventory-table">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Manufacturer</th>
+              <th scope="col">Name</th>
+              <th scope="col">Barcode</th>
+              <th scope="col">Category</th>
+              <th scope="col">Notes</th>
+            </tr>
+          </thead>
+
+          <!-- start code for row with no multiples -->
+          <tbody id="item-table">
+            {% for dict in itemdict2 %}
+            	{% if itemdict2[dict][5] == 'Audio' and itemdict2[dict][0] in event_items %}
+
+	            <tr style="font-weight: 600;" id="{{ itemdict2[dict][0] }}">
+	              <!-- ID -->
+	              <td>{{ itemdict2[dict][0] }}</td>
+	              <!-- Manufacturer -->
+	              <td>{{ itemdict2[dict][3] }}</td>
+	              <!-- Name -->
+	              <td>{{ itemdict2[dict][4] }}</td>
+	              <!-- Barcode -->
+	              <td>{{ itemdict2[dict][1] }}</td>
+	              <!-- Category -->
+	              <td style="text-align: center;">{{ itemdict2[dict][5] }}</td>
+	              <!-- Notes -->
+	              <td style="font-weight: 400; font-size: small;">{{ itemdict2[dict][8] }}</td>
+	              <td></td>
+	              </tr>
+              	{% endif %}
+              {% endfor %}
+
+             {% for dict in itemdict2 %}
+            	{% if itemdict2[dict][5] == 'Video' and itemdict2[dict][0] in event_items %}
+              <tr style="font-weight: 600;" id="{{ itemdict2[dict][0] }}">
+              <!-- ID -->
+              <td>{{ itemdict2[dict][0] }}</td>
+              <!-- Manufacturer -->
+              <td>{{ itemdict2[dict][3] }}</td>
+              <!-- Name -->
+              <td>{{ itemdict2[dict][4] }}</td>
+              <!-- Barcode -->
+              <td>{{ itemdict2[dict][1] }}</td>
+              <!-- Category -->
+              <td style="text-align: center;">{{ itemdict2[dict][5] }}</td>
+              <!-- Notes -->
+              <td style="font-weight: 400; font-size: small;">{{ itemdict2[dict][8] }}</td>
+              <td></td>
+              </tr>
+            	{% endif %}
+            {% endfor %}
+
+            {% for dict in itemdict2 %}
+            	{% if itemdict2[dict][5] == 'Lighting' and itemdict2[dict][0] in event_items %}
+              <tr style="font-weight: 600;" id="{{ itemdict2[dict][0] }}">
+              <!-- ID -->
+              <td>{{ itemdict2[dict][0] }}</td>
+              <!-- Manufacturer -->
+              <td>{{ itemdict2[dict][3] }}</td>
+              <!-- Name -->
+              <td>{{ itemdict2[dict][4] }}</td>
+              <!-- Barcode -->
+              <td>{{ itemdict2[dict][1] }}</td>
+              <!-- Category -->
+              <td style="text-align: center;">{{ itemdict2[dict][5] }}</td>
+              <!-- Notes -->
+              <td style="font-weight: 400; font-size: small;">{{ itemdict2[dict][8] }}</td>
+              <td></td>
+              </tr>
+            	{% endif %}
+            {% endfor %}
+
+            {% for dict in itemdict2 %}
+            	{% if itemdict2[dict][5] == 'Rigging' and itemdict2[dict][0] in event_items %}
+              <tr style="font-weight: 600;" id="{{ itemdict2[dict][0] }}">
+              <!-- ID -->
+              <td>{{ itemdict2[dict][0] }}</td>
+              <!-- Manufacturer -->
+              <td>{{ itemdict2[dict][3] }}</td>
+              <!-- Name -->
+              <td>{{ itemdict2[dict][4] }}</td>
+              <!-- Barcode -->
+              <td>{{ itemdict2[dict][1] }}</td>
+              <!-- Category -->
+              <td style="text-align: center;">{{ itemdict2[dict][5] }}</td>
+              <!-- Notes -->
+              <td style="font-weight: 400; font-size: small;">{{ itemdict2[dict][8] }}</td>
+              <td></td>
+              </tr>
+            	{% endif %}
+            {% endfor %}
+
+            {% for dict in itemdict2 %}
+            	{% if itemdict2[dict][5] == 'Other' and itemdict2[dict][0] in event_items %}
+              <tr style="font-weight: 600;" id="{{ itemdict2[dict][0] }}">
+              <!-- ID -->
+              <td>{{ itemdict2[dict][0] }}</td>
+              <!-- Manufacturer -->
+              <td>{{ itemdict2[dict][3] }}</td>
+              <!-- Name -->
+              <td>{{ itemdict2[dict][4] }}</td>
+              <!-- Barcode -->
+              <td>{{ itemdict2[dict][1] }}</td>
+              <!-- Category -->
+              <td style="text-align: center;">{{ itemdict2[dict][5] }}</td>
+              <!-- Notes -->
+              <td style="font-weight: 400; font-size: small;">{{ itemdict2[dict][8] }}</td>
+              <td></td>
+              </tr>
+            	{% endif %}
+            {% endfor %}
+
+          </tbody>
+        </table>
+      </div>
+    </td>
+    </table>
+
+<style type="text/css">
+	
+.scanned {
+background: green;
+transition: background 2s;
+}
+.scan-banner {
+	background-color: green;
+	padding:10px; 
+	margin: 10px; 
+	border-radius: 5px;
+}
+
+</style>
+
+<script type="text/javascript">
+
+var scanned_items = []
+var all_items_list = []
+
+let all_items = document.getElementById("item-table")
+
+for (var i = 0; i < all_items.childNodes.length - 1; i++) {
+					if (all_items.childNodes[i].nodeName == "TR"){
+						console.log(all_items.childNodes[i].className)
+						all_items_list.push(all_items.childNodes[i])
+	}					
+}
+
+$("#scan-item2").keyup(function(event) {
+var input_field = document.getElementById("scan-item2")
+var input = document.getElementById("scan-item2").value;
+
+console.clear()
+
+// console.log(all_items.childNodes)
+
+// check for 'return' key press
+if (event.keyCode === 13) {
+
+// check if input value is length of 8
+if (input.length === 8) {
+
+// open the barcode json file
+$.getJSON( "/json/barcodes", function(json){
+
+	if(input in json)
+		var scanned_row = document.getElementById(json[input][0])
+			
+			if (!(scanned_row == null)){
+				scanned_row.className = "scanned";
+				if (!(scanned_items.includes(input))){
+					scanned_items.push(input)
+
+			if (scanned_items.length == (all_items_list.length)){
+				document.getElementById("everything-scanned").innerHTML = "<h3 class=\"scan-banner\">All Items Are Accounted For!</h3>";
+			}
+
+
+
+					}
+					}
+
+				});	
+			}
+		}
+	});
+</script>
+
+
+{% endblock %}
+
+
+
+

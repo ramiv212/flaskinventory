@@ -14,7 +14,6 @@ from wtforms import SelectField
 from datetime import datetime,timedelta
 
 
-
 eventspage = Blueprint('events',__name__)
 
 
@@ -151,10 +150,6 @@ def remove_from_event():
 
 	scan.remove_func(request.form["id"],event_ID)
 
-
-
-
-
 	return redirect(url_for('events.event_page'))
 
 
@@ -172,7 +167,6 @@ def add_item_to_event():
 
 	scan.add_items(request.form["id"],event_ID)
 
-
 	return redirect(url_for('events.event_page'))
 
 
@@ -182,7 +176,6 @@ def add_item_to_event():
 def return_event_checklist():
 	dictionaries = Dictionaries()
 	event = request.args.get('event')
-
 
 	if event:
 
@@ -294,5 +287,32 @@ def delete_event_archive():
 		flash(f'No event was selected')
 		return redirect(url_for('events.event_archive'))
 		
+
+@eventspage.route('/checkout', methods=['GET','POST'])
+@login_required
+def checkout():
+	select_event_form = SelectEventForm()
+	dictionaries = Dictionaries()
+
+	if select_event_form.submit.data and select_event_form.validate_on_submit():
+		selected_event = select_event_form.event_field.data
+		print(selected_event)
+		event_items = json.loads(dictionaries.eventdict[selected_event][5])['items']
+		
+
+		return render_template("checkout.html", 
+			event_items=event_items,
+			select_event_form=select_event_form,
+			itemdict2=dictionaries.itemdict2,
+			)
+	else:
+		selected_event = None
+		event_items = None
+		return render_template("checkout.html", 
+			event_items=[],
+			select_event_form=select_event_form,
+			itemdict2=dictionaries.itemdict2
+			)
+
 
 

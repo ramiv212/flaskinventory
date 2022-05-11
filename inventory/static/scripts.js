@@ -67,7 +67,6 @@ $("#scan-item").keyup(function(event) {
   var input_field = document.getElementById("scan-item")
   var input = document.getElementById("scan-item").value;
 
-  console.log(typeof input)
 // check for 'return' key press
 if (event.keyCode === 13) {
 
