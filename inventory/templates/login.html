@@ -7,13 +7,13 @@
     <h3 class="title">Login</h3>
         <form method="POST" action="/login">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-            <div class="field">
+            <div class="form-select form-control-md">
                 <div class="control">
                     <input class="input is-large" type="email" name="email" placeholder="Your Email" autofocus="">
                 </div>
             </div>
             <br>
-            <div class="field">
+            <div class="form-select form-control-md">
                 <div class="control">
                     <input class="input is-large" type="password" name="password" placeholder="Your Password">
                 </div>
@@ -25,7 +25,7 @@
                     Remember me
                 </label>
             </div>
-            <button class="button is-block is-info is-large is-fullwidth">Login</button>
+            <button class="btn btn-light btn-md">Login</button>
         </form>
         <center>
     </div>
