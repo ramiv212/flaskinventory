@@ -1,58 +1,33 @@
-from flask import Flask,render_template,request,send_file,Blueprint
+from flask import Flask,render_template,request,send_file,Blueprint,flash
 from flask_login import login_required
 from werkzeug.utils import secure_filename
-from pydrive.auth import GoogleAuth
-from pydrive.drive import GoogleDrive
-import google_auth_oauthlib.flow
-from google.oauth2 import service_account
+from inventory.driveupload import gdrive_db_backup
 import os
 
-# GoogleAuth.DEFAULT_SETTINGS['client_config_file'] = f'{os.getcwd()}/inventory/client_secrets.json'
-
-
-
-SCOPES = ['https://www.googleapis.com/auth/drive']
-SERVICE_ACCOUNT_FILE = f'{os.getcwd()}/inventory/cavl-database-a6363a1fef07'
-
-credentials = service_account.Credentials.from_service_account_file(
-        SERVICE_ACCOUNT_FILE, scopes=SCOPES)
 
 adminpage = Blueprint('admin',__name__)
+
 
 @adminpage.route("/", methods=['GET', 'POST'])
 @login_required
 def admin():
 	if request.form:
 		if request.form["back_up_db"]:
-				gauth = GoogleAuth()
-				gauth.LocalWebserverAuth()
+			try:
+				gdrive_db_backup()
+				flash('Database was successfully backed up to GDrive')
 
-				drive = GoogleDrive(gauth)
-
-
-				team_drive_id = '0ABaFl3VnIbEXUk9PVA'
-
-				parent_folder_id = '1HNHMDhyW9YthjzCPrgB_oiWGmZ8BtrTA'
-
-				f = drive.CreateFile({
-				    'title': 'inventory.db',
-				    'parents': [{
-				        'kind': 'drive#fileLink',
-				        'teamDriveId': team_drive_id,
-				        'id': parent_folder_id
-				    }]
-				})
-
-
-				f.SetContentFile(f'{os.getcwd()}/uploads/inventory.db')
-				f.Upload(param={'supportsTeamDrives': True})
-		
+			except UnboundLocalError:
+				flash('There was an error uploading the database to GDrive')
+				
 	return render_template('admin.html')
+
 
 @adminpage.route("/download-db", methods=['GET', 'POST'])
 @login_required
 def download_db():
 	return send_file(f'{os.getcwd()}/inventory/uploads/inventory.db', as_attachment=True)
+
 
 @adminpage.route("/upload-db", methods=['GET', 'POST'])
 @login_required
