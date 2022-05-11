@@ -252,22 +252,22 @@ def event_archive():
 
 	# get event request and render page with items
 	if request.form and archived_events:
-		event_name = request.form["event"]
+		if request.form['event']:
+			event_name = request.form['event']
 
-		event = EventArchive.query.filter_by(event_name=event_name).first()
+			event = EventArchive.query.filter_by(event_name=event_name).first()
 
-		items = json.loads(event.items)
-		event_date_start = event.event_date_start.strftime('%m/%d/%Y')
-		event_date_end = event.event_date_end.strftime('%m/%d/%Y')
+			items = json.loads(event.items)
+			event_date_start = event.event_date_start.strftime('%m/%d/%Y')
+			event_date_end = event.event_date_end.strftime('%m/%d/%Y')
 
-
-		return render_template("event-archive.html", 
-			archived_events=archived_events,
-			items=items, 
-			event_name=event.event_name,
-			event_client=event.event_client,
-			event_date_start=event_date_start,
-			event_date_end=event_date_end)
+			return render_template("event-archive.html", 
+				archived_events=archived_events,
+				items=items, 
+				event_name=event.event_name,
+				event_client=event.event_client,
+				event_date_start=event_date_start,
+				event_date_end=event_date_end)
 
 	# if there is events but no request, render page with no items
 	elif archived_events:
@@ -277,5 +277,22 @@ def event_archive():
 	# if there is no events, render page with no events
 	else:
 		return render_template("event-archive.html",archived_events=archived_events)
+
+
+@eventspage.route('/delete-archive', methods=['GET','POST'])
+@login_required
+def delete_event_archive():
+	if request.args.get('event'):
+		event_name = request.args.get('event')
+		event_to_delete = EventArchive.query.filter_by(event_name=event_name).first()
+		db.session.delete(event_to_delete)
+		db.session.commit()
+		flash(f'{event_to_delete.event_name} was deleted')
+		return redirect(url_for('events.event_archive'))
+
+	else:
+		flash(f'No event was selected')
+		return redirect(url_for('events.event_archive'))
+		
 
 

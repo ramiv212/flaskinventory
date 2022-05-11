@@ -62,9 +62,8 @@ Event Archive
 
 	<form method="POST" action="/events/archive" style="color:white; display: inline-block;">
 		<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-		<select id="event" name="event" class="form-select" 
-		style="width: 100px;
-		height: 25px;">
+		<select id="event" name="event" class="form-select form-control-sm" 
+		style="width: 100px;">
 			{% for event in archived_events: %}
 			<option value="{{ event.event_name }}">{{ event.event_name }}</option>
 			{% endfor %}
@@ -72,17 +71,10 @@ Event Archive
 		<input type="submit" value="Select" class="btn btn-light btn-sm">
 	</form>
 
-	<form
-	action="/admin/"
-	method="POST"
-	enctype="multipart/form-data"
-	style="display: inline-block;">
-	<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-	<button type="submit" id="back_up_db" name="back_up_db" 
-	class="btn btn-danger btn-sm">
-		Delete
-	</button>
-</form>
+	<form method="POST" action="/events/delete-archive?event={{ event_name }}" onSubmit="return confirm('Are you sure you want to archive {{ event_name }}?')" style="color:white; display: block;">
+     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+      <button class="btn btn-danger btn-sm">Delete</button>
+    </form>
 
 </div>
 
