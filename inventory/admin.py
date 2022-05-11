@@ -6,7 +6,7 @@ from pydrive.drive import GoogleDrive
 import google_auth_oauthlib.flow
 import os
 
-GoogleAuth.DEFAULT_SETTINGS['client_config_file'] = f'{os.getcwd()}/client_secrets.json'
+GoogleAuth.DEFAULT_SETTINGS['client_config_file'] = f'{os.getcwd()}/inventory/client_secrets.json'
 
 # Use the client_secret.json file to identify the application requesting
 # authorization. The client ID (from that file) and access scopes are required.
