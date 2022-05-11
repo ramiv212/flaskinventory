@@ -47,48 +47,71 @@ Event Archive
 		.status{width: var(--statuswidth) }
 		.break{width:  var(--tablewidth);}
 
+		.btn{width: 80px; margin: 5px;}
+
 	</style>
 
 	{% for event in archived_events: %}
 	{{ event[0] }}
 	{% endfor %}
 
-	Select Archived Event:
-	<form method="POST" action="/events/archive" style="color:white; display: block;">
+<div style="display: flex;
+		align-items: center;">
+
+	<span style="margin-bottom: 5px;">Select Archived Event:&nbsp;</span>
+
+	<form method="POST" action="/events/archive" style="color:white; display: inline-block;">
 		<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-		<select id="event" name="event">
+		<select id="event" name="event" class="form-select" 
+		style="width: 100px;
+		height: 25px;">
 			{% for event in archived_events: %}
 			<option value="{{ event.event_name }}">{{ event.event_name }}</option>
 			{% endfor %}
 		</select>
-		<input type="submit" value="Select">
+		<input type="submit" value="Select" class="btn btn-light btn-sm">
 	</form>
-	<br>
+
+	<form
+	action="/admin/"
+	method="POST"
+	enctype="multipart/form-data"
+	style="display: inline-block;">
+	<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+	<button type="submit" id="back_up_db" name="back_up_db" 
+	class="btn btn-danger btn-sm">
+		Delete
+	</button>
+</form>
+
+</div>
+
+	<br><br>
 
 
 <div class="heading">
-	<h4>Event Name</u></h4>
+	<h5>Event Name</u></h4>
 	{{ event_name }}
 </div>
 
 <div class="heading">
-	<h4>Event Client</u></h4>
+	<h5>Event Client</u></h4>
 	{{ event_client }}
 </div>
 
 <div class="heading">
-	<h4>Event Start Date</u></h4>
+	<h5>Event Start Date</u></h4>
 	{{ event_date_start }}	
 </div>
 
 <div class="heading">
-	<h4>Event End Date</h4>
+	<h5>Event End Date</h4>
 	{{ event_date_end }}	
 </div>
 
 <br><br>
 
-	<h4><u>Event Items</u></h4>
+	<h5><u>Event Items</u></h4>
 
 	<div class="item-table">
 

@@ -43,8 +43,9 @@
             {{ inspector_form.notes(id="notes", class="inspector-notes") }}
 
             <div>
-              {{ inspector_form.submit(id="submit") }}
-              {{ inspector_form.delete(id="delete") }}
+              {{ inspector_form.submit(id="submit", class="btn btn-light btn-sm") }}
+              &nbsp;
+              {{ inspector_form.delete(id="delete", class="btn btn-light btn-sm") }}
               <!-- {{ inspector_form.print_barcode(id="barcode") }} -->
 
             </div>
@@ -90,7 +91,7 @@
             <div>{{ create_item_form.notes.label() }}</div>
             {{ create_item_form.notes(class="inspector-notes") }}
 
-            <div>{{ create_item_form.create(id="submit") }}</div>
+            <div>{{ create_item_form.create(id="submit", class="btn btn-light btn-sm") }}</div>
             <br>
           </div>
 
@@ -119,7 +120,7 @@
             {{ add_to_event_form.event_select(class="inspector-field", id="event_select", value="") }}<br>
 
             {{ add_to_event_form.hidden_scanned_items(id="scanned-item-list") }}
-            {{ add_to_event_form.add_scanned_items }}
+            {{ add_to_event_form.add_scanned_items(class="btn btn-light btn-sm") }}
             <br><br>
             Items to add:
             <br>
@@ -160,7 +161,7 @@
           {{ create_event_form.event_client.label() }}
           {{ create_event_form.event_client(class="inspector-field") }}
           <br>
-          {{ create_event_form.submit() }}
+          {{ create_event_form.submit(class="btn btn-light btn-sm") }}
         </form>
 
       </div>

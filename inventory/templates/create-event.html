@@ -16,9 +16,9 @@ Create Event
 
       {{ select_event_form.csrf_token }}
       {{ select_event_form.event_field.label() }}
-      {{ select_event_form.event_field(class="inspector-field", id="event-field") }}
+      {{ select_event_form.event_field(class="inspector-field form-control-sm", id="event-field") }}
       &nbsp;
-      {{ select_event_form.submit() }}
+      {{ select_event_form.submit(class="btn btn-light btn-sm") }}
 
     </form>
 
@@ -26,14 +26,14 @@ Create Event
 
     <form method="POST" action="/events/checklist?event={{ selected_event_name }}" style="color:white; display: block;">
      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-      <button>Checklist</button>
+      <button class="btn btn-light btn-sm">Checklist</button>
     </form>
 
     &nbsp;
 
     <form method="POST" action="/events/delete-event?event={{ selected_event_name }}" onSubmit="return confirm('Are you sure you want to archive {{ selected_event_name }}?')" style="color:white; display: block;">
      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-      <button>Archive</button>
+      <button class="btn btn-danger btn-sm">Archive</button>
     </form>
 
 
@@ -136,7 +136,7 @@ Create Event
 
                   <h3>Item Inventory</h3>
                   Search:
-                  <input type="text" id="item-search2">
+                  <input type="text" id="item-search2" class="form-control-sm">
                   <br><br>
 
                   <thead>
@@ -236,7 +236,7 @@ Create Event
                       <td></td>
                       <td></td>
                       <td>
-                        <button id="button{{ itemdict[dict][0] }}" onclick="collapse({{ itemdict[dict][0] }})">Expand</button>
+                        <button class="btn btn-light btn-sm" id="button{{ itemdict[dict][0] }}" onclick="collapse({{ itemdict[dict][0] }})">Expand</button>
                       </td>
                     </tr>
                     <!-- end code for item that has no multiples -->
