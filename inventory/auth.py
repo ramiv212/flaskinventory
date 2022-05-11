@@ -1,5 +1,5 @@
 from flask import Blueprint,render_template,redirect,url_for,request,flash
-from flask_login import login_user,logout_user,login_required
+from flask_login import login_user,logout_user,login_required,current_user
 from inventory.models import User
 from inventory import db
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -9,12 +9,13 @@ authorize = Blueprint('authorize', __name__)
 
 @authorize.route('/')
 def login():
-
-	user = User.query.filter_by(email='seth@clearavl.com').first()
-	setattr(user, "password", generate_password_hash("Rhem@1999"))
-	db.session.commit()
-
-	return render_template('login.html')
+	if not current_user.is_authenticated:
+		# user = User.query.filter_by(email='seth@clearavl.com').first()
+		# setattr(user, "password", generate_password_hash("Rhem@1999"))
+		# db.session.commit()
+		return render_template('login.html')
+	else:
+		return redirect(url_for('homepage.home_page'))
 
 
 @authorize.route('/login', methods=['POST'])
@@ -27,8 +28,6 @@ def login_post():
 
 	user = User.query.filter_by(email=email).first()
 
-	print(user)
-
 	# check if the user actually exists
 	# take the user-supplied password, hash it, and compare it to the hashed password in the database
 	if not user or not check_password_hash(user.password, password):
@@ -38,6 +37,8 @@ def login_post():
 
 	# if the above check passes, then we know the user has the right credentials
 	login_user(user, remember=remember)
+
+	print(f'{user} has logged in')
 
 	flash(f'Welcome, {user.name}!')
 

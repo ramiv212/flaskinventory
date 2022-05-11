@@ -57,12 +57,10 @@ def home_page():
 				event_ID = dictionaries.eventdict[event][0]
 				# get the json of the items in each event
 				event_item_list = json.loads(dictionaries.eventdict[event][5])['items']
-				print(event_item_list)
 		
 				# remove deleted item from event in eventdict
 				event_item_list.remove(inspector_form.ID.data)
 
-				print(event_item_list)
 				# add items back to events without deleted item
 				funcs.add_list_of_items_to_event(event_ID,event_item_list)
 

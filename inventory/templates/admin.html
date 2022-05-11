@@ -19,7 +19,7 @@ Home
     <span><b>DB Backup Download</b></span>
     <form method="POST" action="/admin/download-db" style="color:white; display: block;">
      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-      <button style="width: 90px">Download</button>
+      <button class="btn btn-light btn-sm" style="width: 90px">Download</button>
     </form>
 
     <br><br>
@@ -30,8 +30,8 @@ Home
       method="POST"
       enctype="multipart/form-data">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-      <input type="file" name="file" />
-      <input type="submit" />
+      <input class="" type="file" name="file" />
+      <input class="btn btn-light btn-sm" type="submit" />
     </form>
 
         <br><br>
@@ -42,7 +42,7 @@ Home
       method="POST"
       enctype="multipart/form-data">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-      <input type="submit" id="back_up_db" name="back_up_db">
+      <input class="btn btn-light btn-sm" type="submit" id="back_up_db" name="back_up_db">
     </form>
 
   </body>

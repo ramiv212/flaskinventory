@@ -20,7 +20,6 @@ def export_barcode(number,name):
 
 	sq_fit_size = 300
 	logo_file = f'{os.getcwd()}/inventory/static/logo.png'
-	print(logo_file)
 	logoIm = Image.open(logo_file)
 	logoWidth, logoHeight = logoIm.size
 
@@ -50,6 +49,3 @@ def export_barcode(number,name):
 
 
 	os.remove("new_code1.png")
-
-	print(width)
-	print(height)

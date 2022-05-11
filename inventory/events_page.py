@@ -149,8 +149,6 @@ def remove_from_event():
 
 	event_ID = dictionaries.eventdict[event_name][0]
 
-	print(request.form["id"],event_ID)
-
 	scan.remove_func(request.form["id"],event_ID)
 
 
@@ -188,10 +186,6 @@ def return_event_checklist():
 
 	if event:
 
-		print(f'\n\n EVENT ITEMS{json.loads(dictionaries.eventdict[event][5])}')
-		print(f'\n\nITEMIDCT2 {dictionaries.itemdict2}\n\n')
-
-
 		return render_template('checklist.html',
 			itemdict2=dictionaries.itemdict2,
 			event_name=event,
@@ -224,7 +218,6 @@ def delete_event():
 
 		if event_dict[5]:
 			for item in json.loads(event_dict[5])['items']:
-				# print(dictionaries.itemdict2[item])
 				newdict[dictionaries.itemdict2[item][0]] = dictionaries.itemdict2[item][0],dictionaries.itemdict2[item][1],dictionaries.itemdict2[item][2],dictionaries.itemdict2[item][3],dictionaries.itemdict2[item][4],dictionaries.itemdict2[item][5],dictionaries.itemdict2[item][6],dictionaries.itemdict2[item][7]
 			
 

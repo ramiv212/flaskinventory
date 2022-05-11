@@ -89,7 +89,6 @@ class Dictionaries:
 	
 	def return_max_barcode(self):
 			max_barcode = int(max([item.barcode for item in self.items]))
-			print(max_barcode)
 			return max_barcode
 
 
@@ -129,15 +128,12 @@ class Scan:
 		# get the items that were scanned and added to the hidden form field
 		items_to_add = items.split(",")
 
-		print(f'\n items to be added {items_to_add}\n')
-
 		# get the items from the selected event
 		try:
 			items_to_add_to = json.loads(Event.query.get(event_ID).items)['items']
 		except TypeError:
 			items_to_add_to = []
 
-		print(items_to_add_to)
 
 		# add the items that are already in the event to the items that were scanned.
 		# if there were no items in the event, then create an empty list and add the scanned items to it.
@@ -168,10 +164,8 @@ class Scan:
 
 		# if no items were scanned flash a message and do not update db.
 		except ValueError:
-			print(items_to_add)
 			if items_to_add[0] == '':
 				flash("No items were scanned.")
-				print("No items were scanned.")
 
 
 		return redirect(url_for('homepage.home_page'))
@@ -185,20 +179,14 @@ class Scan:
 		# get the selected event ID
 		self.event_ID = event
 
-		print(f"\n\n EVENT ID {self.event_ID}\n\n")
-
 		# get the items that were scanned and added to the hidden form field
 		items_to_add = items.split(",")
-
-		print(f'\n items to be added {items_to_add}\n')
 
 		# get the items from the selected event
 		try:
 			items_to_add_to = json.loads(Event.query.get(self.event_ID).items)['items']
 		except TypeError:
 			items_to_add_to = []
-
-		print(items_to_add_to)
 
 		# add the items that are already in the event to the items that were scanned.
 		# if there were no items in the event, then create an empty list and add the scanned items to it.
@@ -229,10 +217,8 @@ class Scan:
 
 		# if no items were scanned flash a message and do not update db.
 		except ValueError:
-			print(items_to_add)
 			if items_to_add[0] == '':
 				flash("No items were scanned.")
-				print("No items were scanned.")
 
 
 		return redirect(url_for('homepage.home_page'))
