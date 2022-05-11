@@ -11,7 +11,7 @@ GoogleAuth.DEFAULT_SETTINGS['client_config_file'] = f'{os.getcwd()}/client_secre
 # Use the client_secret.json file to identify the application requesting
 # authorization. The client ID (from that file) and access scopes are required.
 flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
-    f'{os.getcwd()}/client_secrets.json',
+    f'{os.getcwd()}/inventory/client_secrets.json',
     scopes=['https://www.googleapis.com/auth/drive.metadata.readonly'])
 
 flow.redirect_uri = 'https://https://clearavl-database.herokuapp.com/admin/'
