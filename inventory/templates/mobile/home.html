@@ -1,19 +1,120 @@
-{% extends 'base.html' %}
+<!doctype html>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-{% block title %}
-Home
-{% endblock %}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-{% block content %}
-<table class="main-table">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-mobile
+        <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
-</table>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+
+   <head>
+
+</head>
+
+    <title>
+      ClearAVL Inventory
+    </title>
+
+  </head>
+  <body style="background-color: #212529;">
+{% if current_user.is_authenticated %}
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <a style="padding-left: 20px" class="navbar-brand" href="#">ClearAVL Rental Inventory</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{{ url_for('homepage.mobile_page') }}">Home</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('authorize.logout') }}" class="navbar-item">
+              Logout
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('admin.admin') }}" class="navbar-item">
+              Admin
+            </a>
+          </li>
+        </ul>
+      </ul>
+    </div>
+  </nav>
+{% endif %}
+  <div style="margin: 20px;">
+    {% with messages = get_flashed_messages(with_categories=true)%}
+    {% if messages %}
+    {% for category,message in messages %}
+    <div class="alert" id="alert-message">
+      <button type="button" onclick="hideAlert()" style="width: 30px !important;">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+  </div>
+
+<div class="mobile-event-container">
+<form method="POST" style="color:white; display: block;">
+
+      {{ select_event_form.csrf_token }}
+      {{ select_event_form.event_field.label() }}:
+      {{ select_event_form.event_field(class="inspector-field form-control-sm", id="event-field") }}
+      &nbsp;
+      {{ select_event_form.submit(class="btn btn-light btn-sm") }}
+
+    </form>
+</div>
+<br><br>
+<div class="mobile-event-container" id="mobile-inv-table">
+  Event Items
+{% for dict in itemdict2 %}
+  {% if itemdict2[dict][0] in selected_event_items %}
+
+    <div id="{{itemdict2[dict][0]}}" class="mobile-event-list-item">{{ itemdict2[dict][3] }} {{ itemdict2[dict][4] }}</div>
+    <div id="{{itemdict2[dict][0]}}info" style="display: none;">
+      
+      ID: {{itemdict2[dict][0]}}<br>
+      Barcode: {{itemdict2[dict][1]}}<br>
+      Category: {{itemdict2[dict][5]}}<br>
+      Storage: {{itemdict2[dict][6]}}<br>
+      Notes: {{itemdict2[dict][6]}}
+
+    </div>
+
+  {% endif %}
+{% endfor %}
 
 
-<script type="text/javascript" src="{{ url_for('static', filename='scripts.js') }}"></script>
+</div>
 
 
-{% endblock %}
 
+<script type="text/javascript" src="{{ url_for('static', filename='scripts-mobile.js') }}"></script>
+
+</body>
+<style>
+  body{
+   background-color: #212529;
+   color: white;
+
+ }
+
+</style>
+
+</html>

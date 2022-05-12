@@ -164,3 +164,18 @@ button {
 	font-size: 19px
 
 }
+
+.mobile-event-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.mobile-event-list-item{
+	background-color: rgb(52,58,64);
+	padding: 10px;
+	margin: 1px;
+	width: 100%;
+}
+

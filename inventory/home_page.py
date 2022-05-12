@@ -1,8 +1,7 @@
 from flask import render_template, redirect, url_for, flash, request, send_from_directory,Blueprint
 from flask_login import login_required
-from flask_mobility.decorators import mobile_template
 from inventory.models import Item, Event
-from inventory.forms import CreateEventForm,ItemInspectorForm,CreateItemForm,AddToEventForm
+from inventory.forms import CreateEventForm,ItemInspectorForm,CreateItemForm,AddToEventForm,SelectEventForm
 from inventory import db
 from inventory.mybarcode import export_barcode
 from inventory.resources import Dictionaries,Scan,Funcs
@@ -16,9 +15,8 @@ homepage = Blueprint('homepage',__name__)
 
 
 @homepage.route("/", methods=['GET', 'POST'])
-@mobile_template('{/{mobile/}home.html}')
 @login_required
-def home_page(template):
+def home_page():
 	dictionaries = Dictionaries()
 	inspector_form = ItemInspectorForm()
 	create_item_form = CreateItemForm()
@@ -128,3 +126,31 @@ def home_page(template):
 		create_item_form=create_item_form,
 		create_event_form=create_event_form,
 		add_to_event_form=add_to_event_form)
+
+
+@homepage.route("/mobile", methods=['GET', 'POST'])
+def mobile_page():
+
+	dictionaries = Dictionaries()
+	select_event_form = SelectEventForm()
+	selected_event = None
+	selected_event_id = None
+	selected_event_items = []
+
+	if select_event_form.submit.data and select_event_form.validate_on_submit():
+		selected_event = select_event_form.event_field.data
+		selected_event_id = dictionaries.eventdict[selected_event][0]
+		selected_event_items = json.loads(dictionaries.eventdict[selected_event][5])['items']
+
+		return render_template("mobile/home.html",
+		select_event_form=select_event_form,
+		selected_event_items=selected_event_items,
+		itemdict2=dictionaries.itemdict2
+		)
+
+
+	return render_template("mobile/home.html",
+		select_event_form=select_event_form,
+		selected_event_items=selected_event_items,
+		itemdict2=dictionaries.itemdict2
+		)
