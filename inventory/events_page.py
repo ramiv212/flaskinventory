@@ -176,16 +176,39 @@ def add_item_to_event():
 def return_event_checklist():
 	dictionaries = Dictionaries()
 	event = request.args.get('event')
+	event_items=json.loads(dictionaries.eventdict[event][5])['items']
+	audio_list = []
+	video_list = []
+	lighting_list = []
+	rigging_list = []
+	other_list = []
+
+	for item in event_items:
+		if dictionaries.itemdict2[item][5] == 'Audio':
+			audio_list.append(item)
+		elif dictionaries.itemdict2[item][5] == 'Video':
+			video_list.append(item)
+		elif dictionaries.itemdict2[item][5] == 'Lighting':
+			lighting_list.append(item)
+		elif dictionaries.itemdict2[item][5] == 'Rigging':
+			rigging_list.append(item)
+		elif dictionaries.itemdict2[item][5] == 'Other':
+			other_list.append(item)
+
 
 	if event:
-
 		return render_template('checklist.html',
 			itemdict2=dictionaries.itemdict2,
 			event_name=event,
 			event_date_start=dictionaries.eventdict[event][1],
 			event_date_end=dictionaries.eventdict[event][2],
 			event_client=dictionaries.eventdict[event][3],
-			event_items=json.loads(dictionaries.eventdict[event][5])['items'])
+			event_items=event_items,
+			audio_list=audio_list,
+			video_list=video_list,
+			lighting_list=lighting_list,
+			rigging_list=rigging_list,
+			other_list=other_list)
 	else:
 		flash("No event was selected")
 		return redirect(url_for('events.event_page'))

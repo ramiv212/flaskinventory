@@ -157,3 +157,10 @@ button {
 	padding: 3px 15px 3px 15px;
 
 }
+
+.checklist-category {
+	border-bottom: 2px solid black;
+	font-weight: bold;
+	font-size: 19px
+
+}

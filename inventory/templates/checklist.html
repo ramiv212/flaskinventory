@@ -14,7 +14,7 @@
 
 <center>
 
-	<img src="/static/logo2.png" style="width: 200px; margin: 0;">
+	<img src="/static/logo2.png" style="width: 150px; margin: 0;">
 	<h1 style="margin: 0; margin-bottom: 30px;">ClearAVL Event Checklist</h1>
 
 
@@ -38,23 +38,99 @@
 
 <table class="checklist-table">
 
-<th>
+{% if audio_list %}
+	<tr><td colspan="4" class="checklist-category">Audio</td></tr>
+	<th>	
 	<td>Barcode</td>
 	<td>Manufacturer</td>
 	<td style="width: 300px">Name</td>
 </th>
+	{% for item in audio_list %}
+	<tr>
+		<td style="font-size: 19px">&#9634;</td>
+		<td>{{ itemdict2[item][1] }}</td>
+		<td>{{ itemdict2[item][3] }}</td>
+		<td>{{ itemdict2[item][4] }}</td>
+	</tr>
+	{% endfor  %}
+{% endif %}
 
 
-{% for item in event_items %}
+{% if video_list %}
+	<tr><td colspan="4">&nbsp;</td></tr>
+	<tr><td colspan="4" class="checklist-category">Video</td></tr>
+	<th>	
+	<td>Barcode</td>
+	<td>Manufacturer</td>
+	<td style="width: 300px">Name</td>
+</th>
+	{% for item in video_list %}
+	<tr>
+		<td style="font-size: 19px">&#9634;</td>
+		<td>{{ itemdict2[item][1] }}</td>
+		<td>{{ itemdict2[item][3] }}</td>
+		<td>{{ itemdict2[item][4] }}</td>
+	</tr>
+	{% endfor  %}
+{% endif %}
 
-<tr>
-	<td style="font-size: 19px">&#9634;</td>
-	<td>{{ itemdict2[item][1] }}</td>
-	<td>{{ itemdict2[item][3] }}</td>
-	<td>{{ itemdict2[item][4] }}</td>
-</tr>
 
-{% endfor  %}
+{% if lighting_list %}
+	<tr><td colspan="4">&nbsp;</td></tr>
+	<tr><td colspan="4" class="checklist-category">Lighting</td></tr>
+	<th>	
+	<td>Barcode</td>
+	<td>Manufacturer</td>
+	<td style="width: 300px">Name</td>
+</th>
+	{% for item in lighting_list %}
+	<tr>
+		<td style="font-size: 19px">&#9634;</td>
+		<td>{{ itemdict2[item][1] }}</td>
+		<td>{{ itemdict2[item][3] }}</td>
+		<td>{{ itemdict2[item][4] }}</td>
+	</tr>
+	{% endfor  %}
+{% endif %}
+
+
+{% if rigging_list %}
+	<tr><td colspan="4">&nbsp;</td></tr>
+	<tr><td colspan="4" class="checklist-category">Rigging</td></tr>
+	<th>	
+	<td>Barcode</td>
+	<td>Manufacturer</td>
+	<td style="width: 300px">Name</td>
+</th>
+	{% for item in rigging_list %}
+	<tr>
+		<td style="font-size: 19px">&#9634;</td>
+		<td>{{ itemdict2[item][1] }}</td>
+		<td>{{ itemdict2[item][3] }}</td>
+		<td>{{ itemdict2[item][4] }}</td>
+	</tr>
+	{% endfor  %}
+{% endif %}
+
+
+{% if other_list %}
+	<tr><td colspan="4">&nbsp;</td></tr>
+	<tr><td colspan="4" class="checklist-category">Other</td></tr>
+	<th>	
+	<td>Barcode</td>
+	<td>Manufacturer</td>
+	<td style="width: 300px">Name</td>
+</th>
+	{% for item in other_list %}
+	<tr>
+		<td style="font-size: 19px">&#9634;</td>
+		<td>{{ itemdict2[item][1] }}</td>
+		<td>{{ itemdict2[item][3] }}</td>
+		<td>{{ itemdict2[item][4] }}</td>
+	</tr>
+	{% endfor  %}
+{% endif %}
+
 
 </table>
 
