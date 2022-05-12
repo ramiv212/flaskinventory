@@ -1,5 +1,6 @@
 from flask import render_template, redirect, url_for, flash, request, send_from_directory,Blueprint
 from flask_login import login_required
+from flask_mobility.decorators import mobile_template
 from inventory.models import Item, Event
 from inventory.forms import CreateEventForm,ItemInspectorForm,CreateItemForm,AddToEventForm
 from inventory import db
@@ -15,8 +16,9 @@ homepage = Blueprint('homepage',__name__)
 
 
 @homepage.route("/", methods=['GET', 'POST'])
+@mobile_template('{/{mobile/}home.html}')
 @login_required
-def home_page():
+def home_page(template):
 	dictionaries = Dictionaries()
 	inspector_form = ItemInspectorForm()
 	create_item_form = CreateItemForm()

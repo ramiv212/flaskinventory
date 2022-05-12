@@ -2,6 +2,7 @@ from flask import Flask,render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
 from flask_login import LoginManager
+from flask_mobility import Mobility
 import os
 
 app = Flask(__name__)
@@ -17,7 +18,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 csrf = CSRFProtect(app)
 db = SQLAlchemy(app)
-
+Mobility(app)
 
 
 login_manager = LoginManager()

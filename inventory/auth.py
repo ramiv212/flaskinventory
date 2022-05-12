@@ -4,7 +4,6 @@ from inventory.models import User
 from inventory import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
-
 authorize = Blueprint('authorize', __name__)
 
 @authorize.route('/')
