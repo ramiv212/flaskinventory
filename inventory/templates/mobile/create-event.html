@@ -7,13 +7,27 @@ Events
 {% block content %}
 
 <div class="mobile-event-container">
+<form method="POST" style="color:white; display: block;">
+
+      {{ select_event_form.csrf_token }}
+      {{ select_event_form.event_field.label() }}:
+      {{ select_event_form.event_field(class="inspector-field form-control-sm", id="event-field") }}
+      &nbsp;
+      {{ select_event_form.submit(class="btn btn-light btn-sm") }}
+
+    </form>
+</div>
+<br><br>
+
 
 <div class="mobile-event-container" id="mobile-inv-table">
-Items
+  Event Items
 
 {% if audio_list%}
 <div class="mobile-event-list-item"><b>Audio</b></div>
-  {% for dict in audio_list %}
+{% endif %}
+{% for dict in itemdict2 %}
+  {% if itemdict2[dict][0] in audio_list %}
 
     <div id="{{itemdict2[dict][0]}}" class="mobile-event-list-item">{{ itemdict2[dict][3] }} {{ itemdict2[dict][4] }}</div>
     <div id="{{itemdict2[dict][0]}}info" style="display: none;">
@@ -24,14 +38,16 @@ Items
       Storage: {{itemdict2[dict][6]}}<br>
       Notes: {{itemdict2[dict][6]}}
     </div>
-  {% endfor %}
-{% endif %}
+  {% endif %}
+{% endfor %}
 
 
 {% if video_list%}
 <div><b>&nbsp;</b></div>
 <div class="mobile-event-list-item"><b>Video</b></div>
-  {% for dict in video_list %}
+{% endif %}
+{% for dict in itemdict2 %}
+  {% if itemdict2[dict][0] in video_list %}
 
     <div id="{{itemdict2[dict][0]}}" class="mobile-event-list-item">{{ itemdict2[dict][3] }} {{ itemdict2[dict][4] }}</div>
     <div id="{{itemdict2[dict][0]}}info" style="display: none;">
@@ -42,15 +58,16 @@ Items
       Storage: {{itemdict2[dict][6]}}<br>
       Notes: {{itemdict2[dict][6]}}
     </div>
-  {% endfor %}
-{% endif %}
+  {% endif %}
+{% endfor %}
 
 
-
-{% if lighting_list %}
+{% if lighting_list%}
 <div><b>&nbsp;</b></div>
 <div class="mobile-event-list-item"><b>Lighting</b></div>
-  {% for dict in lighting_list %}
+{% endif %}
+{% for dict in itemdict2 %}
+  {% if itemdict2[dict][0] in lighting_list %}
 
     <div id="{{itemdict2[dict][0]}}" class="mobile-event-list-item">{{ itemdict2[dict][3] }} {{ itemdict2[dict][4] }}</div>
     <div id="{{itemdict2[dict][0]}}info" style="display: none;">
@@ -61,15 +78,16 @@ Items
       Storage: {{itemdict2[dict][6]}}<br>
       Notes: {{itemdict2[dict][6]}}
     </div>
-  {% endfor %}
-{% endif %}
+  {% endif %}
+{% endfor %}
 
 
-
-{% if rigging_list %}
+{% if rigging_list%}
 <div><b>&nbsp;</b></div>
 <div class="mobile-event-list-item"><b>Rigging</b></div>
-  {% for dict in rigging_list %}
+{% endif %}
+{% for dict in itemdict2 %}
+  {% if itemdict2[dict][0] in rigging_list %}
 
     <div id="{{itemdict2[dict][0]}}" class="mobile-event-list-item">{{ itemdict2[dict][3] }} {{ itemdict2[dict][4] }}</div>
     <div id="{{itemdict2[dict][0]}}info" style="display: none;">
@@ -80,15 +98,16 @@ Items
       Storage: {{itemdict2[dict][6]}}<br>
       Notes: {{itemdict2[dict][6]}}
     </div>
-  {% endfor %}
-{% endif %}
+  {% endif %}
+{% endfor %}
 
 
-
-{% if other_list %}
+{% if other_list%}
 <div><b>&nbsp;</b></div>
 <div class="mobile-event-list-item"><b>Other</b></div>
-  {% for dict in other_list %}
+{% endif %}
+{% for dict in itemdict2 %}
+  {% if itemdict2[dict][0] in other_list %}
 
     <div id="{{itemdict2[dict][0]}}" class="mobile-event-list-item">{{ itemdict2[dict][3] }} {{ itemdict2[dict][4] }}</div>
     <div id="{{itemdict2[dict][0]}}info" style="display: none;">
@@ -99,8 +118,8 @@ Items
       Storage: {{itemdict2[dict][6]}}<br>
       Notes: {{itemdict2[dict][6]}}
     </div>
-  {% endfor %}
-{% endif %}
+  {% endif %}
+{% endfor %}
 
 
 </div>
@@ -116,6 +135,5 @@ Items
  }
 
 </style>
-
 
 {% endblock %}

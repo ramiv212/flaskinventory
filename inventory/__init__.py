@@ -39,7 +39,10 @@ from .json_routes import jsonroutes
 from .resources import json_routes
 from .admin import adminpage
 from .auth import authorize
+from .mobi import mobile
 
+
+app.register_blueprint(mobile, url_prefix='/mobile')
 app.register_blueprint(homepage, url_prefix='/home')
 app.register_blueprint(eventspage, url_prefix='/events/')
 app.register_blueprint(jsonroutes, url_prefix='/json-routes/')

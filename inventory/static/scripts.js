@@ -326,6 +326,6 @@ $(function() {
     let isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
 
     if (isMobile) {
-        window.location.replace("/home/mobile");
+        window.location.replace("/mobile");
     }
  });

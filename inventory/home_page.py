@@ -126,31 +126,3 @@ def home_page():
 		create_item_form=create_item_form,
 		create_event_form=create_event_form,
 		add_to_event_form=add_to_event_form)
-
-
-@homepage.route("/mobile", methods=['GET', 'POST'])
-def mobile_page():
-
-	dictionaries = Dictionaries()
-	select_event_form = SelectEventForm()
-	selected_event = None
-	selected_event_id = None
-	selected_event_items = []
-
-	if select_event_form.submit.data and select_event_form.validate_on_submit():
-		selected_event = select_event_form.event_field.data
-		selected_event_id = dictionaries.eventdict[selected_event][0]
-		selected_event_items = json.loads(dictionaries.eventdict[selected_event][5])['items']
-
-		return render_template("mobile/home.html",
-		select_event_form=select_event_form,
-		selected_event_items=selected_event_items,
-		itemdict2=dictionaries.itemdict2
-		)
-
-
-	return render_template("mobile/home.html",
-		select_event_form=select_event_form,
-		selected_event_items=selected_event_items,
-		itemdict2=dictionaries.itemdict2
-		)
