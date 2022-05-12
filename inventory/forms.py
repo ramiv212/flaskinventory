@@ -56,7 +56,7 @@ class AddToEventForm(FlaskForm):
 
 	event_names.insert(0,"")
 
-	event_select = SelectField(label='Event',choices=event_names)
+	event_select = SelectField(label='Event',choices=event_names,render_kw={"placeholder": "Select Event"})
 	hidden_scanned_items = HiddenField()
 	add_scanned_items = SubmitField(label='Add')
 
