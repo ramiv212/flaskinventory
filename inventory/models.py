@@ -24,6 +24,9 @@ class Event(db.Model):
     event_client = db.Column(db.String(length=30),nullable=False)
     active = db.Column(db.String(length=30), nullable=False)
     items = db.Column(db.String(length=1024))
+    load_in = db.Column(db.DateTime())
+    load_out = db.Column(db.DateTime())
+    contact = db.Column(db.String(length=30))
 
 
     def __repr__(self):
@@ -51,3 +54,4 @@ class User(UserMixin,db.Model):
     password = db.Column(db.String(100))
     name = db.Column(db.String(1000))
 
+db.create_all()
