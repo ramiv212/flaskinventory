@@ -71,7 +71,7 @@ Event Archive
 		<input type="submit" value="Select" class="btn btn-light btn-sm">
 	</form>
 
-	<form method="POST" action="/events/delete-archive?event={{ event_name }}" onSubmit="return confirm('Are you sure you want to archive {{ event_name }}?')" style="color:white; display: block;">
+	<form method="POST" action="/events/delete-archive?event={{ event_name }}" onSubmit="return confirm('Are you sure you want to delete {{ event_name }}? This cannot be undone.')" style="color:white; display: block;">
      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
       <button class="btn btn-danger btn-sm">Delete</button>
     </form>

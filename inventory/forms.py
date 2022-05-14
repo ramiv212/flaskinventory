@@ -14,19 +14,23 @@ class CreateEventForm(FlaskForm):
 			raise ValidationError('Event already exists! Please use another event name.')
 
 	event_name = StringField(label='Event Name', validators=[DataRequired(),Length(min=2,max=30)])
-	event_date_start = DateField(label='Event Start',format='%Y-%m-%d')
-	event_date_end = DateField(label='Event End',format='%Y-%m-%d')
+	event_date_start = DateField(label='Event Start',format='%Y-%m-%d',validators=[DataRequired()])
+	event_date_end = DateField(label='Event End',format='%Y-%m-%d',validators=[DataRequired()])
 	event_client = StringField(label='Event Client',validators=[DataRequired(),Length(min=2,max=30)])
+	load_in = DateField(label='Load-In',format='%Y-%m-%d',validators=[DataRequired()])
+	load_out = DateField(label='Load-Out',format='%Y-%m-%d',validators=[DataRequired()])
+	contact = TextAreaField(label='Contact')
+	notes = TextAreaField(label='Notes')
 	submit = SubmitField(label='Create')
 
 
 class ItemInspectorForm(FlaskForm):
 	ID = IntegerField(label='ID')
-	name = StringField(label='Name')
+	name = StringField(label='Name',validators=[DataRequired()])
 	barcode = IntegerField(label='Barcode')
 	serial = StringField(label='Serial')
-	manufacturer = StringField(label='Manufacturer')
-	category = SelectField(label='Category',choices=["Audio","Video","Lighting","Rigging","Other"])
+	manufacturer = StringField(label='Manufacturer',validators=[DataRequired()])
+	category = SelectField(label='Category',choices=["Audio","Video","Lighting","Rigging","Other"],validators=[DataRequired()])
 	storage = StringField(label='Storage')
 	status = SelectField(label='Status',choices=["OK","Broken","Sent For Repair","Loaned To Customer","See Notes"])
 	notes = TextAreaField(label='Notes')

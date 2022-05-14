@@ -26,7 +26,8 @@ class Event(db.Model):
     items = db.Column(db.String(length=1024))
     load_in = db.Column(db.DateTime())
     load_out = db.Column(db.DateTime())
-    contact = db.Column(db.String(length=30))
+    contact = db.Column(db.String(length=1024), nullable=True)
+    notes = db.Column(db.String(length=1024), nullable=True)
 
 
     def __repr__(self):
@@ -42,6 +43,10 @@ class EventArchive(db.Model):
     event_client = db.Column(db.String(length=30),nullable=False)
     active = db.Column(db.String(length=30), nullable=False)
     items = db.Column(db.String(length=1024))
+    load_in = db.Column(db.DateTime())
+    load_out = db.Column(db.DateTime())
+    contact = db.Column(db.String(length=30))
+    notes = db.Column(db.String(length=1024), nullable=True)
 
 
     def __repr__(self):

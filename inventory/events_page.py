@@ -65,6 +65,8 @@ def event_page():
 		conflicting_event_items = get_conflicting_event_items(selected_event)
 
 
+		
+
 
 		return render_template('create-event.html', 
 		items=dictionaries.items,
@@ -79,8 +81,13 @@ def event_page():
 		selected_event_items=selected_event_items,
 		selected_event_id=selected_event_id,
 		conflicting_event_items=conflicting_event_items,
-		event_start_date=dictionaries.eventdict[select_event_form.event_field.data][1],
-		event_end_date=dictionaries.eventdict[select_event_form.event_field.data][2])
+		event_start_date=dictionaries.eventdict[selected_event][1],
+		event_end_date=dictionaries.eventdict[selected_event][2],
+		load_in_date=dictionaries.eventdict[selected_event][6],
+		load_out_date=dictionaries.eventdict[selected_event][7],
+		contact=dictionaries.eventdict[selected_event][8],
+		event_notes=dictionaries.eventdict[selected_event][9]
+		)
 
 	# get the scanned items from the hidden form, add them to the items that are already in the selected form,
 	# and then update the items of the event in the database

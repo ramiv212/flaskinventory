@@ -147,7 +147,7 @@
 
       <div class="container" style="width:80%">
 
-        <form method="POST" class="form-register" style="color:white">
+        <form method="POST" class="form-register" style="color:white" style="display: flex; align-items: baseline;">
           {{ create_event_form.hidden_tag() }}
           {{ create_event_form.event_name.label() }}
           {{ create_event_form.event_name(class="inspector-field") }}
@@ -160,6 +160,25 @@
           <br>
           {{ create_event_form.event_client.label() }}
           {{ create_event_form.event_client(class="inspector-field") }}
+          <br>
+          {{ create_event_form.load_in.label() }}
+          {{ create_event_form.load_in(class="inspector-field") }}
+          <br>
+          {{ create_event_form.load_out.label() }}
+          {{ create_event_form.load_out(class="inspector-field") }}
+          <br>
+          <div style="display: inline-flex; align-items: center;">
+              <div style="display: inline-block;">
+              {{ create_event_form.contact.label() }}&nbsp;
+            </div>
+              {{ create_event_form.contact(class="inspector-field") }}
+            </div>
+          <br>
+            <div style="display: inline-flex; align-items: center;">
+              <div style="display: inline-block;">{{ create_event_form.notes.label() }}&nbsp;
+              </div>
+            {{ create_event_form.notes(class="inspector-field") }}
+            </div>
           <br>
           {{ create_event_form.submit(class="btn btn-light btn-sm") }}
         </form>

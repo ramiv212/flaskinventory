@@ -85,7 +85,11 @@ class Dictionaries:
 										event.event_date_end.strftime("%m/%d/%Y"),
 										event.event_client,
 										event.active,
-										event.items]
+										event.items,
+										event.load_in.strftime("%m/%d/%Y"),
+										event.load_out.strftime("%m/%d/%Y"),
+										event.contact,
+										event.notes]
 	
 	def return_max_barcode(self):
 			max_barcode = int(max([item.barcode for item in self.items]))
@@ -306,7 +310,11 @@ class Funcs:
 "items": [
 ]
 }
-					  """)
+					  """,
+					  load_in=create_event_form.load_in.data,
+					  load_out=create_event_form.load_out.data,
+					  contact=create_event_form.contact.data,
+					  notes=create_event_form.notes.data,)
 
 
 		db.session.add(event_to_create)

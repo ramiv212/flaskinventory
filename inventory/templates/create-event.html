@@ -36,9 +36,22 @@ Create Event
       <button class="btn btn-danger btn-sm">Archive</button>
     </form>
 
-
-    <p>Event Start Date: {{ event_start_date }}<br>
-    Event End Date: {{ event_end_date }}</p>
+    <div style=" display: flex-start;">
+      <div class="event-info-table">
+        <div class="event-info-row">
+          <div class="event-info-cell"><b>Event Start Date:</b> {{ event_start_date }}</div>
+          <div class="event-info-cell"><b>Event End Date:</b> {{ event_end_date }}</div>
+        </div>
+        <div class="event-info-row">
+          <div class="event-info-cell"><b>Event Load-in Date:</b> {{ event_end_date }}</div>
+          <div class="event-info-cell"><b>Event Load-out Date:</b> {{ event_end_date }}</div>
+        </div>
+        <div class="event-info-row">
+          <div class="event-info-cell"><b>Point Of Contact:</b> {{ contact }}</div>
+          <div class="event-info-cell"><b>Notes:</b> {{ event_notes }}</div>
+        </div>
+      </div>
+    </div>
 
   </tr>
 
