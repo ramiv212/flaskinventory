@@ -35,26 +35,27 @@ Create Event
      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
       <button class="btn btn-danger btn-sm">Archive</button>
     </form>
-    <center>
-    <div style=" display: flex-start;">
-      <div style="padding-top: 10px; padding-bottom: 0; height: 3px; font-size: 24px; font-weight: bold">{{ selected_event_name }}</div></center>
-      <div class="event-info-table">
-        <div class="event-info-row">
-          <div class="event-info-cell"><b>Event Start Date:</b> {{ event_start_date }}</div>
-          <div class="event-info-cell"><b>Event End Date:</b> {{ event_end_date }}</div>
-        </div>
-        <div class="event-info-row">
-          <div class="event-info-cell"><b>Event Load-in Date:</b> {{ event_end_date }}</div>
-          <div class="event-info-cell"><b>Event Load-out Date:</b> {{ event_end_date }}</div>
-        </div>
-        <div class="event-info-row">
-          <div class="event-info-cell"><b>Point Of Contact:</b> {{ contact }}</div>
-          <div class="event-info-cell"><b>Notes:</b> {{ event_notes }}</div>
-        </div>
-      </div>
-    </div>
+    </tr>
 
-  </tr>
+    <tr>
+        <table style="margin: auto;">
+          <tr>
+            <td style="text-align: center; font-weight: bold; font-size: 24px;"
+             colspan="2">{{ selected_event_name }}</td>
+          <tr>
+            <td>
+              <div class="event-info-cell"><b>Event Start Date:</b> {{ event_start_date }}</div>
+              <div class="event-info-cell"><b>Event End Date:</b> {{ event_end_date }}</div>
+              <div class="event-info-cell"><b>Event Load-in Date:</b> {{ event_end_date }}</div>
+              <div class="event-info-cell"><b>Event Load-out Date:</b> {{ event_end_date }}</div>
+            </td>
+            <td>
+              <div class="event-info-cell"><b>Point Of Contact:</b> {{ contact }}</div>
+              <div class="event-info-cell"><b>Notes:</b> {{ event_notes }}</div>
+            </td>
+          </tr>
+        </table>
+      </tr>
 
   <tr VALIGN="TOP">
     <td class="inventory-cable-col" id="inv-table">
