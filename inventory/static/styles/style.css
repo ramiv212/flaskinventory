@@ -197,7 +197,9 @@ button {
 
 .event-info-cell {
 	width: 300px;
-	margin: 10px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+
 }
 
 

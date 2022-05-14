@@ -65,7 +65,6 @@ def event_page():
 		conflicting_event_items = get_conflicting_event_items(selected_event)
 
 
-		
 
 
 		return render_template('create-event.html', 

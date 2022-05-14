@@ -35,8 +35,9 @@ Create Event
      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
       <button class="btn btn-danger btn-sm">Archive</button>
     </form>
-
+    <center>
     <div style=" display: flex-start;">
+      <div style="padding-top: 10px; padding-bottom: 0; height: 3px; font-size: 24px; font-weight: bold">{{ selected_event_name }}</div></center>
       <div class="event-info-table">
         <div class="event-info-row">
           <div class="event-info-cell"><b>Event Start Date:</b> {{ event_start_date }}</div>
