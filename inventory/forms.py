@@ -60,9 +60,8 @@ class AddToEventForm(FlaskForm):
 		
 	event_names = [x.event_name for x in events]
 
-	event_names.insert(0,"")
-
-	event_select = SelectField(label='Event',choices=event_names,render_kw={"placeholder": "Select Event"})
+	event_names.insert(0, '')
+	event_select = SelectField(label='Event',choices=event_names)
 	hidden_scanned_items = HiddenField()
 	add_scanned_items = SubmitField(label='Add')
 
@@ -71,7 +70,6 @@ class SelectEventForm(FlaskForm):
 	events = Event.query.all()
 	fields = ['ID', 'event_name','event_date_start', 'event_date_end', 'event_client' ,'active']
 	event_names = [x.event_name for x in events]
-
 	event_field = SelectField(label='Event',choices=event_names)
 	submit = SubmitField(label='Select')
 

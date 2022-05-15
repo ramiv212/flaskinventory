@@ -86,7 +86,7 @@ def home_page():
 
 	# get the scanned items from the hidden form, add them to the items that are already in the selected form,
 	# and then update the items of the event in the database
-	if add_to_event_form.add_scanned_items.data and add_to_event_form.validate_on_submit():
+	if add_to_event_form.add_scanned_items.data and add_to_event_form.validate_on_submit() and add_to_event_form.event_select.data != "":
 		scan.add_scanned_items(add_to_event_form.hidden_scanned_items.data)
 
 

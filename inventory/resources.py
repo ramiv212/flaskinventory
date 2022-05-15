@@ -252,6 +252,7 @@ class Funcs:
 		# update the submitfield of events with the list of events including the newly created event
 		events = Event.query.all()
 		event_names = [x.event_name for x in events]
+		event_names.insert(0, '')
 		AddToEventForm.event_select = SelectField(label='Event',choices=event_names)
 		SelectEventForm.event_field = SelectField(label='Event',choices=event_names)
 
