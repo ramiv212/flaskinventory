@@ -166,16 +166,29 @@
           <br>
           {{ create_event_form.load_out.label() }}
           {{ create_event_form.load_out(class="inspector-field") }}
-          <br>
+          <br><br>
+          <div style="margin-right: 18px;">
+          Event Contact
+          </div>
+
           <div style="display: inline-flex; align-items: center;">
               <div style="display: inline-block;">
-              {{ create_event_form.contact.label() }}&nbsp;
+              {{ create_event_form.contact_name.label() }}&nbsp;
             </div>
-              {{ create_event_form.contact(class="inspector-field") }}
+              {{ create_event_form.contact_name(class="inspector-field") }}
             </div>
+
+            <div style="display: inline-flex; align-items: center;">
+              <div style="display: inline-block;">
+              {{ create_event_form.contact_phone.label() }}&nbsp;
+            </div>
+              {{ create_event_form.contact_phone(class="inspector-field") }}
+            </div>
+
+
           <br>
             <div style="display: inline-flex; align-items: center;">
-              <div style="display: inline-block;">{{ create_event_form.notes.label() }}&nbsp;
+              <div style="display: inline-block;">{{ create_event_form.notes.label() }}&nbsp;   
               </div>
             {{ create_event_form.notes(class="inspector-field") }}
             </div>

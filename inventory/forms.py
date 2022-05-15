@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, DateField, PasswordField, SubmitField,IntegerField,TextAreaField,SelectField,HiddenField
+from wtforms import StringField, DateField, PasswordField, SubmitField,IntegerField,TextAreaField,SelectField,HiddenField,TelField,EmailField
 from wtforms.validators import DataRequired,Length, ValidationError
 from inventory.models import Event
 from sqlalchemy.orm import load_only
@@ -19,7 +19,9 @@ class CreateEventForm(FlaskForm):
 	event_client = StringField(label='Event Client',validators=[DataRequired(),Length(min=2,max=30)])
 	load_in = DateField(label='Load-In',format='%Y-%m-%d',validators=[DataRequired()])
 	load_out = DateField(label='Load-Out',format='%Y-%m-%d',validators=[DataRequired()])
-	contact = TextAreaField(label='Contact')
+	contact_name = StringField(label='Name')
+	contact_phone = IntegerField(label='Phone', render_kw={"pattern":"[0-9]{3}-[0-9]{3}-[0-9]{4}","type":"number"})
+	contact_email = EmailField(label='Email')
 	notes = TextAreaField(label='Notes')
 	submit = SubmitField(label='Create')
 
