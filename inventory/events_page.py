@@ -64,6 +64,8 @@ def event_page():
 		selected_event_items = selected_event_items['items']
 		conflicting_event_items = get_conflicting_event_items(selected_event)
 
+		contact_info = json.loads(dictionaries.eventdict[selected_event][8])
+		print(contact_info)
 
 
 
@@ -84,7 +86,7 @@ def event_page():
 		event_end_date=dictionaries.eventdict[selected_event][2],
 		load_in_date=dictionaries.eventdict[selected_event][6],
 		load_out_date=dictionaries.eventdict[selected_event][7],
-		contact=dictionaries.eventdict[selected_event][8],
+		contact_info=contact_info,
 		event_notes=dictionaries.eventdict[selected_event][9]
 		)
 
@@ -140,6 +142,11 @@ def event_page():
 		add_to_event_form=add_to_event_form,
 		select_event_form=select_event_form,
 		selected_event_items=selected_event_items,
+		contact_info="""{
+		"contact_name":"",
+		"contact_phone":"",
+		"contact_email":"",
+		}""",
 		conflicting_event_items=list())
 
 

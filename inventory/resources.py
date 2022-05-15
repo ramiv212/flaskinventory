@@ -298,6 +298,12 @@ class Funcs:
 
 
 	def create_event(self,create_event_form):
+		contact_name = create_event_form.contact_name.data
+		contact_phone = create_event_form.contact_phone.data
+		contact_email = create_event_form.contact_email.data
+		contact_json = f'"contact_name": "{contact_name}",\n"contact_phone": "{contact_phone}",\n"contact_email": "{contact_email}"'
+
+
 		event_to_create = Event(event_name=create_event_form.event_name.data,
 					  event_date_start=create_event_form.event_date_start.data,
 					  event_date_end=create_event_form.event_date_end.data,
@@ -313,7 +319,7 @@ class Funcs:
 					  """,
 					  load_in=create_event_form.load_in.data,
 					  load_out=create_event_form.load_out.data,
-					  contact=create_event_form.contact.data,
+					  contact="{"+contact_json+"}",
 					  notes=create_event_form.notes.data,)
 
 
