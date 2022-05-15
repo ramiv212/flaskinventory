@@ -187,28 +187,33 @@ def add_item_to_event():
 @eventspage.route('/checklist', methods=['GET', 'POST'])
 @login_required
 def return_event_checklist():
-	dictionaries = Dictionaries()
 	event = request.args.get('event')
-	event_items=json.loads(dictionaries.eventdict[event][5])['items']
-	audio_list = []
-	video_list = []
-	lighting_list = []
-	rigging_list = []
-	other_list = []
 
-	contact_info = json.loads(dictionaries.eventdict[event][8])
+	if event:
+		dictionaries = Dictionaries()
+		event_items=json.loads(dictionaries.eventdict[event][5])['items']
+		audio_list = []
+		video_list = []
+		lighting_list = []
+		rigging_list = []
+		other_list = []
 
-	for item in event_items:
-		if dictionaries.itemdict2[item][5] == 'Audio':
-			audio_list.append(item)
-		elif dictionaries.itemdict2[item][5] == 'Video':
-			video_list.append(item)
-		elif dictionaries.itemdict2[item][5] == 'Lighting':
-			lighting_list.append(item)
-		elif dictionaries.itemdict2[item][5] == 'Rigging':
-			rigging_list.append(item)
-		elif dictionaries.itemdict2[item][5] == 'Other':
-			other_list.append(item)
+		contact_info = json.loads(dictionaries.eventdict[event][8])
+
+		for item in event_items:
+			if dictionaries.itemdict2[item][5] == 'Audio':
+				audio_list.append(item)
+			elif dictionaries.itemdict2[item][5] == 'Video':
+				video_list.append(item)
+			elif dictionaries.itemdict2[item][5] == 'Lighting':
+				lighting_list.append(item)
+			elif dictionaries.itemdict2[item][5] == 'Rigging':
+				rigging_list.append(item)
+			elif dictionaries.itemdict2[item][5] == 'Other':
+				other_list.append(item)
+	else:
+			flash("No event was selected")
+			return redirect(url_for('events.event_page'))
 
 
 	if event:
@@ -235,7 +240,7 @@ def return_event_checklist():
 
 @eventspage.route('/archive-event', methods=['GET', 'POST'])
 @login_required
-def delete_event():
+def archive_event():
 	dictionaries = Dictionaries()
 	funcs = Funcs()
 	event = request.args.get('event')
@@ -250,21 +255,33 @@ def delete_event():
 		db.session.commit()
 		funcs.update_event_submitfields()
 
-
 		if event_dict[5]:
 			for item in json.loads(event_dict[5])['items']:
 				newdict[dictionaries.itemdict2[item][0]] = dictionaries.itemdict2[item][0],dictionaries.itemdict2[item][1],dictionaries.itemdict2[item][2],dictionaries.itemdict2[item][3],dictionaries.itemdict2[item][4],dictionaries.itemdict2[item][5],dictionaries.itemdict2[item][6],dictionaries.itemdict2[item][7]
+
+		if event_dict[8]:
+			contact_info = event_dict[8]
+		else:
+			contact_info = """{
+		"contact_name":"",
+		"contact_phone":"",
+		"contact_email":"",
+		}"""
 			
 
-			# add to event archive
-			archived_event = EventArchive(
-				event_name = event,
-				event_date_start = datetime.strptime(event_dict[1],"%m/%d/%Y"),
-				event_date_end = datetime.strptime(event_dict[2],"%m/%d/%Y"),
-				event_client = event_dict[3],
-				active = 0,
-				items = json.dumps(newdict)
-				)
+		# add to event archive
+		archived_event = EventArchive(
+			event_name = event,
+			event_date_start = datetime.strptime(event_dict[1],"%m/%d/%Y"),
+			event_date_end = datetime.strptime(event_dict[2],"%m/%d/%Y"),
+			load_in = datetime.strptime(event_dict[6],"%m/%d/%Y"),
+			load_out = datetime.strptime(event_dict[7],"%m/%d/%Y"),
+			event_client = event_dict[3],
+			active = 0,
+			items = json.dumps(newdict),
+			contact = contact_info,
+			notes = event_dict[9]
+			)
 
 		db.session.add(archived_event)
 		

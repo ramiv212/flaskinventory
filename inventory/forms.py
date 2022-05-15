@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, DateField, PasswordField, SubmitField,IntegerField,TextAreaField,SelectField,HiddenField,TelField,EmailField
-from wtforms.validators import DataRequired,Length, ValidationError
+from wtforms.validators import DataRequired,Length, ValidationError, Optional
 from inventory.models import Event
 from sqlalchemy.orm import load_only
 from flask import Blueprint
@@ -19,11 +19,11 @@ class CreateEventForm(FlaskForm):
 	event_client = StringField(label='Event Client',validators=[DataRequired(),Length(min=2,max=30)])
 	load_in = DateField(label='Load-In',format='%Y-%m-%d',validators=[DataRequired()])
 	load_out = DateField(label='Load-Out',format='%Y-%m-%d',validators=[DataRequired()])
-	contact_name = StringField(label='Name')
-	contact_phone = IntegerField(label='Phone', render_kw={"pattern":"[0-9]{3}-[0-9]{3}-[0-9]{4}","type":"number"})
-	contact_email = EmailField(label='Email')
-	notes = TextAreaField(label='Notes')
-	submit = SubmitField(label='Create')
+	contact_name = StringField(label='Name', validators=[Optional()])
+	contact_phone = IntegerField(label='Phone', render_kw={"pattern":"[0-9]{3}-[0-9]{3}-[0-9]{4}","type":"number"}, validators=[Optional()])
+	contact_email = EmailField(label='Email', validators=[Optional()])
+	notes = TextAreaField(label='Notes', validators=[Optional()])
+	submit = SubmitField(label='Create', validators=[Optional()])
 
 
 class ItemInspectorForm(FlaskForm):

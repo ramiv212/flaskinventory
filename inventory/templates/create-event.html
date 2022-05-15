@@ -38,7 +38,7 @@ Create Event
     </tr>
     <br><br>
     <tr>
-        <table style="margin: auto; width: 70%;">
+        <table style="margin: auto; width: 80%;">
           <tr>
             <td style="text-align: center; font-weight: bold; font-size: 24px; border-color: white; border-width: 1; border-style: solid;"
              colspan="3">{{ selected_event_name }}</td>
@@ -47,9 +47,8 @@ Create Event
               <div class="event-info-cell"><b>Event Start Date:</b> {{ event_start_date }}<br>
              <b>Event End Date:</b> {{ event_end_date }}</div>
 
-              <div class="event-info-cell"><b>Event Load-in Date:</b><br>
-              {{ event_end_date }}
-              <b>Event Load-out Date:</b> {{ event_end_date }}</div>
+              <div class="event-info-cell"><b>Event Load-in Date:&nbsp</b>{{ load_in_date }}<br>
+              <b>Event Load-out Date:</b> {{ load_out_date }}</div>
             </td>
             <td valign="TOP">
               <div class="event-info-cell"><b>Point Of Contact:</b> <br>
