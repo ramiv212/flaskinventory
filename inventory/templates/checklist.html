@@ -19,17 +19,40 @@
 
 
 <div class="checklist-info-bar">
-	<div>
-	<span>Event Name:&nbsp;</span>
-	{{ event_name }}
-	
-	<span>Event Start Date:&nbsp;</span>
-	{{ event_date_start }}
+	<table class="checklist-info-table">
+		<tr>
+			<td>
+				<b>Event Name:</b> {{ event_name }}
+			</td>
+			<td>
+				<b>Load-In Date:</b> {{ load_in_date }}
+			</td>
+			<td>
+				<b>Contact:</b> {{ contact_info["contact_name"] }}
+			</td>
+		</tr>
 
-	<span>Event End Date:&nbsp;</span>
-	{{ event_date_end }}
-	</div>
+		<tr valign="TOP">
+			<td>
+				<b>Event Start Date:</b> {{ event_date_start }}
+			</td>
+			<td>
+				<b>Load-Out Date:</b> {{ load_out_date }}
+			</td>
+			<td>
+				{{ contact_info["contact_phone"] }}
+			</td>
+		</tr>
 
+		<tr>
+			<td>
+				<b>Event End Date:</b> {{ event_date_end }}
+			</td>
+			<td></td>
+			<td>{{ contact_info["contact_email"] }}</td>
+		</tr>
+
+	</table>
 </div>
 
 
@@ -133,6 +156,15 @@
 
 
 </table>
+<br><br>
+<tr>
+	<td>
+		<div class="checklist-info-bar" style="text-align: left; padding: 10px;">
+			<b>Event Notes:</b><br>
+			{{ event_notes }}
+		</div>
+	</td>
+</tr>
 
 </table>
 

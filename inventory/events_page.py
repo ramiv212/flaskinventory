@@ -196,6 +196,8 @@ def return_event_checklist():
 	rigging_list = []
 	other_list = []
 
+	contact_info = json.loads(dictionaries.eventdict[event][8])
+
 	for item in event_items:
 		if dictionaries.itemdict2[item][5] == 'Audio':
 			audio_list.append(item)
@@ -217,6 +219,10 @@ def return_event_checklist():
 			event_date_end=dictionaries.eventdict[event][2],
 			event_client=dictionaries.eventdict[event][3],
 			event_items=event_items,
+			load_in_date=dictionaries.eventdict[event][6],
+			load_out_date=dictionaries.eventdict[event][7],
+			contact_info=contact_info,
+			event_notes=dictionaries.eventdict[event][9],
 			audio_list=audio_list,
 			video_list=video_list,
 			lighting_list=lighting_list,

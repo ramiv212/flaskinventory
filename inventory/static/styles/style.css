@@ -128,7 +128,7 @@ button {
 	padding-left: 10px;
 	padding-right: 10px;
 	width: 90%;
-	height: 50px;
+	font-size: 14px;
 }
 
 .checklist-info-bar div {
@@ -141,7 +141,6 @@ button {
 .checklist-info-bar span{
 	font-weight: 600;
 	padding-left: 20px;
-	/*padding-right: 40px;*/
 }
 
 
@@ -150,6 +149,13 @@ button {
 	font-weight: 600;
 	padding-top: 10px;
 	padding-bottom: 10px;
+}
+
+
+.checklist-info-table td {
+	padding: 3px;
+	padding-left: 20px;
+	padding-right: 20px;
 }
 
 .checklist-table td{
