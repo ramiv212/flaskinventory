@@ -101,7 +101,43 @@ Event Archive
 	{{ event_date_end }}	
 </div>
 
+<div class="heading">
+	<h5>Load-In Date</h4>
+	{{ load_in_date }}	
+</div>
+
+<div class="heading">
+	<h5>Load-Out Date</h4>
+	{{ load_out_date }}	
+</div>
+
 <br><br>
+
+<div class="heading">
+	<h5>Event Contact</u></h4>
+	{{ contact_info["contact_name"] }}
+</div>
+
+<div class="heading">
+	<h5>Contact Phone</u></h4>
+	<a href="tel:{{ contact_info["contact_phone"] }}">
+		{{ contact_info["contact_name"] }}
+	</a>
+</div>
+
+<div class="heading">
+	<h5>Contact Email</u></h4>
+	<a href="tel:{{ contact_info["contact_email"] }}">
+		{{ contact_info["contact_email"] }}
+	</a>
+</div>
+
+<div class="heading">
+	<h5>Notes</h4>
+	{{ event_notes }}	
+</div>
+
+<br><br><br>
 
 	<h5><u>Event Items</u></h4>
 

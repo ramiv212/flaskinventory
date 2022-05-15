@@ -295,6 +295,9 @@ def event_archive():
 			items = json.loads(event.items)
 			event_date_start = event.event_date_start.strftime('%m/%d/%Y')
 			event_date_end = event.event_date_end.strftime('%m/%d/%Y')
+			event_load_in = event.load_in.strftime('%m/%d/%Y')
+			event_load_out = event.load_out.strftime('%m/%d/%Y')
+			contact_info = json.loads(event.contact)
 
 			return render_template("event-archive.html", 
 				archived_events=archived_events,
@@ -302,16 +305,30 @@ def event_archive():
 				event_name=event.event_name,
 				event_client=event.event_client,
 				event_date_start=event_date_start,
-				event_date_end=event_date_end)
+				event_date_end=event_date_end,
+				load_in_date=event_load_in,
+				load_out_date=event_load_out,
+				contact_info=contact_info,
+				event_notes=event.notes)
 
 	# if there is events but no request, render page with no items
 	elif archived_events:
 		archived_events = EventArchive.query.all()
-		return render_template("event-archive.html",archived_events=archived_events)
+		return render_template("event-archive.html",archived_events=archived_events,
+			contact_info="""{
+		"contact_name":"",
+		"contact_phone":"",
+		"contact_email":"",
+		}""")
 
 	# if there is no events, render page with no events
 	else:
-		return render_template("event-archive.html",archived_events=archived_events)
+		return render_template("event-archive.html",archived_events=archived_events,
+			contact_info="""{
+		"contact_name":"",
+		"contact_phone":"",
+		"contact_email":"",
+		}""")
 
 
 @eventspage.route('/delete-archive', methods=['GET','POST'])
