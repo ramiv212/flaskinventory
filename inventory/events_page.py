@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, flash, request, send_from_directory, flash
 from flask_login import login_required
 from inventory.models import Item, Event,EventArchive
-from inventory.forms import CreateEventForm,ItemInspectorForm,CreateItemForm,AddToEventForm,SelectEventForm,Blueprint
+from inventory.forms import CreateEventForm,ItemInspectorForm,CreateItemForm,AddToEventForm,SelectEventForm,EditEventForm,Blueprint
 from inventory import db
 from inventory.mybarcode import export_barcode
 from inventory.resources import Dictionaries,Scan,Funcs
@@ -21,6 +21,7 @@ eventspage = Blueprint('events',__name__)
 @login_required
 def event_page():
 	create_event_form = CreateEventForm()
+	edit_event_form = EditEventForm()
 	dictionaries = Dictionaries()
 	inspector_form = ItemInspectorForm()
 	create_item_form = CreateItemForm()
@@ -30,6 +31,8 @@ def event_page():
 	funcs = Funcs()
 	selected_event = None
 	selected_event_items = []
+
+	print(f'\n\n VALIDATED = {edit_event_form.validate_on_submit()} \n\n')
 
 
 	# code to update item in database
@@ -65,8 +68,15 @@ def event_page():
 		conflicting_event_items = get_conflicting_event_items(selected_event)
 
 		contact_info = json.loads(dictionaries.eventdict[selected_event][8])
-		print(contact_info)
 
+		# populate event fields with event data
+		edit_event_form.event_name.data = selected_event
+		edit_event_form.event_client.data = dictionaries.eventdict[selected_event][3]
+		edit_event_form.event_date_start.data = datetime.strptime(dictionaries.eventdict[selected_event][1],"%m/%d/%Y")
+		edit_event_form.event_date_end.data = datetime.strptime(dictionaries.eventdict[selected_event][2],"%m/%d/%Y")
+		edit_event_form.load_in.data = datetime.strptime(dictionaries.eventdict[selected_event][6],"%m/%d/%Y")
+		edit_event_form.load_out.data = datetime.strptime(dictionaries.eventdict[selected_event][7],"%m/%d/%Y")
+		edit_event_form.notes.data = dictionaries.eventdict[selected_event][9]
 
 
 		return render_template('create-event.html', 
@@ -74,6 +84,7 @@ def event_page():
 		itemdict=dictionaries.itemdict,
 		itemdict2=dictionaries.itemdict2,
 		create_event_form=create_event_form,
+		edit_event_form=edit_event_form,
 		inspector_form=inspector_form,
 		create_item_form=create_item_form,
 		add_to_event_form=add_to_event_form,
@@ -124,6 +135,40 @@ def event_page():
 		return redirect(url_for('events.event_page'))
 
 
+	# code to update an event
+	if edit_event_form.update.data and edit_event_form.validate_on_submit():
+		event_name = edit_event_form.event_name.data
+		event_date_start = edit_event_form.event_date_start.data
+		event_date_end = edit_event_form.event_date_end.data
+		event_client = edit_event_form.event_client.data
+		load_in = edit_event_form.load_in.data
+		load_out = edit_event_form.load_out.data
+		notes = edit_event_form.notes.data
+
+
+		event_to_update = { 
+							  "event_date_start" : edit_event_form.event_date_start.data,
+							  "event_date_end" : edit_event_form.event_date_end.data,
+							  "event_client" : edit_event_form.event_client.data,
+							  "load_in" : edit_event_form.load_in.data,
+							  "load_out" : edit_event_form.load_out.data,
+							  "notes" : edit_event_form.notes.data,
+						}
+
+		event = Event.query.filter_by(event_name = event_name).first()
+
+		print(event)
+
+		for key, value in event_to_update.items():
+			setattr(event, key, value)
+
+		db.session.commit()
+
+		flash(f'{event_name} was updated')
+
+		return redirect(url_for('events.event_page'))
+
+
 
 	if select_event_form.errors != {}: #If there are not errors from the validations
 		for err_msg in select_event_form.errors.values():
@@ -139,6 +184,7 @@ def event_page():
 		inspector_form=inspector_form,
 		create_item_form=create_item_form,
 		create_event_form=create_event_form,
+		edit_event_form=edit_event_form,
 		add_to_event_form=add_to_event_form,
 		select_event_form=select_event_form,
 		selected_event_items=selected_event_items,

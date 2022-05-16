@@ -202,10 +202,8 @@ button {
 }
 
 .event-info-cell {
-	width: 300px;
-	margin-top: 20px;
-	margin-bottom: 20px;
-
+	margin-bottom: 5px;
+	text-align: right;
 }
 
 input[type=number]::-webkit-inner-spin-button, 

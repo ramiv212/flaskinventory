@@ -23,7 +23,7 @@ class CreateEventForm(FlaskForm):
 	contact_phone = IntegerField(label='Phone', render_kw={"pattern":"[0-9]{3}-[0-9]{3}-[0-9]{4}","type":"number"}, validators=[Optional()])
 	contact_email = EmailField(label='Email', validators=[Optional()])
 	notes = TextAreaField(label='Notes', validators=[Optional()])
-	submit = SubmitField(label='Create', validators=[Optional()])
+	submit = SubmitField(label='Create')
 
 
 class ItemInspectorForm(FlaskForm):
@@ -31,7 +31,7 @@ class ItemInspectorForm(FlaskForm):
 	name = StringField(label='Name',validators=[DataRequired()])
 	barcode = IntegerField(label='Barcode')
 	serial = StringField(label='Serial')
-	manufacturer = StringField(label='Manufacturer',validators=[DataRequired()])
+	manufacturer = StringField(label='Manufacturer')
 	category = SelectField(label='Category',choices=["Audio","Video","Lighting","Rigging","Other"],validators=[DataRequired()])
 	storage = StringField(label='Storage')
 	status = SelectField(label='Status',choices=["OK","Broken","Sent For Repair","Loaned To Customer","See Notes"])
@@ -53,7 +53,6 @@ class CreateItemForm(FlaskForm):
 
 
 class AddToEventForm(FlaskForm):
-
 	events = Event.query.all()
 
 	fields = ['ID', 'event_name','event_date_start', 'event_date_end', 'event_client' ,'active']
@@ -74,6 +73,13 @@ class SelectEventForm(FlaskForm):
 	submit = SubmitField(label='Select')
 
 
-
-	
+class EditEventForm(FlaskForm):
+	event_name = HiddenField()
+	event_date_start = DateField(label='Event Start',format='%Y-%m-%d',validators=[DataRequired()])
+	event_date_end = DateField(label='Event End',format='%Y-%m-%d',validators=[DataRequired()])
+	event_client = StringField(label='Event Client',validators=[DataRequired(),Length(min=2,max=30)])
+	load_in = DateField(label='Load-In',format='%Y-%m-%d',validators=[DataRequired()])
+	load_out = DateField(label='Load-Out',format='%Y-%m-%d',validators=[DataRequired()])
+	notes = TextAreaField(label='Notes', validators=[Optional()])
+	update = SubmitField(label='Update Event')
 
