@@ -210,7 +210,7 @@ $.getJSON( "/json/barcodes", function(json){
 				if (!(scanned_items.includes(input))){
 					scanned_items.push(input)
 
-          scanned_row.value = "" 
+          input_field.value = "" 
 
 			if (scanned_items.length == (all_items_list.length)){
 				document.getElementById("everything-scanned").innerHTML = "<h3 class=\"scan-banner\">All Items Are Accounted For!</h3>";
