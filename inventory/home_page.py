@@ -110,9 +110,6 @@ def home_page():
 		flash(f'There was an error with the form: {err_msg}',category='danger')
 		print(err_msg)
 
-		print(f"\n\nbarcode.data = {inspector_form.print_barcode.data}")
-		print(f"barcode.data = {inspector_form.validate_on_submit()}\n\n")
-
 
 	funcs.update_event_submitfields()
 

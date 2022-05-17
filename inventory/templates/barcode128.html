@@ -1,0 +1,201 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+<table class="main-table">
+  <tr VALIGN="TOP">
+    <td class="inventory-table-col" id="inv-table">
+      <div style="padding: 20px; background-color: #212529;">
+
+        <h3>Print Barcode Page</h3>
+
+        Search:
+        <input type="text" id="item-search" class="form-control-sm" autofocus> &nbsp;
+        <button class="btn btn-light btn-sm"
+                        onclick="renderBarcodes()">Render</button>
+        <br><br>
+
+        <table class="table table-hover table-dark inventory-table">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th score="col">Qty</th>
+              <th scope="col">Manufacturer</th>
+              <th scope="col">St.</th>
+              <th scope="col">Name</th>
+              <th scope="col">Barcode</th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+
+
+
+          <!-- start code for row with no multiples -->
+          <tbody>
+            {% for dict in itemdict %}
+            {% if itemdict[dict][9] < 2: %}
+
+            <tr style="font-weight: 600;" id="{{ itemdict[dict][0] }}">
+              <!-- ID -->
+              <td>{{ itemdict[dict][0] }}</td>
+              <!-- QTY -->
+              <td>{{ itemdict[dict][9] }}</td>
+              <!-- Manufacturer -->
+              <td>{{ itemdict[dict][3] }}</td>
+              <!-- Status -->
+              <td>
+                <!-- this code sets the emojis in the status column according to the status of the item in the db -->
+
+                {% if itemdict[dict][7] == 'Broken': %}
+                <span class="status-emoji">&#128165</span>
+
+                {% elif itemdict[dict][7] == 'Sent For Repair': %}
+                <span class="status-emoji">&#8987</span>
+
+                {% elif itemdict[dict][7] == 'Loaned To Customer': %}
+                <span class="status-emoji">&#128100</span>
+
+                {% elif itemdict[dict][7] == 'See Notes': %}
+                <span class="status-emoji">&#128203</span>
+
+                {% endif %} 
+
+              </td>
+              <!-- Name -->
+              {% if 
+              itemdict[dict][7] == 'Broken' 
+              or itemdict[dict][7] == 'Sent For Repair' 
+              or itemdict[dict][7] == 'Loaned To Customer': %}
+              <td style="color:red">{{ dict }}</td>
+              {% elif itemdict[dict][7] == 'See Notes'%}
+              <td style="color:yellow">{{ dict }}</td>
+
+              {% else %}
+              <td>{{ dict }}</td>
+              {% endif %}
+
+              <!-- Barcode -->
+              <td>{{ itemdict[dict][1] }}</td>
+              <td>
+              </td>
+              <td></td>
+            </tr>
+
+            {% else %}
+            <tr style="font-weight: 600;">
+              <!-- ID -->
+              <td></td>
+              <!-- QTY -->
+              <td>{{ itemdict[dict][9] }}</td>
+              <!-- Manufacturer -->
+              <td>{{ itemdict[dict][3] }}</td>
+              <!-- Status -->
+              <td></td>
+              <!-- Name -->
+              <td>{{ dict }}</td>
+              <!-- Barcode -->
+              <td></td>
+              <td></td>
+              <td>
+                <button class="btn btn-light btn-sm" id="button{{ itemdict[dict][0] }}" onclick="collapse({{ itemdict[dict][0] }})">Expand</button>
+              </td>
+            </tr>
+          <!-- end code for item that has no multiples -->
+
+
+
+          <!-- start code for item that has multiples (child) -->
+          {% for item in items %}
+          {% if item.name == dict and itemdict[dict][9] > 1 %}
+          <tr class="row{{ itemdict[dict][0] }}" id="{{ item.ID }}">
+            <!-- ID -->
+            <td class="td-display">{{ item.ID }}</td>
+            <!-- QTY -->
+            <td class="td-display"></td>
+            <!-- Manufacturer -->
+            <td class="td-display">{{ item.manufacturer }}</td>
+            <!-- Status -->
+            <td class="td-display">
+              <!-- this code sets the emojis in the status column according to the status of the item in the db -->
+
+              {% if item.status == 'Broken': %}
+              <span class="status-emoji">&#128165</span>
+
+              {% elif item.status == 'Sent For Repair': %}
+              <span class="status-emoji">&#8987</span>
+
+              {% elif item.status == 'Loaned To Customer': %}
+              <span class="status-emoji">&#128100</span>
+
+              {% elif item.status == 'See Notes': %}
+              <span class="status-emoji">&#128203</span>
+
+              {% endif %} 
+
+            </td>
+            <!-- Name -->
+            {% if 
+            item.status == 'Broken' 
+            or item.status == 'Sent For Repair' 
+            or item.status == 'Loaned To Customer': %}
+            <td style="color:red" class="td-display">{{ dict }}</td>
+            {% elif item.status == 'See Notes'%}
+            <td style="color:yellow" class="td-display">{{ dict }}</td>
+
+            {% else %}
+            <td class="td-display">{{ item.name }}</td>
+            {% endif %}
+
+            <!-- Barcode -->
+            <td class="td-display">{{ item.barcode }}</td>
+            <td class="td-display">
+            </td>
+            <td class="td-display">
+            </td>
+          </tr>
+          <!-- end code for item that has multiples (child) -->
+
+
+          <script type="text/javascript">
+
+            </script>
+
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </td>
+    </table>
+
+<script type="text/javascript">
+	
+	function renderBarcodes(){
+	var csrf_token = "{{ csrf_token() }}";
+	json_items = JSON.stringify(selected_barcode_items)
+    $.ajax({
+      type: 'POST',
+      url: '/barcode/render',
+      headers: {
+        "X-CSRFToken": csrf_token
+      },
+      data: {items: json_items},
+      // this will allow the render_html return to work
+      success:function(response){ document.write(response);},
+    })
+    
+  }
+
+</script>
+
+<script type="text/javascript" src="{{ url_for('static', filename='scripts.js') }}"></script>
+
+
+{% endblock %}
+

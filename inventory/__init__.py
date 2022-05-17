@@ -40,6 +40,7 @@ from .resources import json_routes
 from .admin import adminpage
 from .auth import authorize
 from .mobi import mobile
+from .barcode128 import barcode
 
 
 app.register_blueprint(mobile, url_prefix='/mobile')
@@ -48,6 +49,7 @@ app.register_blueprint(eventspage, url_prefix='/events/')
 app.register_blueprint(jsonroutes, url_prefix='/json-routes/')
 app.register_blueprint(json_routes, url_prefix='/json/')
 app.register_blueprint(adminpage, url_prefix='/admin/')
+app.register_blueprint(barcode, url_prefix='/barcode')
 app.register_blueprint(authorize, url_prefix='/')
 
 

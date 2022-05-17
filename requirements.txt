@@ -1,3 +1,4 @@
+code128==0.3
 Flask==2.0.3
 flask-paginate==2022.1.8
 Flask-SQLAlchemy==2.5.1

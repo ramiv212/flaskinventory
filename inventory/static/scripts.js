@@ -151,8 +151,9 @@ function inspectAndHide(index){
 
   getItem(index);
   function getItem(index){
+    if (window.location.pathname != "/barcode/"){
     $.getJSON('/json/itemdict2', function(jd) {
-      console.log(index)
+      // console.log(index)
       $("#idnumber").val(jd[index][0]);
       $("#barcode").val(jd[index][1]);
       $("#serial").val(jd[index][2]);
@@ -163,17 +164,19 @@ function inspectAndHide(index){
       $("#status").val(jd[index][7]);
       $("#notes").val(jd[index][8]);
     });
+    }
   }
 }
 
 // get the item that is clicked on in the table and
 // populate the inspector
+
+var selected_barcode_items = []
+
 var table = document.querySelector('#inv-table').addEventListener
 ('click',buttonClick);
 
 function buttonClick(e){
-  console.log(e)
-
   if (!("path" in e))
     Object.defineProperty(e, "path", {
       get: function() {
@@ -193,8 +196,36 @@ function buttonClick(e){
 
   var clickedRow = e.path[1].id
   if (clickedRow != ""){
+    // code to inspect item that is clicked in the inspector
     inspectAndHide(clickedRow)
   }
+
+{     
+    // code to select items to be rendered to the barcode page
+    // check if this is the barcode page
+    if (window.location.pathname == "/barcode/"){
+    // if the item is not already in the list of items, add it
+      if (!(selected_barcode_items.includes(clickedRow)) && clickedRow != "inv-table"){
+        if (clickedRow != ""){
+        // add item to list of items
+        selected_barcode_items.push(clickedRow)
+        console.log(clickedRow)
+        console.log(selected_barcode_items)
+        e.path[1].style.backgroundColor = "green"
+        }
+        // else if it is already in there, remove it
+      } else if (selected_barcode_items.includes(clickedRow) && clickedRow != "inv-table") {
+        var remove_index = selected_barcode_items.indexOf(clickedRow);
+          selected_barcode_items.splice(remove_index, 1);
+        console.log(clickedRow)
+        console.log(selected_barcode_items)
+        e.path[1].style.backgroundColor = ""
+      }
+
+    }  
+          
+  }
+
 }
 
 

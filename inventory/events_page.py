@@ -32,8 +32,6 @@ def event_page():
 	selected_event = None
 	selected_event_items = []
 
-	print(f'\n\n VALIDATED = {edit_event_form.validate_on_submit()} \n\n')
-
 
 	# code to update item in database
 	if inspector_form.submit.data and inspector_form.validate_on_submit():
@@ -157,7 +155,6 @@ def event_page():
 
 		event = Event.query.filter_by(event_name = event_name).first()
 
-		print(event)
 
 		for key, value in event_to_update.items():
 			setattr(event, key, value)
@@ -418,7 +415,6 @@ def checkout():
 
 	if select_event_form.submit.data and select_event_form.validate_on_submit():
 		selected_event = select_event_form.event_field.data
-		print(selected_event)
 		event_items = json.loads(dictionaries.eventdict[selected_event][5])['items']
 		
 
