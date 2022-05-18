@@ -43,9 +43,9 @@
             {{ inspector_form.notes(id="notes", class="inspector-notes") }}
 
             <div>
-              {{ inspector_form.submit(id="submit", class="btn btn-light btn-sm") }}
+              {{ inspector_form.submit(id="submit", class="btn btn-primary btn-sm") }}
               &nbsp;
-              {{ inspector_form.delete(id="delete", class="btn btn-light btn-sm") }}
+              {{ inspector_form.delete(id="delete", class="btn btn-danger btn-sm") }}
               <!-- {{ inspector_form.print_barcode(id="barcode") }} -->
 
             </div>
@@ -91,7 +91,7 @@
             <div>{{ create_item_form.notes.label() }}</div>
             {{ create_item_form.notes(class="inspector-notes") }}
 
-            <div>{{ create_item_form.create(id="submit", class="btn btn-light btn-sm") }}</div>
+            <div>{{ create_item_form.create(id="submit", class="btn btn-primary btn-sm") }}</div>
             <br>
           </div>
 
@@ -159,7 +159,7 @@
               <div style="display: inline-block;">{{ create_event_form.notes.label() }}&nbsp;   
               </div>
             {{ create_event_form.notes(class="inspector-field inspector-notes") }}
-          {{ create_event_form.submit(class="btn btn-light btn-sm") }}<br>
+          {{ create_event_form.submit(class="btn btn-primary btn-sm") }}<br>
         </form>
 
       </div>
@@ -175,6 +175,9 @@
     <div id="events-window" style="display: none;">
 
       <div class="inspector-fields">
+        <br>
+        {{ add_to_event_form.event_select.label() }}
+        {{ add_to_event_form.event_select(class="inspector-field") }}
 
         <form onsubmit="return false">
           <label for="scan_item">Scan</label>
@@ -183,12 +186,10 @@
 
         <form method="POST" class="inspector-form" id="events-window" onSubmit="return confirm('Are you sure?')" style="color:white; display: block;">
           <div>
-            {{ add_to_event_form.csrf_token }}
-
-            {{ add_to_event_form.event_select.label() }}
+            {{ add_to_event_form.csrf_token }}<br>
 
             {{ add_to_event_form.hidden_scanned_items(id="scanned-item-list") }}
-            {{ add_to_event_form.add_scanned_items(class="btn btn-light btn-sm") }}
+            {{ add_to_event_form.add_scanned_items(class="btn btn-primary btn-sm") }}
             <br><br>
             Items to add:
             <br>
