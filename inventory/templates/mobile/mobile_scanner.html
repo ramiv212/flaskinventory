@@ -1,0 +1,48 @@
+{% extends 'mobile/base.html' %}
+
+{% block title %}
+Mobile Scanner
+{% endblock %}
+
+{% block content %}
+
+<div id="qr-reader" style="width: 600px"></div>
+
+
+<!-- include the library -->
+<script src="https://unpkg.com/html5-qrcode@2.0.9/dist/html5-qrcode.min.js"></script>
+
+
+<script type="text/javascript">
+function onScanSuccess(decodedText, decodedResult) {
+    console.log(`Code scanned = ${decodedText}`, decodedResult);
+    
+}
+var html5QrcodeScanner = new Html5QrcodeScanner(
+  "qr-reader", { fps: 10, qrbox: 250 });
+html5QrcodeScanner.render(onScanSuccess);
+</script>
+
+
+<script type="text/javascript">
+	
+	function renderBarcodes(){
+	var csrf_token = "{{ csrf_token() }}";
+	json_items = JSON.stringify(selected_barcode_items)
+    $.ajax({
+      type: 'POST',
+      url: '/barcode/render',
+      headers: {
+        "X-CSRFToken": csrf_token
+      },
+      data: {items: json_items},
+      // this will allow the render_html return to work
+      success:function(response){ document.write(response);},
+    })
+    
+  }
+
+</script>
+
+
+{% endblock %}

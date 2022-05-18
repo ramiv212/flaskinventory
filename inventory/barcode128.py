@@ -1,6 +1,7 @@
-from flask import render_template, redirect, url_for, flash, request, send_from_directory,send_file,Blueprint
+from flask import render_template, redirect, url_for, flash, request, send_from_directory,send_file,Response,Blueprint
 from flask_login import login_required
 from inventory.resources import Dictionaries,Scan,Funcs
+from inventory.barcodereader import serve_frames
 import code128
 import io
 import json
@@ -50,3 +51,8 @@ def barcode_page():
 		items = items,
 		itemdict = itemdict,
 		itemdict2 = itemdict2)
+
+
+# @barcode.route('/video_feed')
+# def video_feed():
+# 	return Response(serve_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')

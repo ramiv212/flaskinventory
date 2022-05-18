@@ -96,3 +96,8 @@ def mobile_events():
 		selected_event_items=selected_event_items,
 		itemdict2=dictionaries.itemdict2
 		)
+
+@mobile.route("/scanner", methods=['GET', 'POST'])
+def mobile_scanner():
+	return render_template("mobile/mobile_scanner.html")
+
