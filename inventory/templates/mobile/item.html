@@ -55,7 +55,7 @@
 
 		<div class="item-row-div">
 		<div>ID:</div>
-		<div>{{ inspector_form.ID(class="item-field", style="width: 150px")}}</div>
+		<div>{{ inspector_form.ID(class="item-field", style="width: 220px;")}}</div>
 		</div>
 
 		<div class="item-row-div" style="text-align: left;">
@@ -93,27 +93,26 @@
 		<div>{{ inspector_form.status(class="item-field") }}</div>
 		</div>
 
-		<div class="item-row-div" style="text-align: center; background-color: red;"> 	
-		<div>Notes: {{ inspector_form.notes(class="item-notes-field") }}</div>
-		</div>
 
 	</div>
+
 </div>
+
+<div style="margin: auto; display: flex; justify-content: center; flex-flow: column; color: white;text-align: center;">
+	<div>Notes:<br>
+	 {{ inspector_form.notes(class="item-notes-field", style="width: 60%; margin: auto;") }}</div>
+	 <br>
 </div>
-	<div style="width: 200px; margin: auto; display: flex; justify-content: center;">
-		{{ inspector_form.submit(id="submit", class="update-button btn btn-mid btn-primary") }}
-		</form>
 
-		<form method="GET" action="/mobile/scanner" style="display: inline-block;">
-		<button class="btn btn-mid" style="width: 110px;">Scan Again</button>
-		</form>
+<div style="display: flex; flex-flow: row; justify-content: center; align-content: center;">
+{{ inspector_form.submit(id="submit", class="update-button btn btn-mid btn-primary") }}
 
-		</div>
+</form>
+	<form method="GET" action="/mobile/scanner" style="display: inline-block;">
+	<button class="btn btn-mid" style="width: 110px;">Scan Again</button>
+</form>
 
-
-
-
-
+</div>
 
 
 
