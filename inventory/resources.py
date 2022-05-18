@@ -132,6 +132,8 @@ class Scan:
 		# get the items that were scanned and added to the hidden form field
 		items_to_add = items.split(",")
 
+		print(items_to_add)
+
 		# get the items from the selected event
 		try:
 			items_to_add_to = json.loads(Event.query.get(event_ID).items)['items']

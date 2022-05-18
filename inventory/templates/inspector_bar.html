@@ -172,14 +172,10 @@
   <div class="sticky-inspector-inner">
       <button class="sidebar-banner" onclick="hideEvents()">Event Quick Scan</button>
     </div>
+    <form onsubmit="return false">
     <div id="events-window" style="display: none;">
 
       <div class="inspector-fields">
-        <br>
-        {{ add_to_event_form.event_select.label() }}
-        {{ add_to_event_form.event_select(class="inspector-field") }}
-
-        <form onsubmit="return false">
           <label for="scan_item">Scan</label>
           <input type="text" name="scan_item" id="scan-item" class="inspector-field">
         </form>
@@ -187,9 +183,11 @@
         <form method="POST" class="inspector-form" id="events-window" onSubmit="return confirm('Are you sure?')" style="color:white; display: block;">
           <div>
             {{ add_to_event_form.csrf_token }}<br>
+            {{ add_to_event_form.event_select.label() }}
+            {{ add_to_event_form.event_select(class="inspector-field") }}<br>
 
             {{ add_to_event_form.hidden_scanned_items(id="scanned-item-list") }}
-            {{ add_to_event_form.add_scanned_items(class="btn btn-primary btn-sm") }}
+            {{ add_to_event_form.add_scanned_items(class="btn btn-primary btn-sm", style="width: 60px;") }}
             <br><br>
             Items to add:
             <br>

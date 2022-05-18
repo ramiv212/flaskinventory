@@ -89,6 +89,10 @@ def home_page():
 	if add_to_event_form.add_scanned_items.data and add_to_event_form.validate_on_submit() and add_to_event_form.event_select.data != "":
 		scan.add_scanned_items(add_to_event_form.hidden_scanned_items.data)
 
+		print("RAN ADD ITEMS")
+
+
+
 
 
 	# create an event
@@ -109,6 +113,10 @@ def home_page():
 	for err_msg in inspector_form.errors.values():
 		flash(f'There was an error with the form: {err_msg}',category='danger')
 		print(err_msg)
+
+	for err_msg in add_to_event_form.errors.values():
+			flash(f'There was an error with the form: {err_msg}',category='danger')
+			print(err_msg)
 
 
 	funcs.update_event_submitfields()

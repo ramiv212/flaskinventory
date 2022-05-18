@@ -26,7 +26,7 @@
 }
 
 .item-field {
-	width: 150px;
+	width: 220px;
 }
 
 .item-notes-field {
@@ -93,12 +93,13 @@
 		<div>{{ inspector_form.status(class="item-field") }}</div>
 		</div>
 
-		<div class="item-row-div" style="text-align: center;"> 	
+		<div class="item-row-div" style="text-align: center; background-color: red;"> 	
 		<div>Notes: {{ inspector_form.notes(class="item-notes-field") }}</div>
 		</div>
 
 	</div>
-
+</div>
+</div>
 	<div style="width: 200px; margin: auto; display: flex; justify-content: center;">
 		{{ inspector_form.submit(id="submit", class="update-button btn btn-mid btn-primary") }}
 		</form>
@@ -109,12 +110,12 @@
 
 		</div>
 
-</div>
 
 
 
 
 
-</div>
+
+
 
 {% endblock %}
