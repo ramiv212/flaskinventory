@@ -6,7 +6,7 @@ Mobile Scanner
 
 {% block content %}
 
-<div id="reader" style="width: 100%"></div>
+<div id="reader" style="width: 70%"></div>
 
 
 <!-- include the library -->
@@ -14,30 +14,23 @@ Mobile Scanner
 
 
 <script type="text/javascript">
-function onScanSuccess(decodedText, decodedResult) {
-    console.log(`Code scanned = ${decodedText}`, decodedResult);
+
+const html5QrCode = new Html5Qrcode(/* element id */ "reader");
+html5QrCode.start({ facingMode: "environment" }, 
+  {
+    fps: 10,    // Optional, frame per seconds for qr code scanning
+    qrbox: { width: 250, height: 250 },  // Optional, if you want bounded box UI
+    formatsToSupport: [CODE_128,]
+  },
+  (decodedText, decodedResult) => {
     scanBarcode(decodedText)
-}
-
-
-
-
-	const html5QrCode = new Html5Qrcode(/* element id */ "reader");
-	html5QrCode.start({ facingMode: "environment" }, 
-	  {
-	    fps: 10,    // Optional, frame per seconds for qr code scanning
-	    qrbox: { width: 250, height: 250 },  // Optional, if you want bounded box UI
-	    facingMode: "environment"
-	  },
-	  (decodedText, decodedResult) => {
-	    // do something when code is read
-	  },
-	  (errorMessage) => {
-	    // parse error, ignore it.
-	  })
-	.catch((err) => {
-	  // Start failed, handle it.
-	});
+  },
+  (errorMessage) => {
+    // parse error, ignore it.
+  })
+.catch((err) => {
+  // Start failed, handle it.
+});
 
 </script>
 
