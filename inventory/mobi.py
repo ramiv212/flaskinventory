@@ -101,3 +101,18 @@ def mobile_events():
 def mobile_scanner():
 	return render_template("mobile/mobile_scanner.html")
 
+
+@login_required
+@mobile.route('item/<barcode>')
+def item_page(barcode):
+	dictionaries = Dictionaries()
+	barcodedict = dictionaries.barcodedict
+
+	if barcode in barcodedict:
+		return render_template("mobile/item.html", 
+			barcodedict = barcodedict,
+			barcode = barcode)
+
+	else:
+		return f"{barcode} is not in the database."
+

@@ -1,0 +1,28 @@
+{% extends 'mobile/base.html' %}
+
+{% block title %}
+{{ barcodedict[barcode][3] }}  {{ barcodedict[barcode][4] }}
+{% endblock %}
+
+{% block content %}
+
+<div style="color: white; display: flex; flex-flow: column; padding: 20px;">
+
+<center>
+<h3>{{ barcodedict[barcode][3] }}  {{ barcodedict[barcode][4] }}</h3>
+</center>
+
+
+ID: {{ barcodedict[barcode][0] }}<br>
+Barcode: {{ barcodedict[barcode][1] }}<br>
+Serial: {{ barcodedict[barcode][2] }}<br>
+Manufacturer: {{ barcodedict[barcode][3] }}<br>
+Category: {{ barcodedict[barcode][5] }}<br>
+Storage: {{ barcodedict[barcode][6] }}<br>
+Status: {{ barcodedict[barcode][7] }}<br>
+Notes: {{ barcodedict[barcode][8] }}<br>
+
+
+</div>
+
+{% endblock %}
