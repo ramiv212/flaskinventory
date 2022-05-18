@@ -16,6 +16,11 @@ Mobile Scanner
 <script type="text/javascript">
 function onScanSuccess(decodedText, decodedResult) {
     console.log(`Code scanned = ${decodedText}`, decodedResult);
+    html5QrCode.stop().then((ignore) => {
+  // QR Code scanning is stopped.
+	}).catch((err) => {
+  // Stop failed, handle it.
+});
     scanBarcode(decodedText)
 }
 
@@ -31,6 +36,8 @@ const html5QrcodeScanner = new Html5QrcodeScanner(
     formatsToSupport: formatsToSupport
   },
   /* verbose= */ false);
+
+html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
 
 html5QrcodeScanner.render(onScanSuccess);
 </script>
