@@ -74,7 +74,7 @@ def event_page():
 		edit_event_form.event_date_end.data = datetime.strptime(dictionaries.eventdict[selected_event][2],"%m/%d/%Y")
 		edit_event_form.load_in.data = datetime.strptime(dictionaries.eventdict[selected_event][6],"%m/%d/%Y")
 		edit_event_form.load_out.data = datetime.strptime(dictionaries.eventdict[selected_event][7],"%m/%d/%Y")
-		edit_event_form.notes.data = dictionaries.eventdict[selected_event][9]
+		edit_event_form.edit_notes.data = dictionaries.eventdict[selected_event][9]
 
 
 		return render_template('create-event.html', 

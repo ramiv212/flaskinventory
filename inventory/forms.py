@@ -80,6 +80,6 @@ class EditEventForm(FlaskForm):
 	event_client = StringField(label='Event Client',validators=[DataRequired(),Length(min=2,max=30)])
 	load_in = DateField(label='Load-In',format='%Y-%m-%d',validators=[DataRequired()])
 	load_out = DateField(label='Load-Out',format='%Y-%m-%d',validators=[DataRequired()])
-	notes = TextAreaField(label='Notes', validators=[Optional()])
+	edit_notes = TextAreaField(label='Notes', validators=[Optional()])
 	update = SubmitField(label='Update Event')
 
