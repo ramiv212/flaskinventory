@@ -103,16 +103,47 @@ def mobile_scanner():
 
 
 @login_required
-@mobile.route('item/<barcode>')
+@mobile.route('item/<barcode>', methods=['GET', 'POST'])
 def item_page(barcode):
 	dictionaries = Dictionaries()
+	inspector_form = ItemInspectorForm()
 	barcodedict = dictionaries.barcodedict
+	funcs = Funcs()
 
-	if barcode in barcodedict:
+	# function to update item
+	if inspector_form.submit.data and inspector_form.validate_on_submit():
+		funcs.update_item(inspector_form)
+
+		flash(f'{inspector_form.name.data} was updated.')
+
 		return render_template("mobile/item.html", 
 			barcodedict = barcodedict,
-			barcode = barcode)
+			barcode = barcode,
+			inspector_form = inspector_form)
+	else:
+		print(f"Did not validate: {inspector_form.validate_on_submit()}")
+		print(inspector_form.submit.data)
+		for err_msg in inspector_form.errors.values():
+			print(err_msg)
+
+
+	if barcode in barcodedict:
+
+		inspector_form.ID.data = barcodedict[barcode][0]
+		inspector_form.barcode.data = barcode
+		inspector_form.serial.data = barcodedict[barcode][2]
+		inspector_form.manufacturer.data = barcodedict[barcode][3]
+		inspector_form.name.data = barcodedict[barcode][4]
+		inspector_form.category.data = barcodedict[barcode][5]
+		inspector_form.storage.data = barcodedict[barcode][6]
+		inspector_form.status.data = barcodedict[barcode][7]
+		inspector_form.notes.data = barcodedict[barcode][8]
+
+		return render_template("mobile/item.html", 
+			barcodedict = barcodedict,
+			barcode = barcode,
+			inspector_form = inspector_form)
 
 	else:
-		return f"{barcode} is not in the database."
+		return f"<h2>{barcode} is not in the database.<h2>"
 

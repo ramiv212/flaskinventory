@@ -271,6 +271,9 @@ class Funcs:
 		
 						}
 
+		print(item_to_update)
+
+
 		item = Item.query.get(inspector_form.ID.data)
 
 

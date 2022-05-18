@@ -5,10 +5,19 @@ Mobile Scanner
 {% endblock %}
 
 {% block content %}
+<div style="color: white;">
+<div style="width: 100%; display: flex; justify-content: center;">
+	<div>
+	Enter Code Manually:
+		<input type="text" name="manualbarcode" id="manualbarcode">
+		<button onclick="manualScan()">Submit</button>
+	</div>
+</div>
 
+<br>
 <center>
+Or Scan it Here:
 <div id="reader" style="width: 80%" style="background-color: white;"></div>
-Scan ClearVL barcode
 </center>
 
 
@@ -45,7 +54,14 @@ html5QrCode.start({ facingMode: "environment" },
     
   }
 
-</script>
 
+function manualScan(){
+	var barcode = document.getElementById('manualbarcode').value
+	location.replace('/mobile/item/' + barcode);
+
+}
+
+</script>
+</div>
 
 {% endblock %}

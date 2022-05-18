@@ -6,21 +6,113 @@
 
 {% block content %}
 
+
+<style type="text/css">
+.main-item-div {
+	display: flex;
+	flex-flow: column;
+	margin: auto;
+	padding-right: 20%;
+}
+
+.item-row-div {
+	display: flex;
+	flex-flow: row;
+	column-gap: 20px;
+	justify-content: right;
+	align-content: right;
+	text-align: right;
+	padding: 5px;
+}
+
+.item-field {
+	width: 150px;
+}
+
+.item-notes-field {
+	width: 130%;
+	height: 100px;
+	margin-top: 10px;
+}
+
+.update-button {
+	margin-right: 50px;
+}
+
+</style>
+
+
 <div style="color: white; display: flex; flex-flow: column; padding: 20px;">
 
 <center>
 <h3>{{ barcodedict[barcode][3] }}  {{ barcodedict[barcode][4] }}</h3>
 </center>
+<br>
+
+	<div class="main-item-div">
+	<form method="POST">
+		{{ inspector_form.csrf_token }}
+
+		<div class="item-row-div">
+		<div>ID:</div>
+		<div>{{ inspector_form.ID(class="item-field", style="width: 150px")}}</div>
+		</div>
+
+		<div class="item-row-div" style="text-align: left;">
+		<div>Barcode:</div>
+		<div>{{ inspector_form.barcode(class="item-field")}}</div>
+		</div>
+
+		<div class="item-row-div">
+		<div>Serial:</div>
+		<div>{{ inspector_form.serial(class="item-field")}}</div>
+		</div>
+
+		<div class="item-row-div"> 	
+		<div>Name:</div>
+		<div>{{ inspector_form.name(class="item-field") }}</div>
+		</div>
+
+		<div class="item-row-div"> 	
+		<div>Manufacturer:</div>
+		<div>{{ inspector_form.manufacturer(class="item-field") }}</div>
+		</div>
+
+		<div class="item-row-div"> 	
+		<div>Category:</div>
+		<div>{{ inspector_form.category(class="item-field") }}</div>
+		</div>
+
+		<div class="item-row-div"> 	
+		<div>Storage:</div>
+		<div>{{ inspector_form.storage(class="item-field") }}</div>
+		</div>
+
+		<div class="item-row-div"> 	
+		<div>Status:</div>
+		<div>{{ inspector_form.status(class="item-field") }}</div>
+		</div>
+
+		<div class="item-row-div" style="text-align: center;"> 	
+		<div>Notes: {{ inspector_form.notes(class="item-notes-field") }}</div>
+		</div>
+
+	</div>
+
+	<div style="width: 200px; margin: auto; display: flex; justify-content: center;">
+		{{ inspector_form.submit(id="submit", class="update-button btn btn-mid btn-primary") }}
+		</form>
+
+		<form method="GET" action="/mobile/scanner" style="display: inline-block;">
+		<button class="btn btn-mid" style="width: 110px;">Scan Again</button>
+		</form>
+
+		</div>
+
+</div>
 
 
-ID: {{ barcodedict[barcode][0] }}<br>
-Barcode: {{ barcodedict[barcode][1] }}<br>
-Serial: {{ barcodedict[barcode][2] }}<br>
-Manufacturer: {{ barcodedict[barcode][3] }}<br>
-Category: {{ barcodedict[barcode][5] }}<br>
-Storage: {{ barcodedict[barcode][6] }}<br>
-Status: {{ barcodedict[barcode][7] }}<br>
-Notes: {{ barcodedict[barcode][8] }}<br>
+
 
 
 </div>
