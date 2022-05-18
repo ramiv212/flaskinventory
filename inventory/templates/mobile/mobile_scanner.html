@@ -7,7 +7,8 @@ Mobile Scanner
 {% block content %}
 
 <center>
-<div id="reader" style="width: 80%"></div>
+<div id="reader" style="width: 80%" style="background-color: white;"></div>
+Scan ClearVL barcode
 </center>
 
 
@@ -25,6 +26,11 @@ html5QrCode.start({ facingMode: "environment" },
   },
   (decodedText, decodedResult) => {
     scanBarcode(decodedText)
+    html5QrCode.stop().then((ignore) => {
+		  // QR Code scanning is stopped.
+		}).catch((err) => {
+		  // Stop failed, handle it.
+		});
   },
   (errorMessage) => {
     // parse error, ignore it.
@@ -32,11 +38,6 @@ html5QrCode.start({ facingMode: "environment" },
 .catch((err) => {
   // Start failed, handle it.
 });
-
-</script>
-
-
-<script type="text/javascript">
 	
 	function scanBarcode(barcode){
 
