@@ -49,102 +49,102 @@ justify-content: center;">
 
           <!-- start code for row with no multiples -->
           <tbody id="item-table">
-            {% for dict in itemdict2 %}
-            	{% if itemdict2[dict][5] == 'Audio' and itemdict2[dict][0] in event_items %}
+            {% for dict in ID_item_dict %}
+            	{% if ID_item_dict[dict]['category'] == 'Audio' and dict in event_items %}
 
-	            <tr style="font-weight: 600;" id="{{ itemdict2[dict][0] }}">
+	            <tr style="font-weight: 600;" id="{{ dict }}">
 	              <!-- ID -->
-	              <td>{{ itemdict2[dict][0] }}</td>
+	              <td>{{ dict }}</td>
 	              <!-- Manufacturer -->
-	              <td>{{ itemdict2[dict][3] }}</td>
+	              <td>{{ ID_item_dict[dict]['manufacturer'] }}</td>
 	              <!-- Name -->
-	              <td>{{ itemdict2[dict][4] }}</td>
+	              <td>{{ ID_item_dict[dict]['name'] }}</td>
 	              <!-- Barcode -->
-	              <td>{{ itemdict2[dict][1] }}</td>
+	              <td>{{ ID_item_dict[dict]['barcode'] }}</td>
 	              <!-- Category -->
-	              <td style="text-align: center;">{{ itemdict2[dict][5] }}</td>
+	              <td style="text-align: center;">{{ ID_item_dict[dict]['category'] }}</td>
 	              <!-- Notes -->
-	              <td style="font-weight: 400; font-size: small;">{{ itemdict2[dict][8] }}</td>
+	              <td style="font-weight: 400; font-size: small;">{{ ID_item_dict[dict]['notes'] }}</td>
 	              <td></td>
 	              </tr>
               	{% endif %}
               {% endfor %}
 
-             {% for dict in itemdict2 %}
-            	{% if itemdict2[dict][5] == 'Video' and itemdict2[dict][0] in event_items %}
-              <tr style="font-weight: 600;" id="{{ itemdict2[dict][0] }}">
+             {% for dict in ID_item_dict %}
+            	{% if ID_item_dict[dict]['category'] == 'Video' and dict in event_items %}
+              <tr style="font-weight: 600;" id="{{ dict }}">
               <!-- ID -->
-              <td>{{ itemdict2[dict][0] }}</td>
+              <td>{{ dict }}</td>
               <!-- Manufacturer -->
-              <td>{{ itemdict2[dict][3] }}</td>
+              <td>{{ ID_item_dict[dict]['manufacturer'] }}</td>
               <!-- Name -->
-              <td>{{ itemdict2[dict][4] }}</td>
+              <td>{{ ID_item_dict[dict]['name'] }}</td>
               <!-- Barcode -->
-              <td>{{ itemdict2[dict][1] }}</td>
+              <td>{{ ID_item_dict[dict]['barcode'] }}</td>
               <!-- Category -->
-              <td style="text-align: center;">{{ itemdict2[dict][5] }}</td>
+              <td style="text-align: center;">{{ ID_item_dict[dict]['category'] }}</td>
               <!-- Notes -->
-              <td style="font-weight: 400; font-size: small;">{{ itemdict2[dict][8] }}</td>
+              <td style="font-weight: 400; font-size: small;">{{ ID_item_dict[dict]['notes'] }}</td>
               <td></td>
               </tr>
             	{% endif %}
             {% endfor %}
 
-            {% for dict in itemdict2 %}
-            	{% if itemdict2[dict][5] == 'Lighting' and itemdict2[dict][0] in event_items %}
-              <tr style="font-weight: 600;" id="{{ itemdict2[dict][0] }}">
+            {% for dict in ID_item_dict %}
+            	{% if ID_item_dict[dict]['category'] == 'Lighting' and dict in event_items %}
+              <tr style="font-weight: 600;" id="{{ dict }}">
               <!-- ID -->
-              <td>{{ itemdict2[dict][0] }}</td>
+              <td>{{ dict }}</td>
               <!-- Manufacturer -->
-              <td>{{ itemdict2[dict][3] }}</td>
+              <td>{{ ID_item_dict[dict]['manufacturer'] }}</td>
               <!-- Name -->
-              <td>{{ itemdict2[dict][4] }}</td>
+              <td>{{ ID_item_dict[dict]['name'] }}</td>
               <!-- Barcode -->
-              <td>{{ itemdict2[dict][1] }}</td>
+              <td>{{ ID_item_dict[dict]['barcode'] }}</td>
               <!-- Category -->
-              <td style="text-align: center;">{{ itemdict2[dict][5] }}</td>
+              <td style="text-align: center;">{{ ID_item_dict[dict]['category'] }}</td>
               <!-- Notes -->
-              <td style="font-weight: 400; font-size: small;">{{ itemdict2[dict][8] }}</td>
+              <td style="font-weight: 400; font-size: small;">{{ ID_item_dict[dict]['notes'] }}</td>
               <td></td>
               </tr>
             	{% endif %}
             {% endfor %}
 
-            {% for dict in itemdict2 %}
-            	{% if itemdict2[dict][5] == 'Rigging' and itemdict2[dict][0] in event_items %}
-              <tr style="font-weight: 600;" id="{{ itemdict2[dict][0] }}">
+            {% for dict in ID_item_dict %}
+            	{% if ID_item_dict[dict]['category'] == 'Rigging' and dict in event_items %}
+              <tr style="font-weight: 600;" id="{{ dict }}">
               <!-- ID -->
-              <td>{{ itemdict2[dict][0] }}</td>
+              <td>{{ dict }}</td>
               <!-- Manufacturer -->
-              <td>{{ itemdict2[dict][3] }}</td>
+              <td>{{ ID_item_dict[dict]['manufacturer'] }}</td>
               <!-- Name -->
-              <td>{{ itemdict2[dict][4] }}</td>
+              <td>{{ ID_item_dict[dict]['name'] }}</td>
               <!-- Barcode -->
-              <td>{{ itemdict2[dict][1] }}</td>
+              <td>{{ ID_item_dict[dict]['barcode'] }}</td>
               <!-- Category -->
-              <td style="text-align: center;">{{ itemdict2[dict][5] }}</td>
+              <td style="text-align: center;">{{ ID_item_dict[dict]['category'] }}</td>
               <!-- Notes -->
-              <td style="font-weight: 400; font-size: small;">{{ itemdict2[dict][8] }}</td>
+              <td style="font-weight: 400; font-size: small;">{{ ID_item_dict[dict]['note'] }}</td>
               <td></td>
               </tr>
             	{% endif %}
             {% endfor %}
 
-            {% for dict in itemdict2 %}
-            	{% if itemdict2[dict][5] == 'Other' and itemdict2[dict][0] in event_items %}
-              <tr style="font-weight: 600;" id="{{ itemdict2[dict][0] }}">
+            {% for dict in ID_item_dict %}
+            	{% if ID_item_dict[dict]['category'] == 'Other' and dict in event_items %}
+              <tr style="font-weight: 600;" id="{{ dict }}">
               <!-- ID -->
-              <td>{{ itemdict2[dict][0] }}</td>
+              <td>{{ dict }}</td>
               <!-- Manufacturer -->
-              <td>{{ itemdict2[dict][3] }}</td>
+              <td>{{ ID_item_dict[dict]['manufacturer'] }}</td>
               <!-- Name -->
-              <td>{{ itemdict2[dict][4] }}</td>
+              <td>{{ ID_item_dict[dict]['name'] }}</td>
               <!-- Barcode -->
-              <td>{{ itemdict2[dict][1] }}</td>
+              <td>{{ ID_item_dict[dict]['barcode'] }}</td>
               <!-- Category -->
-              <td style="text-align: center;">{{ itemdict2[dict][5] }}</td>
+              <td style="text-align: center;">{{ ID_item_dict[dict]['category'] }}</td>
               <!-- Notes -->
-              <td style="font-weight: 400; font-size: small;">{{ itemdict2[dict][8] }}</td>
+              <td style="font-weight: 400; font-size: small;">{{ ID_item_dict[dict]['notes'] }}</td>
               <td></td>
               </tr>
             	{% endif %}
@@ -180,7 +180,6 @@ let all_items = document.getElementById("item-table")
 
 for (var i = 0; i < all_items.childNodes.length - 1; i++) {
 					if (all_items.childNodes[i].nodeName == "TR"){
-						console.log(all_items.childNodes[i].className)
 						all_items_list.push(all_items.childNodes[i])
 	}					
 }
@@ -203,14 +202,13 @@ if (input.length === 8) {
 $.getJSON( "/json/barcodes", function(json){
 
 	if(input in json)
-		var scanned_row = document.getElementById(json[input][0])
+		var scanned_row = document.getElementById(json[input]['ID'])
 			
 			if (!(scanned_row == null)){
 				scanned_row.className = "scanned";
 				if (!(scanned_items.includes(input))){
 					scanned_items.push(input)
 
-          input_field.value = "" 
 
 			if (scanned_items.length == (all_items_list.length)){
 				document.getElementById("everything-scanned").innerHTML = "<h3 class=\"scan-banner\">All Items Are Accounted For!</h3>";
@@ -221,7 +219,8 @@ $.getJSON( "/json/barcodes", function(json){
 					}
 					}
 
-				});	
+				});
+      input_field.value = "" 
 			}
 		}
 	});

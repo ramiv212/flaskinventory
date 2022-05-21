@@ -13,8 +13,8 @@ def get_conflicting_event_items(event):
 	eventdates = []
 
 	# turn the start date and end date of event from db to a datetime object
-	start = datetime.strptime(dictionaries.eventdict[event][1].replace("/","-"),"%m-%d-%Y")
-	end = datetime.strptime(dictionaries.eventdict[event][2].replace("/","-"),"%m-%d-%Y")
+	start = datetime.strptime(dictionaries.eventdict[event]['date_start'].replace("/","-"),"%m-%d-%Y")
+	end = datetime.strptime(dictionaries.eventdict[event]['date_end'].replace("/","-"),"%m-%d-%Y")
 	
 	# get the timedelta
 	delta = end - start
@@ -40,8 +40,8 @@ def get_conflicting_event_items(event):
 	for event in other_events:
 
 		# get the start and end date of the current iteration event
-		other_start = datetime.strptime(dictionaries.eventdict[event][1].replace("/","-"),"%m-%d-%Y")
-		other_end = datetime.strptime(dictionaries.eventdict[event][2].replace("/","-"),"%m-%d-%Y")
+		other_start = datetime.strptime(dictionaries.eventdict[event]['date_start'].replace("/","-"),"%m-%d-%Y")
+		other_end = datetime.strptime(dictionaries.eventdict[event]['date_end'].replace("/","-"),"%m-%d-%Y")
 
 		# get timedelta of current iteration
 		other_delta = other_end - other_start
@@ -75,7 +75,7 @@ def get_conflicting_event_items(event):
 	# that are conflicting with the other events, and then
 	# get their items
 	for event in set(conflicting_events):
-		for item in json.loads(dictionaries.eventdict[event][5])['items']:
+		for item in json.loads(dictionaries.eventdict[event]['items']):
 			conflicting_event_items.append(item)
 
 

@@ -20,7 +20,7 @@ class JSONFiles:
 
 
 		# this turns the second dictionary into a JSON object
-		self.jsondict2 = json.dumps(dictionaries.itemdict2, indent = 4)
+		self.json_item_IDs = json.dumps(dictionaries.ID_item_dict, indent = 4)
 
 
 		# this turns the barcode dictionary into a JSON object
@@ -52,44 +52,81 @@ class Dictionaries:
 		self.items = Item.query.all()
 		self.events = Event.query.all()
 
-		self.itemdict = dict()
-		self.itemdict2 = dict()
+		# formerly itemdict
+		self.name_item_dict = dict()
+
+		# formerly itemdict2
+		self.ID_item_dict = dict()
+
 		self.barcodedict = dict()
+
 		self.eventdict = dict()
+
 
 		# add all item names as keys into the dictionary. This dictionary is used to populate the rows in the inventory page.
 		# It does not have duplicate name child items. It has Qty.
 		for item in self.items:
-			self.itemdict[item.name] = [item.ID,item.barcode,item.serial,item.manufacturer,item.name,item.category,item.storage,item.status,item.notes,0]
+			self.name_item_dict[item.name] = {
+				"ID" : item.ID,
+				"barcode" : item.barcode,
+				"serial" : item.serial,
+				"manufacturer" : item.manufacturer,
+				"category" : item.category,
+				"storage" : item.storage,
+				"status" : item.status,
+				"notes" : item.notes,
+				"qty" : 0}
 
+		# get the count of how many items of each item we have and add it to the 'count' key
 		for item in self.items:
-			self.itemdict[item.name][9] = self.itemdict[item.name][9] + 1
+			self.name_item_dict[item.name]['qty'] += 1
 
 
-		# this dictionary is used to populate the inspector when the inspect button is pushed.
+
+		# this list is used to populate the inspector when the inspect button is pushed.
 		# It contains all items. Also used to populate Events page.
 		for item in self.items:
-			self.itemdict2[item.ID] = [item.ID,item.barcode,item.serial,item.manufacturer,item.name,item.category,item.storage,item.status,item.notes,0]
+			self.ID_item_dict[item.ID] = {
+				"barcode" : item.barcode,
+				"serial" : item.serial,
+				"manufacturer" : item.manufacturer,
+				"name" : item.name,
+				"category" : item.category,
+				"storage" : item.storage,
+				"status" : item.status,
+				"notes" : item.notes}
+
 
 
 		# this dictionary is used to get values when scanning barcode
 		for item in self.items:
-			self.barcodedict[item.barcode] = [item.ID,item.barcode,item.serial,item.manufacturer,item.name,item.category,item.storage,item.status,item.notes,0]
+			self.barcodedict[item.barcode] = {
+				"ID" : item.ID,
+				"serial" : item.serial,
+				"manufacturer" : item.manufacturer,
+				"name" : item.name,
+				"category" : item.category,
+				"storage" : item.storage,
+				"status" : item.status,
+				"notes" : item.notes}
+
 
 
 		# this dictionary is used to get the event info of the currenty selected event in the selectfield
 		for event in self.events:
 			if event.active:
-				self.eventdict[event.event_name] = [event.ID,
-										event.event_date_start.strftime("%m/%d/%Y"),
-										event.event_date_end.strftime("%m/%d/%Y"),
-										event.event_client,
-										event.active,
-										event.items,
-										event.load_in.strftime("%m/%d/%Y"),
-										event.load_out.strftime("%m/%d/%Y"),
-										event.contact,
-										event.notes]
+				self.eventdict[event.event_name] = {
+					"ID" : event.ID,
+					"date_start" : event.event_date_start.strftime("%m/%d/%Y"),
+					"date_end" : event.event_date_end.strftime("%m/%d/%Y"),
+					"client" : event.event_client,
+					"active" : event.active,
+					"items" : event.items,
+					"load_in" : event.load_in.strftime("%m/%d/%Y"),
+					"load_out" : event.load_out.strftime("%m/%d/%Y"),
+					"contact" : event.contact,
+					"notes" : event.notes}
+
 	
 	def return_max_barcode(self):
 			max_barcode = int(max([item.barcode for item in self.items]))
@@ -109,9 +146,9 @@ class Scan:
 		event_to_update = Event.query.get(event_id)
 		event_to_update_items = json.loads(event_to_update.items)
 
-		if item_id in event_to_update_items['items']:
+		if item_id in event_to_update_items:
 
-			event_to_update_items['items'].remove(int(item_id))
+			event_to_update_items.remove(int(item_id))
 
 			setattr(event_to_update, "items", json.dumps(event_to_update_items))
 
@@ -127,7 +164,7 @@ class Scan:
 
 
 		# get the selected event ID
-		event_ID = dictionaries.eventdict[add_to_event_form.event_select.data][0] 
+		event_ID = dictionaries.eventdict[add_to_event_form.event_select.data]['ID'] 
 
 		# get the items that were scanned and added to the hidden form field
 		items_to_add = items.split(",")
@@ -136,7 +173,7 @@ class Scan:
 
 		# get the items from the selected event
 		try:
-			items_to_add_to = json.loads(Event.query.get(event_ID).items)['items']
+			items_to_add_to = json.loads(Event.query.get(event_ID).items)
 		except TypeError:
 			items_to_add_to = []
 
@@ -154,11 +191,8 @@ class Scan:
 		try:
 			int_list = list(set(map(int, items_to_add_to)))
 
-			# create a new dict from the list of aggregated items
-			new_dict = {'items' : int_list}
-
-			# turn that dict into a JSON object
-			json_object = json.dumps(new_dict, indent = 4)
+			# turn that list into a JSON object
+			json_object = json.dumps(int_list, indent = 4)
 
 			# query the db for the event that will be updated
 			event_to_update = Event.query.get(event_ID)
@@ -190,7 +224,7 @@ class Scan:
 
 		# get the items from the selected event
 		try:
-			items_to_add_to = json.loads(Event.query.get(self.event_ID).items)['items']
+			items_to_add_to = json.loads(Event.query.get(self.event_ID).items)
 		except TypeError:
 			items_to_add_to = []
 
@@ -207,11 +241,8 @@ class Scan:
 		try:
 			int_list = list(set(map(int, items_to_add_to)))
 
-			# create a new dict from the list of aggregated items
-			new_dict = {'items' : int_list}
-
 			# turn that dict into a JSON object
-			json_object = json.dumps(new_dict, indent = 4)
+			json_object = json.dumps(int_list, indent = 4)
 
 			# query the db for the event that will be updated
 			event_to_update = Event.query.get(self.event_ID)
@@ -230,10 +261,10 @@ class Scan:
 		return redirect(url_for('homepage.home_page'))
 
 
-@json_routes.route("/itemdict2", methods=['GET', 'POST'])
+@json_routes.route("/items", methods=['GET', 'POST'])
 def itemdict2():
 	json_files = JSONFiles()
-	return json_files.jsondict2
+	return json_files.json_item_IDs
 
 @json_routes.route("/barcodes", methods=['GET', 'POST'])
 def barcodes():
@@ -317,12 +348,7 @@ class Funcs:
 					  active=True,
 
 					  # empty JSON string
-					  items = """ 
-						{
-"items": [
-]
-}
-					  """,
+					  items = "[]",
 					  load_in=create_event_form.load_in.data,
 					  load_out=create_event_form.load_out.data,
 					  contact="{"+contact_json+"}",
@@ -349,11 +375,8 @@ class Funcs:
 		
 		int_list = list(set(map(int, items_to_add)))
 
-		# create a new dict from the list of aggregated items
-		new_dict = {'items' : int_list}
-
-		# turn that dict into a JSON object
-		json_object = json.dumps(new_dict, indent = 4)
+		# turn that list into a JSON object
+		json_object = json.dumps(int_list, indent = 4)
 
 		# query the db for the event that will be updated
 		event_to_update = Event.query.get(event_ID)

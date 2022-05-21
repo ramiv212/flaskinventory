@@ -76,18 +76,18 @@ if (input.length === 8) {
 // open the barcode json file
 $.getJSON( "/json/barcodes", function(json){
 
-// check if the barcode is already in the array
-if (!(scanned.includes(json[input][0]))){
+// check if the ID is already in the array
+if (!(scanned.includes(json[input]['ID']))){
 
         // append each scanned item to the span element
-        items_to_add_span_element.innerHTML = items_to_add_span_element.innerHTML + json[input][4] + "<br>";
+        items_to_add_span_element.innerHTML = items_to_add_span_element.innerHTML + json[input]['name'] + "<br>";
 
         // append item's ID into the array
-        scanned.push(json[input][0]);
+        scanned.push(json[input]['ID']);
 
         // add array of barcode numbers into a hidden input in the event form
         document.getElementById('scanned-item-list').value = scanned;
-        console.log( document.getElementById('scanned-item-list').value)
+        // console.log( document.getElementById('scanned-item-list').value)
 
         input_field.value = "" 
 
@@ -106,18 +106,23 @@ var event_items_element = document.getElementById('items-in-event-list');
 if (!(event_select_field === null))
   event_select_field.addEventListener('change', (e) => {
     var selected_event = event_select_field.value
-    console.log(selected_event)
+    // console.log(selected_event)
     $.getJSON( "/json/events", function(json){
-      var event_items = JSON.parse(json[selected_event][5])['items'];
-      console.log(event_items)
+      if (selected_event != ""){
+        var event_items = JSON.parse(json[selected_event]['items']);
+      
+      // console.log(event_items)
       event_items_element.innerHTML = ""
-      $.getJSON( "/json/itemdict2", function(json2){ 
+      $.getJSON( "/json/items", function(json2){ 
         for (var i of event_items) {
-          event_items_element.innerHTML = event_items_element.innerHTML + json2[i][4] + " | " + json2[i][1] + "<br>"
+          event_items_element.innerHTML = event_items_element.innerHTML + json2[i]['manufacturer'] + " | " + json2[i]['name'] + "<br>"
       // console.log(json2[i])
 
-    }
-  })
+           }
+        })
+      }else{
+        event_items_element.innerHTML = ""
+      }
     }) 
   });
 
@@ -152,17 +157,17 @@ function inspectAndHide(index){
   getItem(index);
   function getItem(index){
     if (window.location.pathname != "/barcode/"){
-    $.getJSON('/json/itemdict2', function(jd) {
-      // console.log(index)
-      $("#idnumber").val(jd[index][0]);
-      $("#barcode").val(jd[index][1]);
-      $("#serial").val(jd[index][2]);
-      $("#manufacturer").val(jd[index][3]);
-      $("#name").val(jd[index][4]);
-      $("#category").val(jd[index][5]);
-      $("#storage").val(jd[index][6]);
-      $("#status").val(jd[index][7]);
-      $("#notes").val(jd[index][8]);
+    $.getJSON('/json/items', function(jd) {
+      console.log(jd[index])
+      $("#idnumber").val(index);
+      $("#barcode").val(jd[index]['barcode']);
+      $("#serial").val(jd[index]['serial']);
+      $("#manufacturer").val(jd[index]['manufacturer']);
+      $("#name").val(jd[index]['name']);
+      $("#category").val(jd[index]['category']);
+      $("#storage").val(jd[index]['storage']);
+      $("#status").val(jd[index]['status']);
+      $("#notes").val(jd[index]['notes']);
     });
     }
   }
@@ -251,35 +256,42 @@ function conflictingItem(events,item){
     // get the children of the inventory table
     var children = inv_table[0].childNodes[5].childNodes
 
+
     // get the letters in the search bar
     search_var = document.getElementById('item-search').value.toLowerCase()
-    console.clear()
+    // console.clear()
+
 
     // for every child
     for (let i = 1; i < children.length; i++) {
+
+          
 
             // if the child is a tr 
             if (children[i].nodeName == "TR")
 
               // name of item in tr
-            var name_tr = children[i].childNodes[19]
+            var name_tr = children[i].children[3]
             var tr2 = children[i]
 
+
                 // if the child has more than 0 nodes
-                if(tr2.childNodes.length != 0) {
+                if(tr2.childNodes.length > 0) {
 
                   // if the child has more than 1 node
-                  if (tr2.childNodes.length != 1){
+                  if (tr2.childNodes.length > 1){
 
                   // manufacturer of item in tr
-                  manufacturer_tr = tr2.childNodes[11].innerHTML
+                  manufacturer_tr = tr2.children[1].innerHTML
 
                   // barcode of item in tr
-                  barcode_tr = tr2.childNodes[23].innerHTML
+                  barcode_tr = tr2.childNodes[4].innerHTML
                 }
               }
                 // concatenate manufacturer, name and barcode
                 full_item = manufacturer_tr.toLowerCase() + " " + name_tr.innerHTML.toLowerCase() + " " + barcode_tr
+
+                console.log(full_item)
 
                 // check if the search var is in the concatenated item string
                 if (full_item.includes(search_var)){
@@ -314,28 +326,33 @@ function conflictingItem(events,item){
     // for every child
     for (let i = 1; i < children.length; i++) {
 
+          
+
             // if the child is a tr 
             if (children[i].nodeName == "TR")
 
               // name of item in tr
-            var name_tr = children[i].childNodes[19]
+            var name_tr = children[i].children[3]
             var tr2 = children[i]
 
+
                 // if the child has more than 0 nodes
-                if(tr2.childNodes.length != 0) {
+                if(tr2.childNodes.length > 0) {
 
                   // if the child has more than 1 node
-                  if (tr2.childNodes.length != 1){
+                  if (tr2.childNodes.length > 1){
 
                   // manufacturer of item in tr
-                  manufacturer_tr = tr2.childNodes[11].innerHTML
+                  manufacturer_tr = tr2.children[1].innerHTML
 
                   // barcode of item in tr
-                  barcode_tr = tr2.childNodes[23].innerHTML
+                  barcode_tr = tr2.childNodes[4].innerHTML
                 }
               }
                 // concatenate manufacturer, name and barcode
                 full_item = manufacturer_tr.toLowerCase() + " " + name_tr.innerHTML.toLowerCase() + " " + barcode_tr
+
+                console.log(full_item)
 
                 // check if the search var is in the concatenated item string
                 if (full_item.includes(search_var)){

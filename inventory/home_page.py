@@ -54,9 +54,9 @@ def home_page():
 		try:
 			# for each event in eventdict
 			for event in dictionaries.eventdict:
-				event_ID = dictionaries.eventdict[event][0]
+				event_ID = dictionaries.eventdict[event]['ID']
 				# get the json of the items in each event
-				event_item_list = json.loads(dictionaries.eventdict[event][5])['items']
+				event_item_list = json.loads(dictionaries.eventdict[event]['items'])
 		
 				# remove deleted item from event in eventdict
 				event_item_list.remove(inspector_form.ID.data)
@@ -124,8 +124,8 @@ def home_page():
 
 	return render_template("home.html", 
 		items=dictionaries.items, 
-		itemdict=dictionaries.itemdict,
-		itemdict2=dictionaries.itemdict2,
+		name_item_dict=dictionaries.name_item_dict,
+		ID_item_dict=dictionaries.ID_item_dict,
 		barcodedict=dictionaries.barcodedict,
 		inspector_form=inspector_form,
 		create_item_form=create_item_form,

@@ -60,27 +60,29 @@ def event_page():
 	# select an event
 	if select_event_form.submit.data and select_event_form.validate_on_submit() and select_event_form.event_field.data != "":
 		selected_event = select_event_form.event_field.data
-		selected_event_id = dictionaries.eventdict[selected_event][0]
-		selected_event_items = json.loads(dictionaries.eventdict[selected_event][5])
-		selected_event_items = selected_event_items['items']
+		selected_event_id = dictionaries.eventdict[selected_event]['ID']
+		selected_event_items = json.loads(dictionaries.eventdict[selected_event]['items'])
+
+		print(selected_event_items)
+
 		conflicting_event_items = get_conflicting_event_items(selected_event)
 
-		contact_info = json.loads(dictionaries.eventdict[selected_event][8])
+		contact_info = json.loads(dictionaries.eventdict[selected_event]['contact'])
 
 		# populate event fields with event data
 		edit_event_form.event_name.data = selected_event
-		edit_event_form.event_client.data = dictionaries.eventdict[selected_event][3]
-		edit_event_form.event_date_start.data = datetime.strptime(dictionaries.eventdict[selected_event][1],"%m/%d/%Y")
-		edit_event_form.event_date_end.data = datetime.strptime(dictionaries.eventdict[selected_event][2],"%m/%d/%Y")
-		edit_event_form.load_in.data = datetime.strptime(dictionaries.eventdict[selected_event][6],"%m/%d/%Y")
-		edit_event_form.load_out.data = datetime.strptime(dictionaries.eventdict[selected_event][7],"%m/%d/%Y")
-		edit_event_form.edit_notes.data = dictionaries.eventdict[selected_event][9]
+		edit_event_form.event_client.data = dictionaries.eventdict[selected_event]['client']
+		edit_event_form.event_date_start.data = datetime.strptime(dictionaries.eventdict[selected_event]['date_start'],"%m/%d/%Y")
+		edit_event_form.event_date_end.data = datetime.strptime(dictionaries.eventdict[selected_event]['date_end'],"%m/%d/%Y")
+		edit_event_form.load_in.data = datetime.strptime(dictionaries.eventdict[selected_event]['load_in'],"%m/%d/%Y")
+		edit_event_form.load_out.data = datetime.strptime(dictionaries.eventdict[selected_event]['load_out'],"%m/%d/%Y")
+		edit_event_form.edit_notes.data = dictionaries.eventdict[selected_event]['notes']
 
 
 		return render_template('create-event.html', 
 		items=dictionaries.items,
-		itemdict=dictionaries.itemdict,
-		itemdict2=dictionaries.itemdict2,
+		name_item_dict=dictionaries.name_item_dict,
+		ID_item_dict=dictionaries.ID_item_dict,
 		create_event_form=create_event_form,
 		edit_event_form=edit_event_form,
 		inspector_form=inspector_form,
@@ -91,12 +93,12 @@ def event_page():
 		selected_event_items=selected_event_items,
 		selected_event_id=selected_event_id,
 		conflicting_event_items=conflicting_event_items,
-		event_start_date=dictionaries.eventdict[selected_event][1],
-		event_end_date=dictionaries.eventdict[selected_event][2],
-		load_in_date=dictionaries.eventdict[selected_event][6],
-		load_out_date=dictionaries.eventdict[selected_event][7],
+		event_start_date=dictionaries.eventdict[selected_event]['date_start'],
+		event_end_date=dictionaries.eventdict[selected_event]['date_end'],
+		load_in_date=dictionaries.eventdict[selected_event]['load_in'],
+		load_out_date=dictionaries.eventdict[selected_event]['load_out'],
 		contact_info=contact_info,
-		event_notes=dictionaries.eventdict[selected_event][9]
+		event_notes=dictionaries.eventdict[selected_event]['notes']
 		)
 
 	# get the scanned items from the hidden form, add them to the items that are already in the selected form,
@@ -141,7 +143,7 @@ def event_page():
 		event_client = edit_event_form.event_client.data
 		load_in = edit_event_form.load_in.data
 		load_out = edit_event_form.load_out.data
-		notes = edit_event_form.notes.data
+		notes = edit_event_form.edit_notes.data
 
 
 		event_to_update = { 
@@ -150,7 +152,7 @@ def event_page():
 							  "event_client" : edit_event_form.event_client.data,
 							  "load_in" : edit_event_form.load_in.data,
 							  "load_out" : edit_event_form.load_out.data,
-							  "notes" : edit_event_form.notes.data,
+							  "notes" : edit_event_form.edit_notes.data,
 						}
 
 		event = Event.query.filter_by(event_name = event_name).first()
@@ -176,8 +178,8 @@ def event_page():
 
 	return render_template('create-event.html',
 		items=dictionaries.items,
-		itemdict=dictionaries.itemdict,
-		itemdict2=dictionaries.itemdict2,
+		name_item_dict=dictionaries.name_item_dict,
+		ID_item_dict=dictionaries.ID_item_dict,
 		inspector_form=inspector_form,
 		create_item_form=create_item_form,
 		create_event_form=create_event_form,
@@ -202,7 +204,9 @@ def remove_from_event():
 
 	event_name = request.form["event"]
 
-	event_ID = dictionaries.eventdict[event_name][0]
+	event_ID = dictionaries.eventdict[event_name]['ID']
+
+	print(event_name,event_ID)
 
 	scan.remove_func(request.form["id"],event_ID)
 
@@ -219,7 +223,7 @@ def add_item_to_event():
 
 	event_name = request.form["event"]
 
-	event_ID = dictionaries.eventdict[event_name][0]
+	event_ID = dictionaries.eventdict[event_name]["ID"]
 
 	scan.add_items(request.form["id"],event_ID)
 
@@ -234,25 +238,25 @@ def return_event_checklist():
 
 	if event:
 		dictionaries = Dictionaries()
-		event_items=json.loads(dictionaries.eventdict[event][5])['items']
+		event_items=json.loads(dictionaries.eventdict[event]['items'])
 		audio_list = []
 		video_list = []
 		lighting_list = []
 		rigging_list = []
 		other_list = []
 
-		contact_info = json.loads(dictionaries.eventdict[event][8])
+		contact_info = json.loads(dictionaries.eventdict[event]['contact'])
 
 		for item in event_items:
-			if dictionaries.itemdict2[item][5] == 'Audio':
+			if dictionaries.ID_item_dict[item]['category'] == 'Audio':
 				audio_list.append(item)
-			elif dictionaries.itemdict2[item][5] == 'Video':
+			elif dictionaries.ID_item_dict[item]['category'] == 'Video':
 				video_list.append(item)
-			elif dictionaries.itemdict2[item][5] == 'Lighting':
+			elif dictionaries.ID_item_dict[item]['category'] == 'Lighting':
 				lighting_list.append(item)
-			elif dictionaries.itemdict2[item][5] == 'Rigging':
+			elif dictionaries.ID_item_dict[item]['category'] == 'Rigging':
 				rigging_list.append(item)
-			elif dictionaries.itemdict2[item][5] == 'Other':
+			elif dictionaries.ID_item_dict[item]['category'] == 'Other':
 				other_list.append(item)
 	else:
 			flash("No event was selected")
@@ -261,16 +265,16 @@ def return_event_checklist():
 
 	if event:
 		return render_template('checklist.html',
-			itemdict2=dictionaries.itemdict2,
+			ID_item_dict=dictionaries.ID_item_dict,
 			event_name=event,
-			event_date_start=dictionaries.eventdict[event][1],
-			event_date_end=dictionaries.eventdict[event][2],
-			event_client=dictionaries.eventdict[event][3],
+			event_date_start=dictionaries.eventdict[event]['date_start'],
+			event_date_end=dictionaries.eventdict[event]['date_end'],
+			event_client=dictionaries.eventdict[event]['client'],
 			event_items=event_items,
-			load_in_date=dictionaries.eventdict[event][6],
-			load_out_date=dictionaries.eventdict[event][7],
+			load_in_date=dictionaries.eventdict[event]['load_in'],
+			load_out_date=dictionaries.eventdict[event]['load_out'],
 			contact_info=contact_info,
-			event_notes=dictionaries.eventdict[event][9],
+			event_notes=dictionaries.eventdict[event]['notes'],
 			audio_list=audio_list,
 			video_list=video_list,
 			lighting_list=lighting_list,
@@ -292,18 +296,27 @@ def archive_event():
 	# delete event from event db
 	if event:
 		event_dict = dictionaries.eventdict[event]
-		event_ID = event_dict[0]
+		event_ID = event_dict['ID']
 
 		Event.query.filter_by(ID=event_ID).delete()
 		db.session.commit()
 		funcs.update_event_submitfields()
 
-		if event_dict[5]:
-			for item in json.loads(event_dict[5])['items']:
-				newdict[dictionaries.itemdict2[item][0]] = dictionaries.itemdict2[item][0],dictionaries.itemdict2[item][1],dictionaries.itemdict2[item][2],dictionaries.itemdict2[item][3],dictionaries.itemdict2[item][4],dictionaries.itemdict2[item][5],dictionaries.itemdict2[item][6],dictionaries.itemdict2[item][7]
+		if event_dict['items']:
+			for item in json.loads(event_dict['items']):
+				print(item)
+				newdict[item] = {'barcode' : dictionaries.ID_item_dict[item]['barcode'],
+								'serial': dictionaries.ID_item_dict[item]['serial'],
+								'manufacturer' : dictionaries.ID_item_dict[item]['manufacturer'],
+								'name' : dictionaries.ID_item_dict[item]['name'],
+								'category' : dictionaries.ID_item_dict[item]['category'],
+								'storage' : dictionaries.ID_item_dict[item]['storage'],
+								'status' : dictionaries.ID_item_dict[item]['status'],
+								'notes' : dictionaries.ID_item_dict[item]['notes']
+								}
 
-		if event_dict[8]:
-			contact_info = event_dict[8]
+		if event_dict['contact']:
+			contact_info = event_dict['contact']
 		else:
 			contact_info = """{
 		"contact_name":"",
@@ -311,19 +324,20 @@ def archive_event():
 		"contact_email":"",
 		}"""
 			
+		print(newdict)
 
 		# add to event archive
 		archived_event = EventArchive(
 			event_name = event,
-			event_date_start = datetime.strptime(event_dict[1],"%m/%d/%Y"),
-			event_date_end = datetime.strptime(event_dict[2],"%m/%d/%Y"),
-			load_in = datetime.strptime(event_dict[6],"%m/%d/%Y"),
-			load_out = datetime.strptime(event_dict[7],"%m/%d/%Y"),
-			event_client = event_dict[3],
+			event_date_start = datetime.strptime(event_dict['date_start'],"%m/%d/%Y"),
+			event_date_end = datetime.strptime(event_dict['date_end'],"%m/%d/%Y"),
+			load_in = datetime.strptime(event_dict['load_in'],"%m/%d/%Y"),
+			load_out = datetime.strptime(event_dict['load_out'],"%m/%d/%Y"),
+			event_client = event_dict['client'],
 			active = 0,
 			items = json.dumps(newdict),
 			contact = contact_info,
-			notes = event_dict[9]
+			notes = event_dict['notes']
 			)
 
 		db.session.add(archived_event)
@@ -415,13 +429,14 @@ def checkout():
 
 	if select_event_form.submit.data and select_event_form.validate_on_submit():
 		selected_event = select_event_form.event_field.data
-		event_items = json.loads(dictionaries.eventdict[selected_event][5])['items']
+		event_items = json.loads(dictionaries.eventdict[selected_event]['items'])
+		print(event_items)
 		
 
 		return render_template("checkout.html", 
 			event_items=event_items,
 			select_event_form=select_event_form,
-			itemdict2=dictionaries.itemdict2,
+			ID_item_dict=dictionaries.ID_item_dict,
 			)
 	else:
 		selected_event = None
@@ -429,7 +444,7 @@ def checkout():
 		return render_template("checkout.html", 
 			event_items=[],
 			select_event_form=select_event_form,
-			itemdict2=dictionaries.itemdict2
+			ID_item_dict=dictionaries.ID_item_dict
 			)
 
 

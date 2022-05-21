@@ -105,7 +105,6 @@ Create Event
           <h3>Items In Event</h3>
           <thead>
             <tr>
-              <th scope="col">ID</th>
               <th scope="col">Manufacturer</th>
               <th scope="col">St.</th>
               <th scope="col">Name</th>
@@ -117,28 +116,27 @@ Create Event
 
           <tbody>
 
-            {% for dict in itemdict2 %}
-            {% if itemdict2[dict][0] in selected_event_items %}
+            {% for dict in ID_item_dict %}
 
-            <tr style="font-weight: 600;" id="{{ itemdict2[dict][0] }}">
-              <!-- ID -->
-              <td>{{ itemdict2[dict][0] }}</td>
+            {% if dict in selected_event_items %}
+
+            <tr style="font-weight: 600;" id="{{ ID_item_dict[dict]['ID'] }}">
               <!-- Manufacturer -->
-              <td>{{ itemdict2[dict][3] }}</td>
+              <td>{{ ID_item_dict[dict]['manufacturer'] }}</td>
               <!-- Status -->
               <td>
                 <!-- this code sets the emojis in the status column according to the status of the item in the db -->
 
-                {% if itemdict2[dict][7] == 'Broken': %}
+                {% if ID_item_dict[dict]['status'] == 'Broken': %}
                 <span class="status-emoji">&#128165</span>
 
-                {% elif itemdict2[dict][7] == 'Sent For Repair': %}
+                {% elif ID_item_dict[dict]['status'] == 'Sent For Repair': %}
                 <span class="status-emoji">&#8987</span>
 
-                {% elif itemdict2[dict][7] == 'Loaned To Customer': %}
+                {% elif ID_item_dict[dict]['status'] == 'Loaned To Customer': %}
                 <span class="status-emoji">&#128100</span>
 
-                {% elif itemdict2[dict][7] == 'See Notes': %}
+                {% elif ID_item_dict[dict]['status'] == 'See Notes': %}
                 <span class="status-emoji">&#128203</span>
 
                 {% endif %} 
@@ -146,26 +144,25 @@ Create Event
               </td>
               <!-- Name -->
               {% if 
-              itemdict2[dict][7] == 'Broken' 
-              or itemdict2[dict][7] == 'Sent For Repair' 
-              or itemdict2[dict][7] == 'Loaned To Customer': %}
-              <td style="color:red">{{ itemdict2[dict][4] }}</td>
-              {% elif itemdict2[dict][7] == 'See Notes'%}
-              <td style="color:yellow">{{ itemdict2[dict][4] }}</td>
+              ID_item_dict[dict]['status'] == 'Broken' 
+              or ID_item_dict[dict]['status'] == 'Sent For Repair' 
+              or ID_item_dict[dict]['status'] == 'Loaned To Customer': %}
+              <td style="color:red">{{  ID_item_dict[dict]['name'] }}</td>
+              {% elif ID_item_dict[dict]['status'] == 'See Notes'%}
+              <td style="color:yellow">{{  ID_item_dict[dict]['name'] }}</td>
 
               {% else %}
-              <td>{{ itemdict2[dict][4] }}</td>
+              <td>{{  ID_item_dict[dict]['name'] }}</td>
               {% endif %}
 
               <!-- Barcode -->
-              <td>{{ itemdict2[dict][1] }}</td>
-
+              <td>{{ ID_item_dict[dict]['barcode'] }}</td>
 
 
               <!-- Remove Button -->
               <td>
 
-                <button class="btn btn-light btn-sm" onclick="deleteEventItem( {{ itemdict2[dict][0] }} )">
+                <button class="btn btn-light btn-sm" onclick="deleteEventItem({{ dict }})">
                   Remove
                 </button>
 
@@ -197,7 +194,6 @@ Create Event
 
                   <thead>
                     <tr>
-                      <th scope="col">ID</th>
                       <th score="col">Qty</th>
                       <th scope="col">Manufacturer</th>
                       <th scope="col">St.</th>
@@ -212,30 +208,28 @@ Create Event
 
                   <!-- start code for row with no multiples -->
                   <tbody>
-                    {% for dict in itemdict %}
-                    {% if itemdict[dict][9] < 2: %}
+                    {% for dict in name_item_dict %}
+                    {% if name_item_dict[dict]['qty'] < 2: %}
 
-                    <tr style="font-weight: 600;" id="{{ itemdict[dict][0] }}">
-                      <!-- ID -->
-                      <td>{{ itemdict[dict][0] }}</td>
+                    <tr style="font-weight: 600;" id="{{ name_item_dict[dict]['ID'] }}">
                       <!-- QTY -->
-                      <td>{{ itemdict[dict][9] }}</td>
+                      <td>{{ name_item_dict[dict]['qty'] }}</td>
                       <!-- Manufacturer -->
-                      <td>{{ itemdict[dict][3] }}</td>
+                      <td>{{ name_item_dict[dict]['manufacturer'] }}</td>
                       <!-- Status -->
                       <td>
                         <!-- this code sets the emojis in the status column according to the status of the item in the db -->
 
-                        {% if itemdict[dict][7] == 'Broken': %}
+                        {% if name_item_dict[dict][7] == 'Broken': %}
                         <span class="status-emoji">&#128165</span>
 
-                        {% elif itemdict[dict][7] == 'Sent For Repair': %}
+                        {% elif name_item_dict[dict][7] == 'Sent For Repair': %}
                         <span class="status-emoji">&#8987</span>
 
-                        {% elif itemdict[dict][7] == 'Loaned To Customer': %}
+                        {% elif name_item_dict[dict][7] == 'Loaned To Customer': %}
                         <span class="status-emoji">&#128100</span>
 
-                        {% elif itemdict[dict][7] == 'See Notes': %}
+                        {% elif name_item_dict[dict][7] == 'See Notes': %}
                         <span class="status-emoji">&#128203</span>
 
                         {% endif %} 
@@ -243,11 +237,11 @@ Create Event
                       </td>
                       <!-- Name -->
                       {% if 
-                      itemdict[dict][7] == 'Broken' 
-                      or itemdict[dict][7] == 'Sent For Repair' 
-                      or itemdict[dict][7] == 'Loaned To Customer': %}
+                      name_item_dict[dict]['category'] == 'Broken' 
+                      or name_item_dict[dict]['category'] == 'Sent For Repair' 
+                      or name_item_dict[dict]['category'] == 'Loaned To Customer': %}
                       <td style="color:red">{{ dict }}</td>
-                      {% elif itemdict[dict][7] == 'See Notes'%}
+                      {% elif name_item_dict[dict]['category'] == 'See Notes'%}
                       <td style="color:yellow">{{ dict }}</td>
 
                       {% else %}
@@ -255,19 +249,19 @@ Create Event
                       {% endif %}
 
                       <!-- Barcode -->
-                      <td>{{ itemdict[dict][1] }}</td>
+                      <td>{{ name_item_dict[dict]['barcode'] }}</td>
 
                       <!-- Add to event button -->
                       <td>
-                        {% if itemdict[dict][0] not in conflicting_event_items[0] %}
+                        {% if name_item_dict[dict]['ID'] not in conflicting_event_items[0] %}
 
                         <button class="add-to-event-button"
-                        onclick="addItemToEvent({{ itemdict[dict][0] }})">+</button>
+                        onclick="addItemToEvent({{ name_item_dict[dict]['ID'] }})">+</button>
 
                         {% else %}
 
                         <button class="conflicting-event-button"
-                        onclick="conflictingItem({{ conflicting_event_items[1] }},{{ itemdict[dict][0] }})">+</button>
+                        onclick="conflictingItem({{ conflicting_event_items[1] }},{{ name_item_dict[dict]['ID'] }})">+</button>
 
                         {% endif %}
 
@@ -278,12 +272,10 @@ Create Event
 
                     {% else %}
                     <tr style="font-weight: 600;">
-                      <!-- ID -->
-                      <td></td>
                       <!-- QTY -->
-                      <td>{{ itemdict[dict][9] }}</td>
+                      <td>{{ name_item_dict[dict]['qty'] }}</td>
                       <!-- Manufacturer -->
-                      <td>{{ itemdict[dict][3] }}</td>
+                      <td>{{ name_item_dict[dict]['manufacturer'] }}</td>
                       <!-- Status -->
                       <td></td>
                       <!-- Name -->
@@ -292,7 +284,7 @@ Create Event
                       <td></td>
                       <td></td>
                       <td>
-                        <button class="btn btn-light btn-sm" id="button{{ itemdict[dict][0] }}" onclick="collapse({{ itemdict[dict][0] }})">Expand</button>
+                        <button class="btn btn-light btn-sm" id="button{{ name_item_dict[dict]['ID'] }}" onclick="collapse({{ name_item_dict[dict]['ID'] }})">Expand</button>
                       </td>
                     </tr>
                     <!-- end code for item that has no multiples -->
@@ -301,10 +293,8 @@ Create Event
 
                     <!-- start code for item that has multiples (child) -->
                     {% for item in items %}
-                    {% if item.name == dict and itemdict[dict][9] > 1 %}
-                    <tr class="row{{ itemdict[dict][0] }} collapse-me" id="{{ item.ID }}">
-                      <!-- ID -->
-                      <td class="td-display">{{ item.ID }}</td>
+                    {% if item.name == dict and name_item_dict[dict]['qty'] > 1 %}
+                    <tr class="row{{ name_item_dict[dict]['ID'] }} collapse-me" id="{{ item.ID }}">
                       <!-- QTY -->
                       <td class="td-display"></td>
                       <!-- Manufacturer -->
@@ -355,7 +345,7 @@ Create Event
                         {% else %}
 
                         <button class="conflicting-event-button"
-                        onclick="conflictingItem({{ conflicting_event_items[1] }},{{ itemdict[dict][0] }})">+</button>
+                        onclick="conflictingItem({{ conflicting_event_items[1] }},{{ name_item_dict[dict]['ID'] }})">+</button>
 
                         {% endif %}
 

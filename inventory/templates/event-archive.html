@@ -16,7 +16,8 @@ Event Archive
 		--namewidth: 300px;
 		--categorywidth: 90px;
 		--storagewidth: 90px;
-		--statuswidth: 40px;
+		--statuswidth: 65px;
+		--noteswidth:  550px;
 
 		--tablewidth: calc( 
 			var(--idwidth) 
@@ -26,7 +27,8 @@ Event Archive
 			+ var(--namewidth) 
 			+ var(--categorywidth) 
 			+ var(--storagewidth) 
-			+ var(--statuswidth));
+			+ var(--statuswidth)
+			+ var(--noteswidth));
 	}
 
 		.heading {display: inline-block;
@@ -45,6 +47,7 @@ Event Archive
 		.category{width: var(--categorywidth) }
 		.storage{width: var(--storagewidth) }
 		.status{width: var(--statuswidth) }
+		.notes{width:  var(--noteswidth)}
 		.break{width:  var(--tablewidth);}
 
 		.btn{width: 80px; margin: 5px;}
@@ -63,12 +66,12 @@ Event Archive
 	<form method="POST" action="/events/archive" style="color:white; display: inline-block;">
 		<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 		<select id="event" name="event" class="form-select form-control-sm" 
-		style="width: 100px;">
+		style="width: 200px;">
 			{% for event in archived_events: %}
 			<option value="{{ event.event_name }}">{{ event.event_name }}</option>
 			{% endfor %}
 		</select>
-		<input type="submit" value="Select" class="btn btn-light btn-sm">
+		<input type="submit" value="Select" class="btn btn-primary btn-sm">
 	</form>
 
 	<form method="POST" action="/events/delete-archive?event={{ event_name }}" onSubmit="return confirm('Are you sure you want to delete {{ event_name }}? This cannot be undone.')" style="color:white; display: block;">
@@ -151,77 +154,83 @@ Event Archive
 		<div class="category" style="font-weight: bold;">Category</div>
 		<div class="storage" style="font-weight: bold;">Storage</div>
 		<div class="status" style="font-weight: bold;">Status</div>
+		<div class="notes" style="font-weight: bold;">Notes</div>
 
 		{% for item in items %}
-			{% if items[item][5] == 'Audio' %}
-		<div class="id">{{ items[item][0] }}</div>
-		<div class="barcode">{{ items[item][1] }}</div>
-		<div class="serial">{{ items[item][2] }}</div>
-		<div class="manufacturer">{{ items[item][3] }}</div>
-		<div class="name">{{ items[item][4] }}</div>
-		<div class="category">{{ items[item][5] }}</div>
-		<div class="storage">{{ items[item][6] }}</div>
-		<div class="status">{{ items[item][7] }}</div>
+			{% if items[item]['category'] == 'Audio' %}
+		<div class="id">{{ item }}</div>
+		<div class="barcode">{{ items[item]['barcode'] }}</div>
+		<div class="serial">{{ items[item]['serial'] }}</div>
+		<div class="manufacturer">{{ items[item]['manufacturer'] }}</div>
+		<div class="name">{{ items[item]['name'] }}</div>
+		<div class="category">{{ items[item]['category'] }}</div>
+		<div class="storage">{{ items[item]['storage'] }}</div>
+		<div class="status">{{ items[item]['status'] }}</div>
+		<div class="notes">{{ items[item]['notes'] }}</div>
 			{% endif %}
 		{% endfor %}
 
 		<div class="break">&nbsp;</div>
 
 		{% for item in items %}
-			{% if items[item][5] == 'Video' %}
-		<div class="id">{{ items[item][0] }}</div>
-		<div class="barcode">{{ items[item][1] }}</div>
-		<div class="serial">{{ items[item][2] }}</div>
-		<div class="manufacturer">{{ items[item][3] }}</div>
-		<div class="name">{{ items[item][4] }}</div>
-		<div class="category">{{ items[item][5] }}</div>
-		<div class="storage">{{ items[item][6] }}</div>
-		<div class="status">{{ items[item][7] }}</div>
+			{% if items[item]['category'] == 'Video' %}
+		<div class="id">{{ item }}</div>
+		<div class="barcode">{{ items[item]['barcode'] }}</div>
+		<div class="serial">{{ items[item]['serial'] }}</div>
+		<div class="manufacturer">{{ items[item]['manufacturer'] }}</div>
+		<div class="name">{{ items[item]['name'] }}</div>
+		<div class="category">{{ items[item]['category'] }}</div>
+		<div class="storage">{{ items[item]['storage'] }}</div>
+		<div class="status">{{ items[item]['status'] }}</div>
+		<div class="notes">{{ items[item]['notes'] }}</div>
 			{% endif %}
 		{% endfor %}
 
 		<div class="break">&nbsp;</div>
 
 		{% for item in items %}
-			{% if items[item][5] == 'Lighting' %}
-		<div class="id">{{ items[item][0] }}</div>
-		<div class="barcode">{{ items[item][1] }}</div>
-		<div class="serial">{{ items[item][2] }}</div>
-		<div class="manufacturer">{{ items[item][3] }}</div>
-		<div class="name">{{ items[item][4] }}</div>
-		<div class="category">{{ items[item][5] }}</div>
-		<div class="storage">{{ items[item][6] }}</div>
-		<div class="status">{{ items[item][7] }}</div>
+			{% if items[item]['category'] == 'Lighting' %}
+		<div class="id">{{ item }}</div>
+		<div class="barcode">{{ items[item]['barcode'] }}</div>
+		<div class="serial">{{ items[item]['serial'] }}</div>
+		<div class="manufacturer">{{ items[item]['manufacturer'] }}</div>
+		<div class="name">{{ items[item]['name'] }}</div>
+		<div class="category">{{ items[item]['category'] }}</div>
+		<div class="storage">{{ items[item]['storage'] }}</div>
+		<div class="status">{{ items[item]['status'] }}</div>
+		<div class="notes">{{ items[item]['notes'] }}</div>
 			{% endif %}
 		{% endfor %}
 
 		<div class="break">&nbsp;</div>
 
 		{% for item in items %}
-			{% if items[item][5] == 'Rigging' %}
-		<div class="id">{{ items[item][0] }}</div>
-		<div class="barcode">{{ items[item][1] }}</div>
-		<div class="serial">{{ items[item][2] }}</div>
-		<div class="manufacturer">{{ items[item][3] }}</div>
-		<div class="name">{{ items[item][4] }}</div>
-		<div class="category">{{ items[item][5] }}</div>
-		<div class="storage">{{ items[item][6] }}</div>
-		<div class="status">{{ items[item][7] }}</div>
+			{% if items[item]['category'] == 'Rigging' %}
+		<div class="id">{{ item }}</div>
+		<div class="barcode">{{ items[item]['barcode'] }}</div>
+		<div class="serial">{{ items[item]['serial'] }}</div>
+		<div class="manufacturer">{{ items[item]['manufacturer'] }}</div>
+		<div class="name">{{ items[item]['name'] }}</div>
+		<div class="category">{{ items[item]['category'] }}</div>
+		<div class="storage">{{ items[item]['storage'] }}</div>
+		<div class="status">{{ items[item]['status'] }}</div>
+		<div class="notes">{{ items[item]['notes'] }}</div>
 			{% endif %}
 		{% endfor %}
 
 		<div class="break">&nbsp;</div>
 
 		{% for item in items %}
-			{% if items[item][5] == 'Other' %}
-		<div class="id">{{ items[item][0] }}</div>
-		<div class="barcode">{{ items[item][1] }}</div>
-		<div class="serial">{{ items[item][2] }}</div>
-		<div class="manufacturer">{{ items[item][3] }}</div>
-		<div class="name">{{ items[item][4] }}</div>
-		<div class="category">{{ items[item][5] }}</div>
-		<div class="storage">{{ items[item][6] }}</div>
-		<div class="status">{{ items[item][7] }}</div>
+			{% if items[item]['category'] == 'Other' %}
+		<div class="id">{{ item }}</div>
+		<div class="barcode">{{ items[item]['barcode'] }}</div>
+		<div class="serial">{{ items[item]['serial'] }}</div>
+		<div class="manufacturer">{{ items[item]['manufacturer'] }}</div>
+		<div class="name">{{ items[item]['name'] }}</div>
+		<div class="category">{{ items[item]['category'] }}</div>
+		<div class="storage">{{ items[item]['storage'] }}</div>
+		<div class="status">{{ items[item]['status'] }}</div>
+		<div class="notes">{{ items[item]['notes'] }}</div>
 			{% endif %}
 		{% endfor %}
 

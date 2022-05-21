@@ -71,9 +71,9 @@
 	{% for item in audio_list %}
 	<tr>
 		<td style="font-size: 19px">&#9634;</td>
-		<td>{{ itemdict2[item][1] }}</td>
-		<td>{{ itemdict2[item][3] }}</td>
-		<td>{{ itemdict2[item][4] }}</td>
+		<td>{{ ID_item_dict[item]['barcode'] }}</td>
+		<td>{{ ID_item_dict[item]['manufacturer'] }}</td>
+		<td>{{ ID_item_dict[item]['name'] }}</td>
 	</tr>
 	{% endfor  %}
 {% endif %}
@@ -90,9 +90,9 @@
 	{% for item in video_list %}
 	<tr>
 		<td style="font-size: 19px">&#9634;</td>
-		<td>{{ itemdict2[item][1] }}</td>
-		<td>{{ itemdict2[item][3] }}</td>
-		<td>{{ itemdict2[item][4] }}</td>
+		<td>{{ ID_item_dict[item]['barcode'] }}</td>
+		<td>{{ ID_item_dict[item]['manufacturer'] }}</td>
+		<td>{{ ID_item_dict[item]['name'] }}</td>
 	</tr>
 	{% endfor  %}
 {% endif %}
@@ -109,9 +109,9 @@
 	{% for item in lighting_list %}
 	<tr>
 		<td style="font-size: 19px">&#9634;</td>
-		<td>{{ itemdict2[item][1] }}</td>
-		<td>{{ itemdict2[item][3] }}</td>
-		<td>{{ itemdict2[item][4] }}</td>
+		<td>{{ ID_item_dict[item]['barcode'] }}</td>
+		<td>{{ ID_item_dict[item]['manufacturer'] }}</td>
+		<td>{{ ID_item_dict[item]['name'] }}</td>
 	</tr>
 	{% endfor  %}
 {% endif %}
@@ -128,9 +128,9 @@
 	{% for item in rigging_list %}
 	<tr>
 		<td style="font-size: 19px">&#9634;</td>
-		<td>{{ itemdict2[item][1] }}</td>
-		<td>{{ itemdict2[item][3] }}</td>
-		<td>{{ itemdict2[item][4] }}</td>
+		<td>{{ ID_item_dict[item]['barcode'] }}</td>
+		<td>{{ ID_item_dict[item]['manufacturer'] }}</td>
+		<td>{{ ID_item_dict[item]['name'] }}</td>
 	</tr>
 	{% endfor  %}
 {% endif %}
@@ -147,9 +147,9 @@
 	{% for item in other_list %}
 	<tr>
 		<td style="font-size: 19px">&#9634;</td>
-		<td>{{ itemdict2[item][1] }}</td>
-		<td>{{ itemdict2[item][3] }}</td>
-		<td>{{ itemdict2[item][4] }}</td>
+		<td>{{ ID_item_dict[item]['barcode'] }}</td>
+		<td>{{ ID_item_dict[item]['manufacturer'] }}</td>
+		<td>{{ ID_item_dict[item]['name'] }}</td>
 	</tr>
 	{% endfor  %}
 {% endif %}
