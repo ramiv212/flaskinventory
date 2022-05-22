@@ -18,29 +18,29 @@ def mobile_home():
 
 	dictionaries = Dictionaries()
 	select_event_form = SelectEventForm()
-	itemdict2 = dictionaries.itemdict2
+	ID_item_dict = dictionaries.ID_item_dict
 	audio_list = []
 	video_list = []
 	lighting_list = []
 	rigging_list = []
 	other_list = []
 
-	for item in itemdict2:
-			if dictionaries.itemdict2[item][5] == 'Audio':
+	for item in ID_item_dict:
+			if dictionaries.ID_item_dict[item]['category'] == 'Audio':
 				audio_list.append(item)
-			elif dictionaries.itemdict2[item][5] == 'Video':
+			elif dictionaries.ID_item_dict[item]['category'] == 'Video':
 				video_list.append(item)
-			elif dictionaries.itemdict2[item][5] == 'Lighting':
+			elif dictionaries.ID_item_dict[item]['category'] == 'Lighting':
 				lighting_list.append(item)
-			elif dictionaries.itemdict2[item][5] == 'Rigging':
+			elif dictionaries.ID_item_dict[item]['category'] == 'Rigging':
 				rigging_list.append(item)
-			elif dictionaries.itemdict2[item][5] == 'Other':
+			elif dictionaries.ID_item_dict[item]['category'] == 'Other':
 				other_list.append(item)
 
-	print(itemdict2)
+	print(ID_item_dict)
 
 	return render_template("mobile/home.html",
-		itemdict2=itemdict2,
+		ID_item_dict=ID_item_dict,
 		audio_list=audio_list,
 		video_list=video_list,
 		lighting_list=lighting_list,
@@ -65,25 +65,25 @@ def mobile_events():
 
 	if select_event_form.submit.data and select_event_form.validate_on_submit():
 		selected_event = select_event_form.event_field.data
-		selected_event_id = dictionaries.eventdict[selected_event][0]
-		selected_event_items = json.loads(dictionaries.eventdict[selected_event][5])['items']
+		selected_event_id = dictionaries.eventdict[selected_event]
+		selected_event_items = json.loads(dictionaries.eventdict[selected_event]['items'])
 
 		for item in selected_event_items:
-			if dictionaries.itemdict2[item][5] == 'Audio':
+			if dictionaries.ID_item_dict[item]['category'] == 'Audio':
 				audio_list.append(item)
-			elif dictionaries.itemdict2[item][5] == 'Video':
+			elif dictionaries.ID_item_dict[item]['category'] == 'Video':
 				video_list.append(item)
-			elif dictionaries.itemdict2[item][5] == 'Lighting':
+			elif dictionaries.ID_item_dict[item]['category'] == 'Lighting':
 				lighting_list.append(item)
-			elif dictionaries.itemdict2[item][5] == 'Rigging':
+			elif dictionaries.ID_item_dict[item]['category'] == 'Rigging':
 				rigging_list.append(item)
-			elif dictionaries.itemdict2[item][5] == 'Other':
+			elif dictionaries.ID_item_dict[item]['category'] == 'Other':
 				other_list.append(item)
 
 		return render_template("mobile/create-event.html",
 			select_event_form=select_event_form,
 			selected_event_items=selected_event_items,
-			itemdict2=dictionaries.itemdict2,
+			ID_item_dict=dictionaries.ID_item_dict,
 			audio_list=audio_list,
 			video_list=video_list,
 			lighting_list=lighting_list,
@@ -94,7 +94,7 @@ def mobile_events():
 	return render_template("mobile/create-event.html",
 		select_event_form=select_event_form,
 		selected_event_items=selected_event_items,
-		itemdict2=dictionaries.itemdict2
+		ID_item_dict=dictionaries.ID_item_dict
 		)
 
 @mobile.route("/scanner", methods=['GET', 'POST'])
@@ -129,15 +129,15 @@ def item_page(barcode):
 
 	if barcode in barcodedict:
 
-		inspector_form.ID.data = barcodedict[barcode][0]
+		inspector_form.ID.data = barcodedict[barcode]['ID']
 		inspector_form.barcode.data = barcode
-		inspector_form.serial.data = barcodedict[barcode][2]
-		inspector_form.manufacturer.data = barcodedict[barcode][3]
-		inspector_form.name.data = barcodedict[barcode][4]
-		inspector_form.category.data = barcodedict[barcode][5]
-		inspector_form.storage.data = barcodedict[barcode][6]
-		inspector_form.status.data = barcodedict[barcode][7]
-		inspector_form.notes.data = barcodedict[barcode][8]
+		inspector_form.serial.data = barcodedict[barcode]['serial']
+		inspector_form.manufacturer.data = barcodedict[barcode]['manufacturer']
+		inspector_form.name.data = barcodedict[barcode]['name']
+		inspector_form.category.data = barcodedict[barcode]['category']
+		inspector_form.storage.data = barcodedict[barcode]['storage']
+		inspector_form.status.data = barcodedict[barcode]['status']
+		inspector_form.notes.data = barcodedict[barcode]['notes']
 
 		return render_template("mobile/item.html", 
 			barcodedict = barcodedict,

@@ -23,18 +23,17 @@ def return_128_barcode(barcode):
 def barcode_render():
 	dictionaries = Dictionaries()
 	items = dictionaries.items
-	itemdict = dictionaries.itemdict
-	itemdict2 = dictionaries.itemdict2
+	name_item_dict = dictionaries.name_item_dict
+	ID_item_dict = dictionaries.ID_item_dict
 
 	barcode_items = json.loads(request.form['items'])
 	barcode_items = [int(i) for i in barcode_items]
 
-	print(barcode_items)
 
 	return render_template("render_barcodes.html",
 		items = items,
-		itemdict = itemdict,
-		itemdict2 = itemdict2,
+		name_item_dict = name_item_dict,
+		ID_item_dict = ID_item_dict,
 		barcode_items = barcode_items)
 
 
@@ -43,10 +42,11 @@ def barcode_render():
 def barcode_page():
 	dictionaries = Dictionaries()
 	items = dictionaries.items
-	itemdict = dictionaries.itemdict
-	itemdict2 = dictionaries.itemdict2
+	name_item_dict = dictionaries.name_item_dict
+	ID_item_dict = dictionaries.ID_item_dict
+
 
 	return render_template("barcode128.html",
 		items = items,
-		itemdict = itemdict,
-		itemdict2 = itemdict2)
+		name_item_dict = name_item_dict,
+		ID_item_dict = ID_item_dict)

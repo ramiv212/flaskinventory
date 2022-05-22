@@ -89,11 +89,12 @@ if (!(scanned.includes(json[input]['ID']))){
         document.getElementById('scanned-item-list').value = scanned;
         // console.log( document.getElementById('scanned-item-list').value)
 
-        input_field.value = "" 
+         
 
       }
     })
 }
+input_field.value = ""
 }
 
 });

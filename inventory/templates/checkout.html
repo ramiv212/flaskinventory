@@ -49,102 +49,105 @@ justify-content: center;">
 
           <!-- start code for row with no multiples -->
           <tbody id="item-table">
-            {% for dict in ID_item_dict %}
-            	{% if ID_item_dict[dict]['category'] == 'Audio' and dict in event_items %}
 
-	            <tr style="font-weight: 600;" id="{{ dict }}">
+            <!-- sort by name -->
+            {% for key,value in ID_item_dict.items()|sort(attribute='1.name') %}
+            	{% if ID_item_dict[key]['category'] == 'Audio' and key in event_items %}
+
+	            <tr style="font-weight: 600;" id="{{ key }}">
 	              <!-- ID -->
-	              <td>{{ dict }}</td>
+	              <td>{{ key }}</td>
 	              <!-- Manufacturer -->
-	              <td>{{ ID_item_dict[dict]['manufacturer'] }}</td>
+	              <td>{{ ID_item_dict[key]['manufacturer'] }}</td>
 	              <!-- Name -->
-	              <td>{{ ID_item_dict[dict]['name'] }}</td>
+	              <td>{{ ID_item_dict[key]['name'] }}</td>
 	              <!-- Barcode -->
-	              <td>{{ ID_item_dict[dict]['barcode'] }}</td>
+	              <td>{{ ID_item_dict[key]['barcode'] }}</td>
 	              <!-- Category -->
-	              <td style="text-align: center;">{{ ID_item_dict[dict]['category'] }}</td>
+	              <td style="text-align: center;">{{ ID_item_dict[key]['category'] }}</td>
 	              <!-- Notes -->
-	              <td style="font-weight: 400; font-size: small;">{{ ID_item_dict[dict]['notes'] }}</td>
+	              <td style="font-weight: 400; font-size: small;">{{ ID_item_dict[key]['notes'] }}</td>
 	              <td></td>
 	              </tr>
               	{% endif %}
               {% endfor %}
 
-             {% for dict in ID_item_dict %}
-            	{% if ID_item_dict[dict]['category'] == 'Video' and dict in event_items %}
-              <tr style="font-weight: 600;" id="{{ dict }}">
+            {% for key,value in ID_item_dict.items()|sort(attribute='1.name') %}
+              {% if ID_item_dict[key]['category'] == 'Video' and key in event_items %}
+
+              <tr style="font-weight: 600;" id="{{ key }}">
               <!-- ID -->
-              <td>{{ dict }}</td>
+              <td>{{ key }}</td>
               <!-- Manufacturer -->
-              <td>{{ ID_item_dict[dict]['manufacturer'] }}</td>
+              <td>{{ ID_item_dict[key]['manufacturer'] }}</td>
               <!-- Name -->
-              <td>{{ ID_item_dict[dict]['name'] }}</td>
+              <td>{{ ID_item_dict[key]['name'] }}</td>
               <!-- Barcode -->
-              <td>{{ ID_item_dict[dict]['barcode'] }}</td>
+              <td>{{ ID_item_dict[key]['barcode'] }}</td>
               <!-- Category -->
-              <td style="text-align: center;">{{ ID_item_dict[dict]['category'] }}</td>
+              <td style="text-align: center;">{{ ID_item_dict[key]['category'] }}</td>
               <!-- Notes -->
-              <td style="font-weight: 400; font-size: small;">{{ ID_item_dict[dict]['notes'] }}</td>
+              <td style="font-weight: 400; font-size: small;">{{ ID_item_dict[key]['notes'] }}</td>
               <td></td>
               </tr>
             	{% endif %}
             {% endfor %}
 
-            {% for dict in ID_item_dict %}
-            	{% if ID_item_dict[dict]['category'] == 'Lighting' and dict in event_items %}
-              <tr style="font-weight: 600;" id="{{ dict }}">
+            {% for key,value in ID_item_dict.items()|sort(attribute='1.name') %}
+              {% if ID_item_dict[key]['category'] == 'Lighting' and key in event_items %}
+              <tr style="font-weight: 600;" id="{{ key }}">
               <!-- ID -->
-              <td>{{ dict }}</td>
+              <td>{{ key }}</td>
               <!-- Manufacturer -->
-              <td>{{ ID_item_dict[dict]['manufacturer'] }}</td>
+              <td>{{ ID_item_dict[key]['manufacturer'] }}</td>
               <!-- Name -->
-              <td>{{ ID_item_dict[dict]['name'] }}</td>
+              <td>{{ ID_item_dict[key]['name'] }}</td>
               <!-- Barcode -->
-              <td>{{ ID_item_dict[dict]['barcode'] }}</td>
+              <td>{{ ID_item_dict[key]['barcode'] }}</td>
               <!-- Category -->
-              <td style="text-align: center;">{{ ID_item_dict[dict]['category'] }}</td>
+              <td style="text-align: center;">{{ ID_item_dict[key]['category'] }}</td>
               <!-- Notes -->
-              <td style="font-weight: 400; font-size: small;">{{ ID_item_dict[dict]['notes'] }}</td>
+              <td style="font-weight: 400; font-size: small;">{{ ID_item_dict[key]['notes'] }}</td>
               <td></td>
               </tr>
             	{% endif %}
             {% endfor %}
 
-            {% for dict in ID_item_dict %}
-            	{% if ID_item_dict[dict]['category'] == 'Rigging' and dict in event_items %}
-              <tr style="font-weight: 600;" id="{{ dict }}">
+            {% for key,value in ID_item_dict.items()|sort(attribute='1.name') %}
+              {% if ID_item_dict[key]['category'] == 'Rigging' and key in event_items %}
+              <tr style="font-weight: 600;" id="{{ key }}">
               <!-- ID -->
-              <td>{{ dict }}</td>
+              <td>{{ key }}</td>
               <!-- Manufacturer -->
-              <td>{{ ID_item_dict[dict]['manufacturer'] }}</td>
+              <td>{{ ID_item_dict[key]['manufacturer'] }}</td>
               <!-- Name -->
-              <td>{{ ID_item_dict[dict]['name'] }}</td>
+              <td>{{ ID_item_dict[key]['name'] }}</td>
               <!-- Barcode -->
-              <td>{{ ID_item_dict[dict]['barcode'] }}</td>
+              <td>{{ ID_item_dict[key]['barcode'] }}</td>
               <!-- Category -->
-              <td style="text-align: center;">{{ ID_item_dict[dict]['category'] }}</td>
+              <td style="text-align: center;">{{ ID_item_dict[key]['category'] }}</td>
               <!-- Notes -->
-              <td style="font-weight: 400; font-size: small;">{{ ID_item_dict[dict]['note'] }}</td>
+              <td style="font-weight: 400; font-size: small;">{{ ID_item_dict[key]['note'] }}</td>
               <td></td>
               </tr>
             	{% endif %}
             {% endfor %}
 
-            {% for dict in ID_item_dict %}
-            	{% if ID_item_dict[dict]['category'] == 'Other' and dict in event_items %}
-              <tr style="font-weight: 600;" id="{{ dict }}">
+            {% for key,value in ID_item_dict.items()|sort(attribute='1.name') %}
+              {% if ID_item_dict[key]['category'] == 'Rigging' and key in event_items %}
+              <tr style="font-weight: 600;" id="{{ key }}">
               <!-- ID -->
-              <td>{{ dict }}</td>
+              <td>{{ key }}</td>
               <!-- Manufacturer -->
-              <td>{{ ID_item_dict[dict]['manufacturer'] }}</td>
+              <td>{{ ID_item_dict[key]['manufacturer'] }}</td>
               <!-- Name -->
-              <td>{{ ID_item_dict[dict]['name'] }}</td>
+              <td>{{ ID_item_dict[key]['name'] }}</td>
               <!-- Barcode -->
-              <td>{{ ID_item_dict[dict]['barcode'] }}</td>
+              <td>{{ ID_item_dict[key]['barcode'] }}</td>
               <!-- Category -->
-              <td style="text-align: center;">{{ ID_item_dict[dict]['category'] }}</td>
+              <td style="text-align: center;">{{ ID_item_dict[key]['category'] }}</td>
               <!-- Notes -->
-              <td style="font-weight: 400; font-size: small;">{{ ID_item_dict[dict]['notes'] }}</td>
+              <td style="font-weight: 400; font-size: small;">{{ ID_item_dict[key]['notes'] }}</td>
               <td></td>
               </tr>
             	{% endif %}

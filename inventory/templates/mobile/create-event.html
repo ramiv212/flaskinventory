@@ -26,17 +26,17 @@ Events
 {% if audio_list%}
 <div class="mobile-event-list-item"><b>Audio</b></div>
 {% endif %}
-{% for dict in itemdict2 %}
-  {% if itemdict2[dict][0] in audio_list %}
+{% for dict in ID_item_dict %}
+  {% if dict in audio_list %}
 
-    <div id="{{itemdict2[dict][0]}}" class="mobile-event-list-item">{{ itemdict2[dict][3] }} {{ itemdict2[dict][4] }}</div>
-    <div id="{{itemdict2[dict][0]}}info" style="display: none; width: 95%;">
+    <div id="{{dict}}" class="mobile-event-list-item">{{ ID_item_dict[dict]['manufacturer'] }} {{ ID_item_dict[dict]['name'] }}</div>
+    <div id="{{dict}}info" style="display: none; width: 95%; padding: 10px;">
       
-      ID: {{itemdict2[dict][0]}}<br>
-      Barcode: {{itemdict2[dict][1]}}<br>
-      Category: {{itemdict2[dict][5]}}<br>
-      Storage: {{itemdict2[dict][6]}}<br>
-      Notes: {{itemdict2[dict][8]}}
+      ID: {{dict}}<br>
+      Barcode: {{ID_item_dict[dict]['barcode']}}<br>
+      Category: {{ID_item_dict[dict]['category']}}<br>
+      Storage: {{ID_item_dict[dict]['storage']}}<br>
+      Notes: {{ID_item_dict[dict]['notes']}}
     </div>
   {% endif %}
 {% endfor %}
@@ -46,17 +46,17 @@ Events
 <div><b>&nbsp;</b></div>
 <div class="mobile-event-list-item"><b>Video</b></div>
 {% endif %}
-{% for dict in itemdict2 %}
-  {% if itemdict2[dict][0] in video_list %}
+{% for dict in ID_item_dict %}
+  {% if dict in video_list %}
 
-    <div id="{{itemdict2[dict][0]}}" class="mobile-event-list-item">{{ itemdict2[dict][3] }} {{ itemdict2[dict][4] }}</div>
-    <div id="{{itemdict2[dict][0]}}info" style="display: none; width: 95%;">
+    <div id="{{dict}}" class="mobile-event-list-item">{{ ID_item_dict[dict]['manufacturer'] }} {{ ID_item_dict[dict]['name'] }}</div>
+    <div id="{{dict}}info" style="display: none; width: 95%; padding: 10px;">
       
-      ID: {{itemdict2[dict][0]}}<br>
-      Barcode: {{itemdict2[dict][1]}}<br>
-      Category: {{itemdict2[dict][5]}}<br>
-      Storage: {{itemdict2[dict][6]}}<br>
-      Notes: {{itemdict2[dict][8]}}
+      ID: {{dict}}<br>
+      Barcode: {{ID_item_dict[dict]['barcode']}}<br>
+      Category: {{ID_item_dict[dict]['category']}}<br>
+      Storage: {{ID_item_dict[dict]['storage']}}<br>
+      Notes: {{ID_item_dict[dict]['notes']}}
     </div>
   {% endif %}
 {% endfor %}
@@ -66,17 +66,17 @@ Events
 <div><b>&nbsp;</b></div>
 <div class="mobile-event-list-item"><b>Lighting</b></div>
 {% endif %}
-{% for dict in itemdict2 %}
-  {% if itemdict2[dict][0] in lighting_list %}
+{% for dict in ID_item_dict %}
+  {% if dict in lighting_list %}
 
-    <div id="{{itemdict2[dict][0]}}" class="mobile-event-list-item">{{ itemdict2[dict][3] }} {{ itemdict2[dict][4] }}</div>
-    <div id="{{itemdict2[dict][0]}}info" style="display: none; width: 95%;">
+    <div id="{{dict}}" class="mobile-event-list-item">{{ ID_item_dict[dict]['manufacturer'] }} {{ ID_item_dict[dict]['name'] }}</div>
+    <div id="{{dict}}info" style="display: none; width: 95%; padding: 10px;">
       
-      ID: {{itemdict2[dict][0]}}<br>
-      Barcode: {{itemdict2[dict][1]}}<br>
-      Category: {{itemdict2[dict][5]}}<br>
-      Storage: {{itemdict2[dict][6]}}<br>
-      Notes: {{itemdict2[dict][8]}}
+      ID: {{dict}}<br>
+      Barcode: {{ID_item_dict[dict]['barcode']}}<br>
+      Category: {{ID_item_dict[dict]['category']}}<br>
+      Storage: {{ID_item_dict[dict]['storage']}}<br>
+      Notes: {{ID_item_dict[dict]['notes']}}
     </div>
   {% endif %}
 {% endfor %}
@@ -86,17 +86,17 @@ Events
 <div><b>&nbsp;</b></div>
 <div class="mobile-event-list-item"><b>Rigging</b></div>
 {% endif %}
-{% for dict in itemdict2 %}
-  {% if itemdict2[dict][0] in rigging_list %}
+{% for dict in ID_item_dict %}
+  {% if dict in rigging_list %}
 
-    <div id="{{itemdict2[dict][0]}}" class="mobile-event-list-item">{{ itemdict2[dict][3] }} {{ itemdict2[dict][4] }}</div>
-    <div id="{{itemdict2[dict][0]}}info" style="display: none; width: 95%;">
+    <div id="{{dict}}" class="mobile-event-list-item">{{ ID_item_dict[dict]['manufacturer'] }} {{ ID_item_dict[dict]['name'] }}</div>
+    <div id="{{dict}}info" style="display: none; width: 95%; padding: 10px;">
       
-      ID: {{itemdict2[dict][0]}}<br>
-      Barcode: {{itemdict2[dict][1]}}<br>
-      Category: {{itemdict2[dict][5]}}<br>
-      Storage: {{itemdict2[dict][6]}}<br>
-      Notes: {{itemdict2[dict][8]}}
+      ID: {{dict}}<br>
+      Barcode: {{ID_item_dict[dict]['barcode']}}<br>
+      Category: {{ID_item_dict[dict]['category']}}<br>
+      Storage: {{ID_item_dict[dict]['storage']}}<br>
+      Notes: {{ID_item_dict[dict]['notes']}}
     </div>
   {% endif %}
 {% endfor %}
@@ -106,17 +106,17 @@ Events
 <div><b>&nbsp;</b></div>
 <div class="mobile-event-list-item"><b>Other</b></div>
 {% endif %}
-{% for dict in itemdict2 %}
-  {% if itemdict2[dict][0] in other_list %}
+{% for dict in ID_item_dict %}
+  {% if dict in other_list %}
 
-    <div id="{{itemdict2[dict][0]}}" class="mobile-event-list-item">{{ itemdict2[dict][3] }} {{ itemdict2[dict][4] }}</div>
-    <div id="{{itemdict2[dict][0]}}info" style="display: none; width: 95%;">
+    <div id="{{dict}}" class="mobile-event-list-item">{{ ID_item_dict[dict]['manufacturer'] }} {{ ID_item_dict[dict]['name'] }}</div>
+    <div id="{{dict}}info" style="display: none; width: 95%; padding: 10px;">
       
-      ID: {{itemdict2[dict][0]}}<br>
-      Barcode: {{itemdict2[dict][1]}}<br>
-      Category: {{itemdict2[dict][5]}}<br>
-      Storage: {{itemdict2[dict][6]}}<br>
-      Notes: {{itemdict2[dict][8]}}
+      ID: {{dict}}<br>
+      Barcode: {{ID_item_dict[dict]['barcode']}}<br>
+      Category: {{ID_item_dict[dict]['category']}}<br>
+      Storage: {{ID_item_dict[dict]['storage']}}<br>
+      Notes: {{ID_item_dict[dict]['notes']}}
     </div>
   {% endif %}
 {% endfor %}

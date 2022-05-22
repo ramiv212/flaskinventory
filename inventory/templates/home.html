@@ -31,28 +31,28 @@ Home
 
           <!-- start code for row with no multiples -->
           <tbody>
-            {% for dict in name_item_dict %}
-            {% if name_item_dict[dict]['qty'] < 2: %}
+            {% for dict in name_item_dict.items()|sort(attribute='0') %}
+            {% if name_item_dict[dict[0]]['qty'] < 2: %}
 
-            <tr style="font-weight: 600;" id="{{ name_item_dict[dict]['ID'] }}">
+            <tr style="font-weight: 600;" id="{{ name_item_dict[dict[0]]['ID'] }}">
               <!-- QTY -->
-              <td>{{ name_item_dict[dict]['qty'] }}</td>
+              <td>{{ name_item_dict[dict[0]]['qty'] }}</td>
               <!-- Manufacturer -->
-              <td>{{ name_item_dict[dict]['manufacturer'] }}</td>
+              <td>{{ name_item_dict[dict[0]]['manufacturer'] }}</td>
               <!-- Status -->
               <td>
                 <!-- this code sets the emojis in the status column according to the status of the item in the db -->
 
-                {% if name_item_dict[dict]['status'] == 'Broken': %}
+                {% if name_item_dict[dict[0]]['status'] == 'Broken': %}
                 <span class="status-emoji">&#128165</span>
 
-                {% elif name_item_dict[dict]['status'] == 'Sent For Repair': %}
+                {% elif name_item_dict[dict[0]]['status'] == 'Sent For Repair': %}
                 <span class="status-emoji">&#8987</span>
 
-                {% elif name_item_dict[dict]['status'] == 'Loaned To Customer': %}
+                {% elif name_item_dict[dict[0]]['status'] == 'Loaned To Customer': %}
                 <span class="status-emoji">&#128100</span>
 
-                {% elif name_item_dict[dict]['status'] == 'See Notes': %}
+                {% elif name_item_dict[dict[0]]['status'] == 'See Notes': %}
                 <span class="status-emoji">&#128203</span>
 
                 {% endif %} 
@@ -60,19 +60,19 @@ Home
               </td>
               <!-- Name -->
               {% if 
-              name_item_dict[dict]['status'] == 'Broken' 
-              or name_item_dict[dict]['status'] == 'Sent For Repair' 
-              or name_item_dict[dict]['status'] == 'Loaned To Customer': %}
-              <td style="color:red">{{ dict }}</td>
-              {% elif name_item_dict[dict]['status'] == 'See Notes'%}
-              <td style="color:yellow">{{ dict }}</td>
+              name_item_dict[dict[0]]['status'] == 'Broken' 
+              or name_item_dict[dict[0]]['status'] == 'Sent For Repair' 
+              or name_item_dict[dict[0]]['status'] == 'Loaned To Customer': %}
+              <td style="color:red">{{ dict[0] }}</td>
+              {% elif name_item_dict[dict[0]]['status'] == 'See Notes'%}
+              <td style="color:yellow">{{ dict[0] }}</td>
 
               {% else %}
-              <td>{{ dict }}</td>
+              <td>{{ dict[0] }}</td>
               {% endif %}
 
               <!-- Barcode -->
-              <td>{{ name_item_dict[dict]['barcode'] }}</td>
+              <td>{{ name_item_dict[dict[0]]['barcode'] }}</td>
               <td>
               </td>
               <td></td>
@@ -81,18 +81,18 @@ Home
             {% else %}
             <tr style="font-weight: 600;">
               <!-- QTY -->
-              <td>{{ name_item_dict[dict]['qty'] }}</td>
+              <td>{{ name_item_dict[dict[0]]['qty'] }}</td>
               <!-- Manufacturer -->
-              <td>{{ name_item_dict[dict]['manufacturer'] }}</td>
+              <td>{{ name_item_dict[dict[0]]['manufacturer'] }}</td>
               <!-- Status -->
               <td></td>
               <!-- Name -->
-              <td>{{ dict }}</td>
+              <td>{{ dict[0] }}</td>
               <!-- Barcode -->
               <td></td>
               <td></td>
               <td>
-                <button class="btn btn-light btn-sm" id="button{{ name_item_dict[dict]['ID'] }}" onclick="collapse({{ name_item_dict[dict]['ID'] }})">Expand</button>
+                <button class="btn btn-light btn-sm" id="button{{ name_item_dict[dict[0]]['ID'] }}" onclick="collapse({{ name_item_dict[dict[0]]['ID'] }})">Expand</button>
               </td>
             </tr>
           <!-- end code for item that has no multiples -->
@@ -101,8 +101,8 @@ Home
 
           <!-- start code for item that has multiples (child) -->
           {% for item in items %}
-          {% if item.name == dict and name_item_dict[dict]['qty'] > 1 %}
-          <tr class="row{{ name_item_dict[dict]['ID'] }}" id="{{ item.ID }}">
+          {% if item.name == dict[0] and name_item_dict[dict[0]]['qty'] > 1 %}
+          <tr class="row{{ name_item_dict[dict[0]]['ID'] }}" id="{{ item.ID }}">
             <!-- QTY -->
             <td class="td-display"></td>
             <!-- Manufacturer -->

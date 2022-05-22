@@ -1,7 +1,7 @@
 {% extends 'mobile/base.html' %}
 
 {% block title %}
-{{ barcodedict[barcode][3] }}  {{ barcodedict[barcode][4] }}
+{{ barcodedict[barcode]['manufacturer'] }}  {{ barcodedict[barcode]['name'] }}
 {% endblock %}
 
 {% block content %}
@@ -45,7 +45,7 @@
 <div style="color: white; display: flex; flex-flow: column; padding: 20px;">
 
 <center>
-<h3>{{ barcodedict[barcode][3] }}  {{ barcodedict[barcode][4] }}</h3>
+<h3>{{ barcodedict[barcode]['manufacturer'] }}  {{ barcodedict[barcode]['name'] }}</h3>
 </center>
 <br>
 

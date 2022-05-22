@@ -5,11 +5,11 @@
 {% for item in barcode_items %}
 
 <div style="text-align: center; padding: 20px;">
-<img src="{{ url_for('barcode.barcode_render') }}/{{ itemdict2[item][1] }}" style="height: 60px;">
+<img src="{{ url_for('barcode.barcode_render') }}/{{ ID_item_dict[item]['barcode'] }}" style="height: 60px;">
 <br>
-{{ itemdict2[item][1] }}
+{{ ID_item_dict[item]['barcode'] }}
 <br>
-{{ itemdict2[item][4] }}
+{{ ID_item_dict[item]['name'] }}
 </div>
 
 {% endfor %}

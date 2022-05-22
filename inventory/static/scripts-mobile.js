@@ -4,7 +4,7 @@ var table = document.querySelector('#mobile-inv-table').addEventListener
 ('click',buttonClick);
 
 function buttonClick(e){
-  console.log(e)
+  // console.log(e)
 
   if (!("path" in e))
     Object.defineProperty(e, "path", {
