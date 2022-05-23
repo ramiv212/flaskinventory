@@ -79,17 +79,19 @@ $.getJSON( "/json/barcodes", function(json){
 // check if the ID is already in the array
 if (!(scanned.includes(json[input]['ID']))){
 
+        // render a button to remove the item from list of scanned items
+        let removeBtn = ' <button class="scannerRemoveBtn" type="button" onclick="removeScannedItem(' + json[input]['ID'] + ')"> X </button> <br>'
+
         // append each scanned item to the span element
-        items_to_add_span_element.innerHTML = items_to_add_span_element.innerHTML + json[input]['name'] + "<br>";
+        items_to_add_span_element.innerHTML = items_to_add_span_element.innerHTML + '<span id="scanned' + json[input]['ID'] + '"">' + json[input]['name'] + removeBtn; + '</span>' 
 
         // append item's ID into the array
         scanned.push(json[input]['ID']);
 
         // add array of barcode numbers into a hidden input in the event form
         document.getElementById('scanned-item-list').value = scanned;
+        // console.log(scanned)
         // console.log( document.getElementById('scanned-item-list').value)
-
-         
 
       }
     })
@@ -98,6 +100,18 @@ input_field.value = ""
 }
 
 });
+
+// function to remove clicked item from list of scanned items
+function removeScannedItem(item){
+  let scanned_item = document.getElementById('scanned' + item)
+  var remove_index = scanned.indexOf(item);
+          scanned.splice(remove_index, 1);
+          scanned_item.remove()
+          console.clear()
+          // console.log(scanned)
+          document.getElementById('scanned-item-list').value = scanned;
+          // console.log( document.getElementById('scanned-item-list').value)
+}
 
 
 // populate the event items in the item scanner
@@ -116,7 +130,7 @@ if (!(event_select_field === null))
       event_items_element.innerHTML = ""
       $.getJSON( "/json/items", function(json2){ 
         for (var i of event_items) {
-          event_items_element.innerHTML = event_items_element.innerHTML + json2[i]['manufacturer'] + " | " + json2[i]['name'] + "<br>"
+          event_items_element.innerHTML = event_items_element.innerHTML + json2[i]['manufacturer'] + " | " + json2[i]['name'] +  "<br>"
       // console.log(json2[i])
 
            }
