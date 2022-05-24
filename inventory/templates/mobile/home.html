@@ -8,99 +8,159 @@ Events
 
 <div class="mobile-event-container">
 
-<div class="mobile-event-container" id="mobile-inv-table">
-Items
+  <div class="mobile-event-container" id="mobile-inv-table">
+    Items
 
-{% if audio_list%}
-<div class="mobile-event-list-item"><b>Audio</b></div>
-  {% for dict in audio_list %}
+    {% if audio_list%}
+    <div class="mobile-event-list-item"><b>Audio</b></div>
+    {% for dict in audio_list %}
 
     <div id="{{dict}}" class="mobile-event-list-item">{{ ID_item_dict[dict]['manufacturer'] }} {{ ID_item_dict[dict]['name'] }}</div>
     <div id="{{dict}}info" style="display: none; width: 95%; padding: 10px;">
-        ID: {{dict}}<br>
-        Barcode: {{ID_item_dict[dict]['barcode']}}<br>
-        Category: {{ID_item_dict[dict]['category']}}<br>
-        Storage: {{ID_item_dict[dict]['storage']}}<br>
-        Notes: {{ID_item_dict[dict]['notes']}}
 
-    </div>
+      <div style="display: flex; flex-direction: row;">
+        <div style="flex-grow: 1;">
+          ID: {{dict}}<br>
+          Barcode: {{ID_item_dict[dict]['barcode']}}<br>
+          Category: {{ID_item_dict[dict]['category']}}<br>
+          Storage: {{ID_item_dict[dict]['storage']}}<br>
+          Notes: {{ID_item_dict[dict]['notes']}}
+        </div>
+
+        <!-- button to inspect item -->
+        <div style="display: flex; flex-grow: 1; justify-content: center;">
+          <form style="margin: auto;" method="GET" action="/mobile/item/{{ ID_item_dict[dict]['barcode'] }}">
+           <button type="submit" style="margin: auto;" class="btn btn-lr btn-primary">Edit</button>
+         </form>
+       </div>
+     </div>
+
+   </div>
+   {% endfor %}
+   {% endif %}
+
+
+   {% if video_list%}
+   <div><b>&nbsp;</b></div>
+   <div class="mobile-event-list-item"><b>Video</b></div>
+   {% for dict in video_list %}
+
+   <div id="{{dict}}" class="mobile-event-list-item">{{ ID_item_dict[dict]['manufacturer'] }} {{ ID_item_dict[dict]['name'] }}</div>
+   <div id="{{dict}}info" style="display: none; width: 95%;padding: 10px;">
+
+      <div style="display: flex; flex-direction: row;">
+        <div style="flex-grow: 1;">
+          ID: {{dict}}<br>
+          Barcode: {{ID_item_dict[dict]['barcode']}}<br>
+          Category: {{ID_item_dict[dict]['category']}}<br>
+          Storage: {{ID_item_dict[dict]['storage']}}<br>
+          Notes: {{ID_item_dict[dict]['notes']}}
+        </div>
+
+        <!-- button to inspect item -->
+        <div style="display: flex; flex-grow: 1; justify-content: center;">
+          <form style="margin: auto;" method="GET" action="/mobile/item/{{ ID_item_dict[dict]['barcode'] }}">
+           <button type="submit" style="margin: auto;" class="btn btn-lr btn-primary">Edit</button>
+         </form>
+       </div>
+     </div>
+
+   </div>
   {% endfor %}
-{% endif %}
-
-
-{% if video_list%}
-<div><b>&nbsp;</b></div>
-<div class="mobile-event-list-item"><b>Video</b></div>
-  {% for dict in video_list %}
-
-    <div id="{{dict}}" class="mobile-event-list-item">{{ ID_item_dict[dict]['manufacturer'] }} {{ ID_item_dict[dict]['name'] }}</div>
-    <div id="{{dict}}info" style="display: none; width: 95%;padding: 10px;">
-      
-      ID: {{dict}}<br>
-      Barcode: {{ID_item_dict[dict]['barcode']}}<br>
-      Category: {{ID_item_dict[dict]['category']}}<br>
-      Storage: {{ID_item_dict[dict]['storage']}}<br>
-      Notes: {{ID_item_dict[dict]['notes']}}
-    </div>
-  {% endfor %}
-{% endif %}
+  {% endif %}
 
 
 
-{% if lighting_list %}
-<div><b>&nbsp;</b></div>
-<div class="mobile-event-list-item"><b>Lighting</b></div>
+  {% if lighting_list %}
+  <div><b>&nbsp;</b></div>
+  <div class="mobile-event-list-item"><b>Lighting</b></div>
   {% for dict in lighting_list %}
 
-    <div id="{{dict}}" class="mobile-event-list-item">{{ ID_item_dict[dict]['manufacturer'] }} {{ ID_item_dict[dict]['name'] }}</div>
-    <div id="{{dict}}info" style="display: none; width: 95%;padding: 10px;">
-      
-      ID: {{dict}}<br>
-      Barcode: {{ID_item_dict[dict]['barcode']}}<br>
-      Category: {{ID_item_dict[dict]['category']}}<br>
-      Storage: {{ID_item_dict[dict]['storage']}}<br>
-      Notes: {{ID_item_dict[dict]['notes']}}
-    </div>
+  <div id="{{dict}}" class="mobile-event-list-item">{{ ID_item_dict[dict]['manufacturer'] }} {{ ID_item_dict[dict]['name'] }}</div>
+  <div id="{{dict}}info" style="display: none; width: 95%;padding: 10px;">
+
+      <div style="display: flex; flex-direction: row;">
+        <div style="flex-grow: 1;">
+          ID: {{dict}}<br>
+          Barcode: {{ID_item_dict[dict]['barcode']}}<br>
+          Category: {{ID_item_dict[dict]['category']}}<br>
+          Storage: {{ID_item_dict[dict]['storage']}}<br>
+          Notes: {{ID_item_dict[dict]['notes']}}
+        </div>
+
+        <!-- button to inspect item -->
+        <div style="display: flex; flex-grow: 1; justify-content: center;">
+          <form style="margin: auto;" method="GET" action="/mobile/item/{{ ID_item_dict[dict]['barcode'] }}">
+           <button type="submit" style="margin: auto;" class="btn btn-lr btn-primary">Edit</button>
+         </form>
+       </div>
+     </div>
+
+   </div>
   {% endfor %}
-{% endif %}
+  {% endif %}
 
 
 
-{% if rigging_list %}
-<div><b>&nbsp;</b></div>
-<div class="mobile-event-list-item"><b>Rigging</b></div>
+  {% if rigging_list %}
+  <div><b>&nbsp;</b></div>
+  <div class="mobile-event-list-item"><b>Rigging</b></div>
   {% for dict in rigging_list %}
 
-    <div id="{{dict}}" class="mobile-event-list-item">{{ ID_item_dict[dict]['manufacturer'] }} {{ ID_item_dict[dict]['name'] }}</div>
-    <div id="{{dict}}info" style="display: none; width: 95%;padding: 10px;">
-      
-      ID: {{dict}}<br>
-      Barcode: {{ID_item_dict[dict]['barcode']}}<br>
-      Category: {{ID_item_dict[dict]['category']}}<br>
-      Storage: {{ID_item_dict[dict]['storage']}}<br>
-      Notes: {{ID_item_dict[dict]['notes']}}
-    </div>
+  <div id="{{dict}}" class="mobile-event-list-item">{{ ID_item_dict[dict]['manufacturer'] }} {{ ID_item_dict[dict]['name'] }}</div>
+  <div id="{{dict}}info" style="display: none; width: 95%;padding: 10px;">
+
+      <div style="display: flex; flex-direction: row;">
+        <div style="flex-grow: 1;">
+          ID: {{dict}}<br>
+          Barcode: {{ID_item_dict[dict]['barcode']}}<br>
+          Category: {{ID_item_dict[dict]['category']}}<br>
+          Storage: {{ID_item_dict[dict]['storage']}}<br>
+          Notes: {{ID_item_dict[dict]['notes']}}
+        </div>
+
+        <!-- button to inspect item -->
+        <div style="display: flex; flex-grow: 1; justify-content: center;">
+          <form style="margin: auto;" method="GET" action="/mobile/item/{{ ID_item_dict[dict]['barcode'] }}">
+           <button type="submit" style="margin: auto;" class="btn btn-lr btn-primary">Edit</button>
+         </form>
+       </div>
+     </div>
+
+   </div>
   {% endfor %}
-{% endif %}
+  {% endif %}
 
 
 
-{% if other_list %}
-<div><b>&nbsp;</b></div>
-<div class="mobile-event-list-item"><b>Other</b></div>
+  {% if other_list %}
+  <div><b>&nbsp;</b></div>
+  <div class="mobile-event-list-item"><b>Other</b></div>
   {% for dict in other_list %}
 
-    <div id="{{dict}}" class="mobile-event-list-item">{{ ID_item_dict[dict]['manufacturer'] }} {{ ID_item_dict[dict]['name'] }}</div>
-    <div id="{{dict}}info" style="display: none; width: 95%;padding: 10px;">
-      
-      ID: {{dict}}<br>
-      Barcode: {{ID_item_dict[dict]['barcode']}}<br>
-      Category: {{ID_item_dict[dict]['category']}}<br>
-      Storage: {{ID_item_dict[dict]['storage']}}<br>
-      Notes: {{ID_item_dict[dict]['notes']}}
-    </div>
+  <div id="{{dict}}" class="mobile-event-list-item">{{ ID_item_dict[dict]['manufacturer'] }} {{ ID_item_dict[dict]['name'] }}</div>
+  <div id="{{dict}}info" style="display: none; width: 95%;padding: 10px;">
+
+      <div style="display: flex; flex-direction: row;">
+        <div style="flex-grow: 1;">
+          ID: {{dict}}<br>
+          Barcode: {{ID_item_dict[dict]['barcode']}}<br>
+          Category: {{ID_item_dict[dict]['category']}}<br>
+          Storage: {{ID_item_dict[dict]['storage']}}<br>
+          Notes: {{ID_item_dict[dict]['notes']}}
+        </div>
+
+        <!-- button to inspect item -->
+        <div style="display: flex; flex-grow: 1; justify-content: center;">
+          <form style="margin: auto;" method="GET" action="/mobile/item/{{ ID_item_dict[dict]['barcode'] }}">
+           <button type="submit" style="margin: auto;" class="btn btn-lr btn-primary">Edit</button>
+         </form>
+       </div>
+     </div>
+
+   </div>
   {% endfor %}
-{% endif %}
+  {% endif %}
 
 
 </div>

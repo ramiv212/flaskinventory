@@ -215,8 +215,10 @@ function buttonClick(e){
     });
 
   var clickedRow = e.path[1].id
-  if (clickedRow != ""){
+  // check ID of parent page to see if it is the rght window
+  if ((clickedRow != "") && (e.path[5].nodeName == "TD")) {
     // code to inspect item that is clicked in the inspector
+    console.log(e.path)
     inspectAndHide(clickedRow)
   }
 
