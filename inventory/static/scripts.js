@@ -76,24 +76,30 @@ if (input.length === 8) {
 // open the barcode json file
 $.getJSON( "/json/barcodes", function(json){
 
-// check if the ID is already in the array
-if (!(scanned.includes(json[input]['ID']))){
 
-        // render a button to remove the item from list of scanned items
-        let removeBtn = ' <button class="scannerRemoveBtn" type="button" onclick="removeScannedItem(' + json[input]['ID'] + ')"> X </button> <br>'
+try {
+  // check if the ID is already in the array
+  if (!(scanned.includes(json[input]['ID']))){
 
-        // append each scanned item to the span element
-        items_to_add_span_element.innerHTML = items_to_add_span_element.innerHTML + '<span id="scanned' + json[input]['ID'] + '"">' + json[input]['name'] + removeBtn; + '</span>' 
+          // render a button to remove the item from list of scanned items
+          let removeBtn = ' <button class="scannerRemoveBtn" type="button" onclick="removeScannedItem(' + json[input]['ID'] + ')"> X </button> <br>'
 
-        // append item's ID into the array
-        scanned.push(json[input]['ID']);
+          // append each scanned item to the span element
+          items_to_add_span_element.innerHTML = items_to_add_span_element.innerHTML + '<span id="scanned' + json[input]['ID'] + '"">' + json[input]['name'] + removeBtn; + '</span>' 
 
-        // add array of barcode numbers into a hidden input in the event form
-        document.getElementById('scanned-item-list').value = scanned;
-        // console.log(scanned)
-        // console.log( document.getElementById('scanned-item-list').value)
+          // append item's ID into the array
+          scanned.push(json[input]['ID']);
 
+          // add array of barcode numbers into a hidden input in the event form
+          document.getElementById('scanned-item-list').value = scanned;
+          console.log(scanned)
+          console.log( document.getElementById('scanned-item-list').value)
+
+        }
+      }catch(err){
+        window.alert("This item does not exist!");
       }
+
     })
 }
 input_field.value = ""
@@ -107,7 +113,7 @@ function removeScannedItem(item){
   var remove_index = scanned.indexOf(item);
           scanned.splice(remove_index, 1);
           scanned_item.remove()
-          console.clear()
+          // console.clear()
           // console.log(scanned)
           document.getElementById('scanned-item-list').value = scanned;
           // console.log( document.getElementById('scanned-item-list').value)
