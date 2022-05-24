@@ -31,6 +31,7 @@ def event_page():
 	funcs = Funcs()
 	selected_event = None
 	selected_event_items = []
+	selected_event_items_dict = dict()
 
 
 	# code to update item in database
@@ -62,8 +63,12 @@ def event_page():
 		selected_event = select_event_form.event_field.data
 		selected_event_id = dictionaries.eventdict[selected_event]['ID']
 		selected_event_items = json.loads(dictionaries.eventdict[selected_event]['items'])
+		for item in selected_event_items: 
+			selected_event_items_dict[dictionaries.ID_item_dict[item]['name']] = {'ID': item,'qty': dictionaries.name_item_dict[dictionaries.ID_item_dict[item]['name']]['qty'], 'manufacturer' : dictionaries.ID_item_dict[item]['manufacturer'], 'status' : dictionaries.ID_item_dict[item]['status'], 'name' : item, 'barcode' : dictionaries.ID_item_dict[item]['barcode'] }
 
-		print(selected_event_items)
+
+		for item in selected_event_items_dict:
+			print(f'{item}: {selected_event_items_dict[item]}')
 
 		conflicting_event_items = get_conflicting_event_items(selected_event)
 
@@ -91,6 +96,7 @@ def event_page():
 		select_event_form=select_event_form,
 		selected_event_name=selected_event,
 		selected_event_items=selected_event_items,
+		selected_event_items_dict=selected_event_items_dict,
 		selected_event_id=selected_event_id,
 		conflicting_event_items=conflicting_event_items,
 		event_start_date=dictionaries.eventdict[selected_event]['date_start'],
@@ -187,6 +193,7 @@ def event_page():
 		add_to_event_form=add_to_event_form,
 		select_event_form=select_event_form,
 		selected_event_items=selected_event_items,
+		selected_event_items_dict=selected_event_items_dict,
 		contact_info="""{
 		"contact_name":"",
 		"contact_phone":"",

@@ -108,6 +108,20 @@ button {
   	cursor: pointer;
 }
 
+.remove-from-event-button{
+	width: 30px;
+	height: 30px;
+	background-color: red;
+	color: white;
+	font-weight: 800;
+  	align-items: center;
+  	text-align: center;
+  	line-height: 0px;
+  	border: 0;
+  	border-radius: 5px;
+  	cursor: pointer;
+}
+
 .conflicting-event-button{
 	width: 30px;
 	height: 30px;
