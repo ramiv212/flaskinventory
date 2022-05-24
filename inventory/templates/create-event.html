@@ -175,12 +175,9 @@ Create Event
 
                       <!-- Add to event button -->
                       <td>
-                        {% if selected_event_items_dict[dict[0]]['ID'] not in conflicting_event_items[0] %}
 
                         <button class="remove-from-event-button"
                         onclick="deleteEventItem({{ selected_event_items_dict[dict[0]]['ID'] }})">-</button>
-
-                        {% endif %}
 
                       </td>
 
@@ -201,7 +198,7 @@ Create Event
                       <td></td>
                       <td></td>
                       <td>
-                        <button class="btn btn-light btn-sm" id="button{{ selected_event_items_dict[dict[0]]['ID'] }}" onclick="collapse({{ selected_event_items_dict[dict[0]]['ID'] }})">Expand</button>
+                        <button class="btn btn-light btn-sm" id="button{{ selected_event_items_dict[dict[0]]['ID'] }}" onclick="eventCollapse({{ selected_event_items_dict[dict[0]]['ID'] }})">Expand</button>
                       </td>
                     </tr>
                     <!-- end code for item that has no multiples -->
@@ -210,8 +207,8 @@ Create Event
 
                     <!-- start code for item that has multiples (child) -->
                     {% for item in items %}
-                    {% if item.name == dict[0] and selected_event_items_dict[dict[0]]['qty'] > 1 %}
-                    <tr class="row{{ selected_event_items_dict[dict[0]]['ID'] }} collapse-me" id="{{ item.ID }}">
+                    {% if item.name == dict[0] and selected_event_items_dict[dict[0]]['qty'] > 1 and item.ID in selected_event_items %}
+                    <tr class="event-row{{ selected_event_items_dict[dict[0]]['ID'] }} collapse-me" id="{{ item.ID }}">
                       <!-- QTY -->
                       <td class="td-display"></td>
                       <!-- Manufacturer -->
@@ -254,17 +251,9 @@ Create Event
                       <!-- Add to event button -->
                       <td class="td-display">
 
-                        {% if item.ID not in conflicting_event_items[0] %}
+                        <button class="remove-from-event-button"
+                        onclick="deleteEventItem({{ item.ID }})">-</button>
 
-                        <button class="add-to-event-button"
-                        onclick="addItemToEvent({{ item.ID }})">+</button>
-
-                        {% else %}
-
-                        <button class="conflicting-event-button"
-                        onclick="conflictingItem({{ conflicting_event_items[1] }},{{ name_item_dict[dict[0]]['ID'] }})">+</button>
-
-                        {% endif %}
 
                       </td>
 

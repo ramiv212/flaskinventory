@@ -169,6 +169,27 @@ function collapse(button) {
 
             }
 
+function eventCollapse(button) {
+
+              // console.log(button)
+
+              // select the row of the current python loop
+              var x = document.querySelectorAll(".event-row" + button);
+
+              // turn the button to "collapse" when pushed, then "expand" when pushed again
+              if ($("#button" + button).html() == "Expand") {
+                $("#button" + button).html("Collapse");
+              }else {
+                $("#button" + button).html("Expand");
+              }
+
+              // function to collapse and expand rows that have duplicates inside of them
+              x.forEach(x => {
+                $(x).children().slideToggle("fast");
+              });
+
+            }
+
 // this function is to add a clicked item from the JSON file to the inspector fields and open the inspector when button is clicked
 function inspectAndHide(index){
   $("#inspector-window").slideDown("fast");

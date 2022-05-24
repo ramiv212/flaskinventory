@@ -67,8 +67,8 @@ def event_page():
 			selected_event_items_dict[dictionaries.ID_item_dict[item]['name']] = {'ID': item,'qty': dictionaries.name_item_dict[dictionaries.ID_item_dict[item]['name']]['qty'], 'manufacturer' : dictionaries.ID_item_dict[item]['manufacturer'], 'status' : dictionaries.ID_item_dict[item]['status'], 'name' : item, 'barcode' : dictionaries.ID_item_dict[item]['barcode'] }
 
 
-		for item in selected_event_items_dict:
-			print(f'{item}: {selected_event_items_dict[item]}')
+		# for item in selected_event_items_dict:
+		# 	print(f'{item}: {selected_event_items_dict[item]}')
 
 		conflicting_event_items = get_conflicting_event_items(selected_event)
 
@@ -213,7 +213,7 @@ def remove_from_event():
 
 	event_ID = dictionaries.eventdict[event_name]['ID']
 
-	print(event_name,event_ID)
+	print(request.form["id"],event_ID)
 
 	scan.remove_func(request.form["id"],event_ID)
 
