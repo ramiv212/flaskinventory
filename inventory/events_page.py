@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash, request, send_from_directory, flash
+from flask import render_template, redirect, url_for, flash, request, send_from_directory
 from flask_login import login_required
 from inventory.models import Item, Event,EventArchive
 from inventory.forms import CreateEventForm,ItemInspectorForm,CreateItemForm,AddToEventForm,SelectEventForm,EditEventForm,Blueprint
@@ -226,9 +226,15 @@ def remove_from_event():
 
 	event_ID = dictionaries.eventdict[event_name]['ID']
 
+	item_ID = str(request.form["id"])
+
+	item_name = dictionaries.ID_item_dict[int(item_ID)]['name']
+
 	print(request.form["id"],event_ID)
 
 	scan.remove_func(request.form["id"],event_ID)
+
+	flash(f'{item_name} was removed from the event.')
 
 	return redirect(url_for('events.event_page'))
 
@@ -245,7 +251,36 @@ def add_item_to_event():
 
 	event_ID = dictionaries.eventdict[event_name]["ID"]
 
-	scan.add_items(request.form["id"],event_ID)
+	item_ID = str(request.form["id"])
+
+	item_name = dictionaries.ID_item_dict[int(item_ID)]['name']
+
+	scan.add_items(item_ID,event_ID)
+
+	flash(f'{item_name} was added to the event.')
+
+	return redirect(url_for('events.event_page'))
+
+
+# add checked items
+@eventspage.route('/addchecked', methods=['GET', 'POST'])
+@login_required
+def add_checked_to_event():
+	scan = Scan()
+	dictionaries = Dictionaries()
+
+	event_name = request.form["event"]
+
+	event_ID = dictionaries.eventdict[event_name]["ID"]
+
+	print(request.form["id"])
+
+	checked = json.loads(request.form["id"])
+
+	for item in checked:
+		scan.add_items(item,event_ID)
+
+	flash("Items were added to the event")
 
 	return redirect(url_for('events.event_page'))
 

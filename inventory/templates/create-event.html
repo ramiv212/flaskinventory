@@ -278,15 +278,21 @@ Create Event
 
             <td class="inventory-table-col" id="inv-table">
               <div style="padding: 20px; background-color: #212529;">
-                <table class="table table-hover table-dark inventory-table2">
+                <table class="table table-hover table-dark inventory-table3">
 
                   <h3>Item Inventory</h3>
                   Search:
-                  <input type="text" id="item-search2" class="form-control-sm">
+                  <input type="text" id="inv-item-search" class="form-control-sm">
+
+                  <button type="button" class="btn btn-primary btn-sm" onclick="addCheckedItems()" style="width: 105px; margin-left: 15px">
+                    Add Checked
+                  </button>
+
                   <br><br>
 
                   <thead>
                     <tr>
+                      <th></th>
                       <th score="col">Qty</th>
                       <th scope="col">Manufacturer</th>
                       <th scope="col">St.</th>
@@ -305,6 +311,10 @@ Create Event
                       {% if name_item_dict[dict[0]]['qty'] < 2: %}
 
                     <tr style="font-weight: 600;" id="{{ name_item_dict[dict[0]]['ID'] }}">
+                      <!-- Checkbox -->
+                      <td>
+                        <input type="checkbox" value="{{ name_item_dict[dict[0]]['ID'] }}" style="display: inline;" class="inv-checkbox">
+                      </td>
                       <!-- QTY -->
                       <td>{{ name_item_dict[dict[0]]['qty'] }}</td>
                       <!-- Manufacturer -->
@@ -365,6 +375,9 @@ Create Event
 
                     {% else %}
                     <tr style="font-weight: 600;">
+                      <!-- Checkbox -->
+                      <td>
+                      </td>
                       <!-- QTY -->
                       <td>{{ name_item_dict[dict[0]]['qty'] }}</td>
                       <!-- Manufacturer -->
@@ -388,6 +401,10 @@ Create Event
                     {% for item in items %}
                     {% if item.name == dict[0] and name_item_dict[dict[0]]['qty'] > 1 %}
                     <tr class="row{{ name_item_dict[dict[0]]['ID'] }} collapse-me" id="{{ item.ID }}">
+                      <!-- Checkbox -->
+                      <td class="td-display">
+                        <input type="checkbox" class="inv-checkbox" value="{{ item.ID }}" style="display: inline;">
+                      </td>
                       <!-- QTY -->
                       <td class="td-display"></td>
                       <!-- Manufacturer -->
@@ -484,24 +501,40 @@ Create Event
       function addItemToEvent(item){
         var event = document.getElementById('event-field').value;
 
-        console.log(event)
-
         $.ajax({
           type: 'POST',
           url: '/events/add',
           headers: {
             "X-CSRFToken": csrf_token
           },
-          data: {id: item, event: event }
+          data: {id: item, event: event },
+          // this will allow the render_html return to work
+          success:function(response){ document.write(response);}
         })
-        location.reload();
       }
+
+
+      function addCheckedItems(){
+        var event = document.getElementById('event-field').value;
+
+        $.ajax({
+          type: 'POST',
+          url: '/events/addchecked',
+          headers: {
+            "X-CSRFToken": csrf_token
+          },
+          data: {id: getCheckedItems(), event: event },
+          // this will allow the render_html return to work
+          success:function(response){ document.write(response);}
+
+        })
+
+      }
+
 
 
       function deleteEventItem(item){
         var event = document.getElementById('event-field').value;
-
-        console.log(event)
 
         $.ajax({
           type: 'POST',
@@ -509,16 +542,15 @@ Create Event
           headers: {
             "X-CSRFToken": csrf_token
           },
-          data: {id: item, event: event }
+          data: {id: item, event: event },
+          // this will allow the render_html return to work
+          success:function(response){ document.write(response);}
         })
-        location.reload();
       }
 
 
       function deleteEvent(){
         var event = document.getElementById('event-field').value;
-
-        console.log(event)
 
         $.ajax({
           type: 'POST',
@@ -526,9 +558,10 @@ Create Event
           headers: {
             "X-CSRFToken": csrf_token
           },
-          data: {event: event}
+          data: {event: event},
+          // this will allow the render_html return to work
+          success:function(response){ document.write(response);}
         })
-        location.reload();
       }
     </script>
 

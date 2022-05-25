@@ -60,7 +60,7 @@ function hideCreateEvent(){
 
 
 // scan barcode into textbox
-let scanned = [];
+var scanned = [];
 var items_to_add_span_element = document.getElementById("items-to-add-list")
 
 $("#scan-item").keyup(function(event) {
@@ -92,8 +92,8 @@ try {
 
           // add array of barcode numbers into a hidden input in the event form
           document.getElementById('scanned-item-list').value = scanned;
-          console.log(scanned)
-          console.log( document.getElementById('scanned-item-list').value)
+          // console.log(scanned)
+          // console.log( document.getElementById('scanned-item-list').value)
 
         }
       }catch(err){
@@ -200,7 +200,7 @@ function inspectAndHide(index){
   function getItem(index){
     if (window.location.pathname != "/barcode/"){
     $.getJSON('/json/items', function(jd) {
-      console.log(jd[index])
+      // console.log(jd[index])
       $("#idnumber").val(index);
       $("#barcode").val(jd[index]['barcode']);
       $("#serial").val(jd[index]['serial']);
@@ -245,7 +245,7 @@ function buttonClick(e){
   // check ID of parent page to see if it is the rght window
   if ((clickedRow != "") && (e.path[5].nodeName == "TD")) {
     // code to inspect item that is clicked in the inspector
-    console.log(e.path)
+    // console.log(e.path)
     inspectAndHide(clickedRow)
   }
 
@@ -258,16 +258,16 @@ function buttonClick(e){
         if (clickedRow != ""){
         // add item to list of items
         selected_barcode_items.push(clickedRow)
-        console.log(clickedRow)
-        console.log(selected_barcode_items)
+        // console.log(clickedRow)
+        // console.log(selected_barcode_items)
         e.path[1].style.backgroundColor = "green"
         }
         // else if it is already in there, remove it
       } else if (selected_barcode_items.includes(clickedRow) && clickedRow != "inv-table") {
         var remove_index = selected_barcode_items.indexOf(clickedRow);
           selected_barcode_items.splice(remove_index, 1);
-        console.log(clickedRow)
-        console.log(selected_barcode_items)
+        // console.log(clickedRow)
+        // console.log(selected_barcode_items)
         e.path[1].style.backgroundColor = ""
       }
 
@@ -335,7 +335,7 @@ function conflictingItem(events,item){
                 // concatenate manufacturer, name and barcode
                 full_item = manufacturer_tr.toLowerCase() + " " + name_tr.innerHTML.toLowerCase() + " " + barcode_tr
 
-                console.log(full_item)
+                // console.log(full_item)
 
                 // check if the search var is in the concatenated item string
                 if (full_item.includes(search_var)){
@@ -350,6 +350,71 @@ function conflictingItem(events,item){
               }
             })
 }
+
+
+// Event Inventory Search
+
+  // if Home search bar is in the page
+  if (!(document.getElementById('inv-item-search') == null)){
+
+  // run the function every time a letter is added to search bar
+  document.getElementById('inv-item-search').addEventListener('input', (e) => {
+    var inv_table = document.getElementsByClassName("inventory-table3")
+
+    // get the children of the inventory table
+    var children = inv_table[0].childNodes[5].childNodes
+
+
+    // get the letters in the search bar
+    search_var = document.getElementById('inv-item-search').value.toLowerCase()
+    // console.clear()
+
+
+    // for every child
+    for (let i = 1; i < children.length; i++) {
+
+
+            // if the child is a tr 
+            if (children[i].nodeName == "TR"){
+
+              // name of item in tr
+            var name_tr = children[i].children[4]
+            var tr2 = children[i]
+
+
+                // if the child has more than 0 nodes
+                if(tr2.childNodes.length > 0) {
+
+                  // if the child has more than 1 node
+                  if (tr2.childNodes.length > 1){
+
+                  // manufacturer of item in tr
+                  manufacturer_tr = tr2.children[2].innerHTML
+
+                  // barcode of item in tr
+                  barcode_tr = tr2.childNodes[4].innerHTML
+                }
+              }
+            }
+                // concatenate manufacturer, name and barcode
+                full_item = manufacturer_tr.toLowerCase() + " " + name_tr.innerHTML.toLowerCase() + " " + barcode_tr
+
+                // console.log(full_item)
+
+                // check if the search var is in the concatenated item string
+                if (full_item.includes(search_var)){
+                  // show the searched items
+                  name_tr.parentNode.style.visibility = "visible"
+                  $("#button" + i).html("Expand");
+                  // hide all other items
+                } else {
+                  name_tr.parentNode.style.visibility = "collapse"
+                }
+
+              }
+            })
+}
+
 
 // Event Item Search
 
@@ -396,7 +461,7 @@ function conflictingItem(events,item){
                 // concatenate manufacturer, name and barcode
                 full_item = manufacturer_tr.toLowerCase() + " " + name_tr.innerHTML.toLowerCase() + " " + barcode_tr
 
-                console.log(full_item)
+                // console.log(full_item)
 
                 // check if the search var is in the concatenated item string
                 if (full_item.includes(search_var)){
@@ -421,3 +486,18 @@ $(function() {
         window.location.replace("/mobile");
     }
  });
+
+
+// event page checkboxes
+function getCheckedItems() {
+  checkboxes = document.getElementsByClassName("inv-checkbox")
+  checked = []
+
+  for (var i = 0; i < checkboxes.length; i++) {
+    if (checkboxes[i].checked){
+      checked.push(checkboxes[i].value);
+    }
+  }
+  // console.log(checked)
+  return JSON.stringify(checked);
+}
