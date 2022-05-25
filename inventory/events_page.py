@@ -32,6 +32,7 @@ def event_page():
 	selected_event = None
 	selected_event_items = []
 	selected_event_items_dict = dict()
+	qtydict = dict()
 
 
 	# code to update item in database
@@ -63,12 +64,24 @@ def event_page():
 		selected_event = select_event_form.event_field.data
 		selected_event_id = dictionaries.eventdict[selected_event]['ID']
 		selected_event_items = json.loads(dictionaries.eventdict[selected_event]['items'])
-		for item in selected_event_items: 
-			selected_event_items_dict[dictionaries.ID_item_dict[item]['name']] = {'ID': item,'qty': dictionaries.name_item_dict[dictionaries.ID_item_dict[item]['name']]['qty'], 'manufacturer' : dictionaries.ID_item_dict[item]['manufacturer'], 'status' : dictionaries.ID_item_dict[item]['status'], 'name' : item, 'barcode' : dictionaries.ID_item_dict[item]['barcode'] }
+
+		# initialize a dictionary with key of name and value of qty 0
+		for item in selected_event_items:
+				qtydict[dictionaries.ID_item_dict[item]['name']] = {'qty' : 0}
+
+		# go through each key name and add one to qty value
+		for item in selected_event_items:		
+			qtydict[dictionaries.ID_item_dict[item]['name']]['qty'] += 1
+
+		# print(qtydict)
+
+		for item in selected_event_items:
+			selected_event_items_dict[dictionaries.ID_item_dict[item]['name']] = {'ID': item,'qty': qtydict[dictionaries.ID_item_dict[item]['name']]['qty'], 'manufacturer' : dictionaries.ID_item_dict[item]['manufacturer'], 'status' : dictionaries.ID_item_dict[item]['status'], 'name' : item, 'barcode' : dictionaries.ID_item_dict[item]['barcode'] }
+
 
 
 		# for item in selected_event_items_dict:
-		# 	print(f'{item}: {selected_event_items_dict[item]}')
+		# 	print(f'{item}: {selcted_event_items_dict[item]}')
 
 		conflicting_event_items = get_conflicting_event_items(selected_event)
 
