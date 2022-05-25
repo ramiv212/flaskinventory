@@ -63,6 +63,13 @@ def mobile_events():
 	other_list = []
 
 
+	client = None
+	start_date = None
+	end_date = None
+	load_in = None
+	load_out = None
+		
+
 	if select_event_form.submit.data and select_event_form.validate_on_submit():
 		selected_event = select_event_form.event_field.data
 		selected_event_id = dictionaries.eventdict[selected_event]
@@ -80,6 +87,15 @@ def mobile_events():
 			elif dictionaries.ID_item_dict[item]['category'] == 'Other':
 				other_list.append(item)
 
+		client = dictionaries.eventdict[selected_event]['client']
+		start_date = dictionaries.eventdict[selected_event]['date_start']
+		end_date = dictionaries.eventdict[selected_event]['date_end']
+		load_in = dictionaries.eventdict[selected_event]['load_in']
+		load_out = dictionaries.eventdict[selected_event]['load_out']
+		contact = json.loads(dictionaries.eventdict[selected_event]['contact'])
+		notes = dictionaries.eventdict[selected_event]['notes']
+
+
 		return render_template("mobile/create-event.html",
 			select_event_form=select_event_form,
 			selected_event_items=selected_event_items,
@@ -88,7 +104,16 @@ def mobile_events():
 			video_list=video_list,
 			lighting_list=lighting_list,
 			rigging_list=rigging_list,
-			other_list=other_list)
+			other_list=other_list,
+			client = client,
+			start_date = start_date,
+			end_date = end_date,
+			load_in = load_in,
+			load_out = load_out,
+			contact_name = contact['contact_name'],
+			contact_phone = contact['contact_phone'],
+			contact_email = contact['contact_email'],
+			notes = notes)
 
 
 	return render_template("mobile/create-event.html",
