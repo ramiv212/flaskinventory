@@ -9,8 +9,8 @@ app = Flask(__name__)
 UPLOAD_FOLDER = f"{os.getcwd()}/inventory/uploads"
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
-app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{os.getcwd()}/inventory/uploads/inventory.db'
-app.config['SECRET_KEY'] = '1c3c7811fb09da0e1cadcb7e'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['SQLITE']
+app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
 app.config['SESSION_COOKIE_SECURE'] = False
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
